@@ -30,6 +30,8 @@ public class ApplicationSetting : NotifyPropertyChangedModelBase
 
     public string[] JsFilesToExcludeFromLoading { get; set; } = [".module.js"];
 
+    public bool EnableWebApiForJsPlugins { get; set; } = false;
+
     public bool DisableBindingManagerWhenAllServersStopped { get; set; }
 
     public string GameIdValidationPattern { get; set; } = @"^[a-zA-Z0-9_\s\-]{3,16}$";

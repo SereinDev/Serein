@@ -83,7 +83,6 @@ public sealed partial class CommandParser(
 
             return new()
             {
-                Origin = origin,
                 Type = type,
                 Body = body,
                 Arguments = ParseCommandArguments(argument),
@@ -96,7 +95,7 @@ public sealed partial class CommandParser(
                 throw;
             }
 
-            return new() { Origin = origin, Type = CommandType.Invalid };
+            return new() { Type = CommandType.Invalid };
         }
     }
 

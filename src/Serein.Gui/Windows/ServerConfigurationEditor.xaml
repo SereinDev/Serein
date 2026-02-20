@@ -59,7 +59,7 @@
                 </Style>
             </TabControl.Resources>
 
-            <TabItem Header="常规">
+            <TabItem ui:TabItemHelper.IsClosable="False" Header="常规">
                 <StackPanel Margin="20,10">
                     <TextBox x:Name="IdTextBox" ui:ControlHelper.Header="Id">
                         <TextBox.Text>
@@ -106,7 +106,7 @@
                 </StackPanel>
             </TabItem>
 
-            <TabItem Header="输入&amp;输出">
+            <TabItem ui:TabItemHelper.IsClosable="False" Header="输入&amp;输出">
                 <StackPanel Margin="20,10">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -191,7 +191,7 @@
                 </StackPanel>
             </TabItem>
 
-            <TabItem Header="更多">
+            <TabItem ui:TabItemHelper.IsClosable="False" Header="更多">
                 <StackPanel Margin="20,10">
                     <CheckBox Content="当退出代码不为零时自动重启" IsChecked="{Binding Configuration.AutoRestart}" />
                     <CheckBox Content="应用程序崩溃时自动停止服务器" IsChecked="{Binding Configuration.AutoStopWhenCrashing}" />

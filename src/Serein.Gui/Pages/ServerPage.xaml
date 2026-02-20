@@ -61,9 +61,7 @@
                     <SolidColorBrush x:Key="TabViewBackground" Color="{DynamicResource SolidBackgroundFillColorBase}" />
                     <SolidColorBrush x:Key="TabViewItemHeaderForeground" Color="{DynamicResource TextFillColorPrimary}" />
                 </ResourceDictionary>
-
             </TabControl.Resources>
-
         </TabControl>
     </Grid>
 </ui:Page>

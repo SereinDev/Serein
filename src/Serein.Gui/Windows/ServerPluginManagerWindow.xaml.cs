@@ -7,7 +7,7 @@ using Microsoft.Win32;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils.Extensions;
-using Serein.Gui.Dialogs;
+using Serein.Gui.Utils;
 using Serein.Gui.ViewModels;
 
 namespace Serein.Gui.Windows;
@@ -53,7 +53,7 @@ public partial class ServerPluginManagerWindow : Window
             case "Import":
                 var openFileDialog = new OpenFileDialog
                 {
-                    Filter = "可接受的插件文件|*.dll;*.jar;*.js;*.py;*.lua",
+                    Filter = "插件文件|*.dll;*.jar;*.js;*.py;*.lua",
                 };
                 if (openFileDialog.ShowDialog() == true)
                 {
@@ -63,7 +63,7 @@ public partial class ServerPluginManagerWindow : Window
                     }
                     catch (Exception ex)
                     {
-                        DialogHelper.ShowSimpleDialog("导入失败", ex.Message);
+                        DialogFactory.ShowSimpleDialog("导入失败", ex.Message);
                     }
                 }
 
@@ -80,7 +80,7 @@ public partial class ServerPluginManagerWindow : Window
                     }
                     catch (Exception ex)
                     {
-                        DialogHelper.ShowSimpleDialog(
+                        DialogFactory.ShowSimpleDialog(
                             $"启用插件\"{plugin.FriendlyName}\"失败",
                             ex.Message
                         );
@@ -98,7 +98,7 @@ public partial class ServerPluginManagerWindow : Window
                     }
                     catch (Exception ex)
                     {
-                        DialogHelper.ShowSimpleDialog(
+                        DialogFactory.ShowSimpleDialog(
                             $"禁用插件\"{plugin.FriendlyName}\"失败",
                             ex.Message
                         );
@@ -113,7 +113,7 @@ public partial class ServerPluginManagerWindow : Window
                     return;
                 }
 
-                DialogHelper
+                DialogFactory
                     .ShowDeleteConfirmation(
                         count == 1
                             ? $"确定要删除\"{selectedPlugins.First().FriendlyName}\"吗？"
@@ -134,7 +134,7 @@ public partial class ServerPluginManagerWindow : Window
                                     {
                                         Dispatcher.Invoke(
                                             () =>
-                                                DialogHelper.ShowSimpleDialog(
+                                                DialogFactory.ShowSimpleDialog(
                                                     $"删除插件\"{plugin.FriendlyName}\"失败",
                                                     ex.Message
                                                 )

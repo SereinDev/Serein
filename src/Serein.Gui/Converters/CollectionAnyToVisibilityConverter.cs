@@ -8,17 +8,22 @@ namespace Serein.Gui.Converters;
 
 public class CollectionAnyToVisibilityConverter : IValueConverter
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         bool hasItems = false;
-        if (value is ICollection collection)
+        switch (value)
         {
-            hasItems = collection.Count > 0;
-        }
-        else if (value is IEnumerable enumerable)
-        {
-            var enumerator = enumerable.GetEnumerator();
-            hasItems = enumerator.MoveNext();
+            case ICollection collection:
+                hasItems = collection.Count > 0;
+                break;
+
+            case IEnumerable enumerable:
+            {
+                var enumerator = enumerable.GetEnumerator();
+                using var enumerator1 = enumerator as IDisposable;
+                hasItems = enumerator.MoveNext();
+                break;
+            }
         }
 
         var invert =
@@ -33,7 +38,12 @@ public class CollectionAnyToVisibilityConverter : IValueConverter
                 : Visibility.Collapsed;
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public object ConvertBack(
+        object? value,
+        Type targetType,
+        object? parameter,
+        CultureInfo culture
+    )
     {
         throw new NotImplementedException();
     }

@@ -1,9 +1,10 @@
 ﻿<ui:ContentDialog
-    x:Class="Serein.Gui.Dialogs.CommandEditorDialog"
+    x:Class="Serein.Gui.Dialogs.TriggerEditorDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="clr-namespace:Serein.Gui.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Serein.Gui.Dialogs"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="clr-namespace:Serein.Core.Models.Commands;assembly=Serein.Core"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
@@ -21,7 +22,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/DialogContentStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <converter:EnumValueConverter x:Key="EnumValueConverter" />
         </ResourceDictionary>
     </ui:ContentDialog.Resources>
 
@@ -31,7 +31,7 @@
                 x:Name="TypeComboBox"
                 HorizontalAlignment="Stretch"
                 ui:ControlHelper.Header="命令类型"
-                SelectedIndex="{Binding Type, Converter={StaticResource EnumValueConverter}, Mode=TwoWay}">
+                SelectedIndex="0">
                 <ComboBoxItem Tag="{x:Static models:CommandType.Invalid}">禁用</ComboBoxItem>
                 <ComboBoxItem Tag="{x:Static models:CommandType.ExecuteShellCommand}">运行终端命令</ComboBoxItem>
                 <ComboBoxItem Tag="{x:Static models:CommandType.InputServer}">输入服务器</ComboBoxItem>
@@ -146,6 +146,8 @@
                 </TextBlock>
             </StackPanel>
 
+
+
             <TextBox
                 Height="120"
                 ui:ControlHelper.Header="数据内容"
@@ -176,6 +178,7 @@
                     </Style>
                 </TextBox.Style>
             </TextBox>
+
 
             <StackPanel>
                 <StackPanel.Style>

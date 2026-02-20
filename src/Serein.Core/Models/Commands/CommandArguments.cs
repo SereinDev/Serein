@@ -1,9 +1,21 @@
 using Serein.ConnectionProtocols.Models;
+using Serein.Core.Models.Abstractions;
 
 namespace Serein.Core.Models.Commands;
 
-public record CommandArguments
+public class CommandArguments : NotifyPropertyChangedModelBase
 {
+    public CommandArguments() { }
+
+    public CommandArguments(CommandArguments commandArguments)
+    {
+        Target = commandArguments.Target;
+        AutoEscape = commandArguments.AutoEscape;
+        AsSegments = commandArguments.AsSegments;
+        UseUnicode = commandArguments.UseUnicode;
+        Self = commandArguments.Self is null ? null : new(commandArguments.Self);
+    }
+
     public string? Target { get; set; }
 
     public bool? AutoEscape { get; set; }

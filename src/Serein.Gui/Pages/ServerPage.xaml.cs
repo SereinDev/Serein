@@ -4,6 +4,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using iNKORE.UI.WPF.Modern.Controls;
+using iNKORE.UI.WPF.Modern.Controls.Helpers;
 using Microsoft.Win32;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
@@ -53,7 +54,8 @@ public partial class ServerPage : Page
 
     private void Add(string id, Server server)
     {
-        var tabItem = new PanelTabItem(id, server, _serverManager, this, _mainWindow) { Tag = id };
+        var tabItem = new PanelTabItem(new(id, server, _serverManager, _mainWindow)) { Tag = id };
+        TabItemHelper.SetIsClosable(tabItem, false);
 
         _panels[id] = tabItem;
         TabControl.Items.Add(tabItem);

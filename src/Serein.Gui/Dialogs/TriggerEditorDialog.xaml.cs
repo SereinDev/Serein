@@ -3,9 +3,9 @@ using Serein.Core.Models.Commands;
 
 namespace Serein.Gui.Dialogs;
 
-public partial class CommandEditorDialog : ContentDialog
+public partial class TriggerEditorDialog : ContentDialog
 {
-    public CommandEditorDialog(Command command)
+    public TriggerEditorDialog(Command command)
     {
         DataContext = command;
         InitializeComponent();

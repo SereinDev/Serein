@@ -7,9 +7,9 @@ namespace Serein.Core.Models.Automations;
 
 public sealed class AutomationTask : NotifyPropertyChangedModelBase
 {
-    public ObservableCollection<TriggerBase> Triggers { get; set; } = [];
+    public ObservableCollection<TriggerBase> Triggers { get; init; } = [];
 
-    public ObservableCollection<Command> Commands { get; set; } = [];
+    public ObservableCollection<Command> Commands { get; init; } = [];
 
     public string Description { get; set; } = string.Empty;
 }

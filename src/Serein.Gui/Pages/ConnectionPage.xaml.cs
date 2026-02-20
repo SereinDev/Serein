@@ -11,23 +11,23 @@ namespace Serein.Gui.Pages;
 
 public partial class ConnectionPage : Page
 {
-    private readonly ConnectionManager _wsConnectionManager;
+    private readonly ConnectionManager _connectionManager;
     private readonly Timer _timer;
 
-    public ConnectionPage(ConnectionManager wsConnectionManager)
+    public ConnectionPage(ConnectionManager connectionManager)
     {
         _timer = new(1000) { AutoReset = true, Enabled = true };
-        _wsConnectionManager = wsConnectionManager;
-        DataContext = _wsConnectionManager;
+        _connectionManager = connectionManager;
+        DataContext = _connectionManager;
 
         InitializeComponent();
         UpdateTimeText();
 
         Console.EnableLogLevelHighlight();
         _timer.Elapsed += (_, _) => Dispatcher.Invoke(UpdateTimeText);
-        _wsConnectionManager.PropertyChanged += (_, e) =>
+        _connectionManager.PropertyChanged += (_, e) =>
         {
-            if (e.PropertyName == nameof(_wsConnectionManager.StartedAt))
+            if (e.PropertyName == nameof(_connectionManager.StartedAt))
             {
                 Dispatcher.Invoke(UpdateTimeText);
             }
@@ -36,8 +36,8 @@ public partial class ConnectionPage : Page
 
     private void UpdateTimeText()
     {
-        TimeTextBlock.Text = _wsConnectionManager.IsActive
-            ? (DateTime.Now - _wsConnectionManager.StartedAt).ToCommonString() ?? "-"
+        TimeTextBlock.Text = _connectionManager.IsActive
+            ? (DateTime.Now - _connectionManager.StartedAt).ToCommonString() ?? "-"
             : "-";
     }
 
@@ -49,11 +49,11 @@ public partial class ConnectionPage : Page
         {
             if (tag == "Close")
             {
-                _wsConnectionManager.Stop();
+                _connectionManager.Stop();
             }
             else if (tag == "Open")
             {
-                _wsConnectionManager.Start();
+                _connectionManager.Start();
                 Console.Clear();
             }
         }

@@ -9,6 +9,11 @@ namespace Serein.Core.Models.Commands;
 /// </summary>
 public readonly record struct CommandContext
 {
+    /// <summary>
+    /// 来源
+    /// </summary>
+    public CommandOrigin Origin { get; init; }
+
     public RegexMatch? Match { get; init; }
 
     public Packets Packets { get; init; }

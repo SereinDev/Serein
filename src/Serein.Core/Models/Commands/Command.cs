@@ -1,34 +1,30 @@
+using Serein.Core.Models.Abstractions;
+
 namespace Serein.Core.Models.Commands;
 
 /// <summary>
 /// 命令
 /// </summary>
-public class Command
+public class Command : NotifyPropertyChangedModelBase
 {
     public Command() { }
 
     public Command(Command command)
     {
-        Origin = command.Origin;
         Type = command.Type;
-        Arguments = command.Arguments;
+        Arguments = new(command.Arguments);
         Body = command.Body;
     }
 
     /// <summary>
-    /// 来源
-    /// </summary>
-    public CommandOrigin Origin { get; init; }
-
-    /// <summary>
     /// 类型
     /// </summary>
-    public CommandType Type { get; init; }
+    public CommandType Type { get; set; }
 
     /// <summary>
     /// 参数
     /// </summary>
-    public CommandArguments? Arguments { get; init; }
+    public CommandArguments Arguments { get; set; } = new();
 
     /// <summary>
     /// 主体

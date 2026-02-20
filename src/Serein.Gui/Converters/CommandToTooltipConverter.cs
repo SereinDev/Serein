@@ -7,7 +7,7 @@ namespace Serein.Gui.Converters;
 
 public class CommandToTooltipConverter : IValueConverter
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is not Command command)
         {
@@ -19,17 +19,20 @@ public class CommandToTooltipConverter : IValueConverter
         {
             tooltip += $"\r\n主体：{command.Body}";
         }
-        if (command.Arguments != null)
+
+        if (!string.IsNullOrEmpty(command.Arguments.Target))
         {
-            if (!string.IsNullOrEmpty(command.Arguments.Target))
-            {
-                tooltip += $"\r\n目标：{command.Arguments.Target}";
-            }
+            tooltip += $"\r\n目标：{command.Arguments.Target}";
         }
         return tooltip;
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public object ConvertBack(
+        object? value,
+        Type targetType,
+        object? parameter,
+        CultureInfo culture
+    )
     {
         throw new NotImplementedException();
     }

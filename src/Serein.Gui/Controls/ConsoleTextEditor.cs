@@ -18,7 +18,7 @@ public class ConsoleTextEditor : TextEditor
         TextArea.TextView.LineTransformers.Add(new LineHeaderColorizer(onlySereinHeader));
     }
 
-    protected readonly object _lock = new();
+    private readonly object _lock = new();
 
     public ConsoleTextEditor()
     {
@@ -66,7 +66,7 @@ public class ConsoleTextEditor : TextEditor
 
     public void AppendReceivedMsgLine(string line)
     {
-        AppendLine($"[Recv] {line}");
+        AppendLine($"[Rev] {line}");
     }
 
     public void AppendSentMsgLine(string line)

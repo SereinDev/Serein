@@ -43,6 +43,7 @@ public partial class App : Application
             .AddSingleton<NotImplPage>()
             .AddSingleton<ServerPage>()
             .AddSingleton<AutomationPage>()
+            .AddSingleton<AutomationPageViewModel>()
             .AddSingleton<ConnectionPage>()
             .AddSingleton<BindingPage>()
             .AddSingleton<PermissionGroupPage>()

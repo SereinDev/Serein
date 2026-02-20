@@ -7,6 +7,7 @@ using iNKORE.UI.WPF.Modern.Controls;
 using Serein.Core.Models.Permissions;
 using Serein.Core.Services.Permissions;
 using Serein.Gui.Dialogs;
+using Serein.Gui.Utils;
 using Serein.Gui.ViewModels;
 
 namespace Serein.Gui.Windows;
@@ -79,7 +80,7 @@ public partial class PermissionGroupEditor : Window
                                     }
                                     else
                                     {
-                                        DialogHelper.ShowSimpleDialog(
+                                        DialogFactory.ShowSimpleDialog(
                                             "添加失败",
                                             "已经添加过此用户Id"
                                         );
@@ -93,7 +94,7 @@ public partial class PermissionGroupEditor : Window
             case "Remove":
                 if (MemberListView.SelectedIndex >= 0)
                 {
-                    DialogHelper
+                    DialogFactory
                         .ShowDeleteConfirmation(
                             $"你确定要删除\"{MemberListView.SelectedItem}\"吗？"
                         )
@@ -184,7 +185,7 @@ public partial class PermissionGroupEditor : Window
             case "Remove":
                 if (PermissionListView.SelectedIndex >= 0)
                 {
-                    DialogHelper
+                    DialogFactory
                         .ShowDeleteConfirmation(
                             $"你确定要删除\"{(PermissionListView.SelectedItem as PermissionItemViewModel)?.Node}\"吗？"
                         )
@@ -234,12 +235,12 @@ public partial class PermissionGroupEditor : Window
         }
         catch (Exception ex)
         {
-            DialogHelper.ShowSimpleDialog("保存失败", ex.Message);
+            DialogFactory.ShowSimpleDialog("保存失败", ex.Message);
         }
     }
 
     private void PermissionListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        ViewModel.IsSelected = PermissionListView.SelectedIndex >= 0;
+        ViewModel.CanRemove = ViewModel.CanEdit = PermissionListView.SelectedIndex >= 0;
     }
 }

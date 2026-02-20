@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
@@ -15,7 +14,7 @@ public sealed class AutomationTaskProvider
 {
     public AutomationTaskProvider()
     {
-         Read();
+        Read();
     }
 
     public override ObservableCollection<AutomationTask> Value { get; } = [];
@@ -26,24 +25,30 @@ public sealed class AutomationTaskProvider
         {
             if (File.Exists(PathConstants.AutomationTasksFile))
             {
-                var wrapper = JsonSerializer.Deserialize<DataItemWrapper<ObservableCollection<AutomationTask>>>(
+                var wrapper = JsonSerializer.Deserialize<
+                    DataItemWrapper<ObservableCollection<AutomationTask>>
+                >(
                     File.ReadAllText(PathConstants.AutomationTasksFile),
                     JsonSerializerOptionsFactory.Common
                 );
 
-                if (wrapper?.Type == typeof(ObservableCollection<AutomationTask>).ToString())
+                if (wrapper?.Type != typeof(ObservableCollection<AutomationTask>).ToString())
                 {
-                    lock (Value)
-                    {
-                        Value.Clear();
+                    return Value;
+                }
 
-                        if (wrapper.Data is not null)
-                        {
-                            foreach (var task in wrapper.Data)
-                            {
-                                Value.Add(task);
-                            }
-                        }
+                lock (Value)
+                {
+                    Value.Clear();
+
+                    if (wrapper.Data is null)
+                    {
+                        return Value;
+                    }
+
+                    foreach (var task in wrapper.Data)
+                    {
+                        Value.Add(task);
                     }
                 }
             }

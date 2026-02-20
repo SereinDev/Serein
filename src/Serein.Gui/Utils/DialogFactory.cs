@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
+using iNKORE.UI.WPF.Modern.Controls;
 using Ookii.Dialogs.Wpf;
-using Serein.Core;
 using Serein.Core.Models;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Extensions;
@@ -12,9 +13,7 @@ namespace Serein.Gui.Utils;
 
 internal static class DialogFactory
 {
-    private static readonly Lazy<string> Title = new(
-        () => "Serein." + SereinApp.GetCurrentApp().Type
-    );
+    private const string Title = "Serein.Gui";
 
     public static void ShowWelcomeDialog()
     {
@@ -36,13 +35,14 @@ internal static class DialogFactory
             EnableHyperlinks = true,
             Footer =
                 $"使用此软件即视为你已阅读并同意了<a href=\"{UrlConstants.DocsArgument}\">使用协议</a>",
-            ExpandedInformation =
-                "此软件与Mojang Studio、网易、Microsoft没有从属关系\n"
-                + $"Serein is licensed under <a href=\"{UrlConstants.License}\">GPL-v3.0</a>\n"
-                + $"Copyright © 2022 <a href=\"{UrlConstants.Author}\">Zaitonn</a>. All Rights Reserved.",
+            ExpandedInformation = $"""
+                此软件与Mojang Studio、网易、Microsoft没有从属关系
+                Serein is licensed under <a href="{UrlConstants.License}">GPL-v3.0</a>
+                Copyright © 2022 <a href="{UrlConstants.Author}">Zaitonn</a>. All Rights Reserved.
+                """,
             FooterIcon = TaskDialogIcon.Information,
             MainInstruction = "欢迎使用Serein！！",
-            WindowTitle = Title.Value,
+            WindowTitle = Title,
             ButtonStyle = TaskDialogButtonStyle.CommandLinks,
         };
 
@@ -78,17 +78,19 @@ internal static class DialogFactory
             {
                 Buttons = { new(ButtonType.Ok), button1, button2 },
                 CenterParent = true,
-                Content =
-                    $"{e.GetType().FullName}: {e.Message} \r\n\r\n"
-                    + $"完整崩溃日志已保存在 {fileName}，请先善用搜索引擎寻找解决方案。\r\n"
-                    + "在确定不是自身问题（如文件语法不正确、文件缺失等）后，你可以通过以下方式反馈此问题，帮助我们更好的改进 Serein！",
+                Content = $"""
+                    {e.GetType().FullName}: {e.Message}
+
+                    完整崩溃日志已保存在 {fileName}，请先善用搜索引擎寻找解决方案。
+                    在确定不是自身问题（如文件语法不正确、文件缺失等）后，你可以通过以下方式反馈此问题，帮助我们更好的改进 Serein！
+                    """,
                 EnableHyperlinks = true,
                 Footer = "反馈问题时你应该上传崩溃日志文件，而不是此窗口的截图",
                 FooterIcon = TaskDialogIcon.Warning,
                 ExpandedInformation = e.StackTrace,
                 MainIcon = TaskDialogIcon.Error,
                 MainInstruction = "唔……崩溃了(っ °Д °;)っ",
-                WindowTitle = Title.Value,
+                WindowTitle = Title,
                 ButtonStyle = TaskDialogButtonStyle.CommandLinks,
             };
 
@@ -124,7 +126,7 @@ internal static class DialogFactory
             ExpandedInformation = sb.ToString(),
             MainIcon = TaskDialogIcon.Warning,
             MainInstruction = "检测到冲突进程",
-            WindowTitle = Title.Value,
+            WindowTitle = Title,
         };
 
         dialog.ShowDialog();
@@ -139,7 +141,7 @@ internal static class DialogFactory
             Content = "确认要导入此服务器配置项吗？",
             MainIcon = TaskDialogIcon.Information,
             MainInstruction = "导入确认",
-            WindowTitle = Title.Value,
+            WindowTitle = Title,
         };
 
         return dialog.ShowDialog().ButtonType == ButtonType.Ok;
@@ -161,7 +163,7 @@ internal static class DialogFactory
             Content = "确认要导入此自动化任务文件吗？",
             MainIcon = TaskDialogIcon.Information,
             MainInstruction = "导入确认",
-            WindowTitle = Title.Value,
+            WindowTitle = Title,
         };
 
         var result = dialog.ShowDialog();
@@ -169,5 +171,31 @@ internal static class DialogFactory
         return result == btn1 ? true
             : result == btn2 ? false
             : null;
+    }
+
+    public static async Task<bool> ShowDeleteConfirmation(string message)
+    {
+        return await new ContentDialog
+            {
+                Content = message + "\r\n这将会永远失去！（真的很久！）",
+                PrimaryButtonText = "确认",
+                CloseButtonText = "取消",
+                DefaultButton = ContentDialogButton.Close,
+            }.ShowAsync() == ContentDialogResult.Primary;
+    }
+
+    public static void ShowSimpleDialog(
+        string title,
+        string message,
+        string closeButtonText = "确定"
+    )
+    {
+        new ContentDialog
+        {
+            Title = title,
+            Content = message,
+            DefaultButton = ContentDialogButton.Close,
+            CloseButtonText = closeButtonText,
+        }.ShowAsync();
     }
 }

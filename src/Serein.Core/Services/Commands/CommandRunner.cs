@@ -245,10 +245,7 @@ public sealed class CommandRunner
         }
 
         // 回退到配置的默认ID（仅限非消息来源的命令）
-        if (
-            command.Origin != CommandOrigin.Message
-            && _settingProvider.Value.Connection.ListenedIds.Length > 0
-        )
+        if (_settingProvider.Value.Connection.ListenedIds.Length > 0)
         {
             var targetId = GetFallbackTargetId(fallbackPrefixes);
             if (!string.IsNullOrEmpty(targetId))

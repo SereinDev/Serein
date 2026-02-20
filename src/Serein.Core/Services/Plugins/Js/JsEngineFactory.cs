@@ -16,6 +16,7 @@ using Serein.Core.Models.Commands;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins.Js.BuiltInModules;
 using Serein.Core.Services.Plugins.Storages;
+using Yilduz;
 
 namespace Serein.Core.Services.Plugins.Js;
 
@@ -38,7 +39,7 @@ public sealed class JsEngineFactory(
 
     private readonly ILogger _logger = logger;
 
-    private Options PrepareOptions(JsPlugin jsPlugin)
+    private Jint.Options PrepareOptions(JsPlugin jsPlugin)
     {
         var assemblies = new List<Assembly>
         {
@@ -80,7 +81,7 @@ public sealed class JsEngineFactory(
             }
         }
 
-        var cfg = new Options
+        var cfg = new Jint.Options
         {
             Modules = { RegisterRequire = true },
             Interop =
@@ -110,6 +111,11 @@ public sealed class JsEngineFactory(
     internal Engine Create(JsPlugin jsPlugin)
     {
         var engine = new Engine(PrepareOptions(jsPlugin));
+
+        if (settingProvider.Value.Application.EnableWebApiForJsPlugins)
+        {
+            engine.InitializeWebApi(new() { CancellationToken = jsPlugin.CancellationToken });
+        }
 
         engine.SetValue("serein", jsPlugin.ScriptInstance);
         engine.SetValue("console", jsPlugin.Console);

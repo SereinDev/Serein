@@ -1,17 +1,17 @@
 <ui:ContentDialog
+    CloseButtonText="确定"
+    DefaultButton="Close"
+    Title="欢迎使用Serein！！"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
     x:Class="Serein.Gui.Dialogs.WelcomeDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Serein.Gui.Dialogs"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
-    Title="欢迎使用Serein！！"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
-    CloseButtonText="确定"
-    DefaultButton="Close"
-    mc:Ignorable="d">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ScrollViewer>
         <StackPanel>
             <FlowDocumentScrollViewer Margin="0,5">
@@ -66,7 +66,7 @@
                 </FlowDocument>
             </FlowDocumentScrollViewer>
 
-            <Expander VerticalAlignment="Bottom" Header="更多...">
+            <Expander Header="更多..." VerticalAlignment="Bottom">
                 <FlowDocumentScrollViewer Margin="0,5">
                     <FlowDocument FontFamily="{DynamicResource ContentControlThemeFontFamily}" FontSize="{DynamicResource ContentControlFontSize}">
                         <Paragraph>

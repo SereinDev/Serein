@@ -5,10 +5,10 @@
     xmlns:control="clr-namespace:Serein.Gui.Controls"
     xmlns:converter="clr-namespace:Serein.Gui.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Serein.Gui.Controls"
+    xmlns:viewmodels="clr-namespace:Serein.Gui.ViewModels"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
-    d:DataContext="{d:DesignInstance Type=local:PanelTabItem}"
+    d:DataContext="{d:DesignInstance Type=viewmodels:PanelViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     ContextMenuOpening="TabItem_ContextMenuOpening"
@@ -24,18 +24,16 @@
     <TabItem.ContextMenu>
         <ContextMenu>
             <MenuItem
-                Click="MenuItem_Click"
-                Header="编辑"
-                Tag="Edit">
+                Command="{Binding EditConfigCommand}"
+                Header="编辑">
                 <MenuItem.Icon>
                     <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Edit}" />
                 </MenuItem.Icon>
             </MenuItem>
 
             <MenuItem
-                Click="MenuItem_Click"
-                Header="删除"
-                Tag="Remove">
+                Command="{Binding RemoveServerCommand}"
+                Header="删除">
                 <MenuItem.Icon>
                     <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Delete}" />
                 </MenuItem.Icon>
@@ -88,40 +86,38 @@
                 <TextBlock
                     Grid.Column="1"
                     HorizontalAlignment="Right"
-                    Text="{Binding ViewModel.Status, Mode=OneWay, Converter={StaticResource serverStatusConverter}}" />
+                    Text="{Binding Status, Mode=OneWay, Converter={StaticResource serverStatusConverter}}" />
 
                 <TextBlock Grid.Row="1" Text="版本" />
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="1"
                     HorizontalAlignment="Right"
-                    Text="{Binding ViewModel.Version, Mode=OneWay, TargetNullValue=-}"
-                    ToolTip="{Binding ViewModel.Version, Mode=OneWay}" />
+                    Text="{Binding Version, Mode=OneWay, TargetNullValue=-}"
+                    ToolTip="{Binding Version, Mode=OneWay}" />
 
                 <TextBlock Grid.Row="2" Text="在线人数" />
                 <TextBlock
                     Grid.Row="2"
                     Grid.Column="1"
                     HorizontalAlignment="Right"
-                    Text="{Binding ViewModel.PlayerCount, Mode=OneWay, TargetNullValue=-}"
-                    ToolTip="{Binding ViewModel.PlayerCount, Mode=OneWay}" />
+                    Text="{Binding PlayerCount, Mode=OneWay, TargetNullValue=-}"
+                    ToolTip="{Binding PlayerCount, Mode=OneWay}" />
 
                 <TextBlock Grid.Row="3" Text="运行时长" />
                 <TextBlock
-                    x:Name="RunTime"
                     Grid.Row="3"
                     Grid.Column="1"
                     HorizontalAlignment="Right"
-                    Text="{Binding ViewModel.RunTime, Mode=OneWay, TargetNullValue=-, Converter={StaticResource timeSpanConverter}}"
-                    ToolTip="{Binding ViewModel.RunTime, Mode=OneWay, Converter={StaticResource timeSpanConverter}}" />
+                    Text="{Binding RunTime, Mode=OneWay, TargetNullValue=-, Converter={StaticResource timeSpanConverter}}"
+                    ToolTip="{Binding RunTime, Mode=OneWay, Converter={StaticResource timeSpanConverter}}" />
 
                 <TextBlock Grid.Row="4" Text="进程占用" />
                 <TextBlock
-                    x:Name="CPUUsage"
                     Grid.Row="4"
                     Grid.Column="1"
                     HorizontalAlignment="Right"
-                    Text="{Binding ViewModel.CpuUsage, Mode=OneWay, TargetNullValue=-, StringFormat={}{0}%}" />
+                    Text="{Binding CpuUsage, Mode=OneWay, TargetNullValue=-, StringFormat={}{0}%}" />
             </Grid>
         </Border>
 
@@ -142,20 +138,17 @@
             </Grid.RowDefinitions>
 
             <Button
-                Click="ControlButton_Click"
-                Content="启动"
-                Tag="Start" />
+                Command="{Binding StartCommand}"
+                Content="启动" />
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
-                Click="ControlButton_Click"
-                Content="停止"
-                Tag="Stop" />
+                Command="{Binding StopCommand}"
+                Content="停止" />
             <Button
                 Grid.Row="1"
-                Click="ControlButton_Click"
-                Content="重启"
-                Tag="Restart" />
+                Command="{Binding RestartCommand}"
+                Content="重启" />
             <Button
                 Grid.Row="1"
                 Grid.Column="1"
@@ -172,8 +165,8 @@
                                 Severity="Error" />
                             <Button
                                 HorizontalAlignment="Center"
-                                Click="ControlButton_Click"
-                                Tag="Terminate">
+                                Command="{Binding TerminateCommand}"
+                                CommandParameter="{Binding ElementName=TerminateFlyout}">
                                 ▶ 继续
                             </Button>
                         </StackPanel>
@@ -190,13 +183,11 @@
                 </Style>
             </StackPanel.Resources>
             <Button
-                Click="ControlButton_Click"
-                Content="打开启动文件位置"
-                Tag="OpenInExplorer" />
+                Command="{Binding OpenInExplorerCommand}"
+                Content="打开启动文件位置" />
             <Button
-                Click="ControlButton_Click"
-                Content="插件管理"
-                Tag="PluginManager" />
+                Command="{Binding PluginManagerCommand}"
+                Content="插件管理" />
         </StackPanel>
 
         <DockPanel
@@ -209,11 +200,11 @@
                     Margin="10,0,0,0"
                     Padding="5"
                     VerticalAlignment="Stretch"
-                    Click="Enter_Click"
+                    Command="{Binding EnterInputOnlyCommand}"
                     DockPanel.Dock="Right">
                     <ui:FontIcon FontSize="13" Icon="{x:Static ui:SegoeFluentIcons.Up}" />
                 </Button>
-                <TextBox Name="InputBox" PreviewKeyDown="InputBox_PreviewKeyDown" />
+                <TextBox Name="InputBox" PreviewKeyDown="InputBox_PreviewKeyDown" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" />
             </DockPanel>
 
             <Border

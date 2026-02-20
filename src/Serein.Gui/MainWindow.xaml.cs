@@ -322,7 +322,7 @@ public partial class MainWindow : Window
     )
     {
         var currMargin = AppTitleBar.Margin;
-        AppTitleBar.Margin = new Thickness(
+        AppTitleBar.Margin = new(
             sender.CompactPaneLength,
             currMargin.Top,
             currMargin.Right,
@@ -351,7 +351,7 @@ public partial class MainWindow : Window
         DropBorder.Visibility = Visibility.Collapsed;
         ShowWindow();
 
-        if (e.Data.GetData(DataFormats.FileDrop) is not string[] datas)
+        if (e.Data.GetData(DataFormats.FileDrop) is not string[] data)
         {
             return;
         }
@@ -363,21 +363,19 @@ public partial class MainWindow : Window
                 () => DialogFactory.ShowImportConfirmWithMergeOption(type)
             );
             _importHandler.Import(
-                datas,
+                data,
                 (actionType) =>
                 {
                     if (actionType == ImportActionType.Server)
                     {
                         return DialogFactory.ShowImportServerConfigurationConfirm();
                     }
-                    else
-                    {
-                        type = actionType;
 
-                        return result.Value.HasValue;
-                    }
+                    type = actionType;
+
+                    return result.Value.HasValue;
                 },
-                (actionType) => result.Value.HasValue && result.Value.Value
+                (_) => result.Value.HasValue && result.Value.Value
             );
         }
         catch (Exception ex)

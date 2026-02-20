@@ -6,7 +6,7 @@ using Force.DeepCloner;
 using Serein.Core.Models.Permissions;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Permissions;
-using Serein.Gui.Dialogs;
+using Serein.Gui.Utils;
 using Serein.Gui.Windows;
 
 namespace Serein.Gui.Pages;
@@ -73,7 +73,7 @@ public partial class PermissionGroupPage : Page
                     && kv1.Key != "everyone"
                 )
                 {
-                    DialogHelper
+                    DialogFactory
                         .ShowDeleteConfirmation($"确定要删除权限组（\"{kv1.Key}\"）吗？")
                         .ContinueWith(
                             (task) =>

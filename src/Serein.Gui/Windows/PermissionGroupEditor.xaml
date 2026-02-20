@@ -57,7 +57,7 @@
                 </Style>
             </TabControl.Resources>
 
-            <TabItem Header="常规">
+            <TabItem ui:TabItemHelper.IsClosable="False" Header="常规">
                 <StackPanel Margin="20,5">
                     <TextBox
                         x:Name="IdTextBox"
@@ -81,7 +81,7 @@
                 </StackPanel>
             </TabItem>
 
-            <TabItem Header="成员">
+            <TabItem ui:TabItemHelper.IsClosable="False" Header="成员">
                 <ListView x:Name="MemberListView" SelectionMode="Single">
                     <ListView.ContextMenu>
                         <ContextMenu>
@@ -113,7 +113,7 @@
                 </ListView>
             </TabItem>
 
-            <TabItem Header="权限">
+            <TabItem ui:TabItemHelper.IsClosable="False" Header="权限">
                 <ListView
                     x:Name="PermissionListView"
                     SelectionChanged="PermissionListView_SelectionChanged"
@@ -131,7 +131,7 @@
                             <MenuItem
                                 Click="PermissionMenuItem_Click"
                                 Header="编辑"
-                                IsEnabled="{Binding ViewModel.IsSelected}"
+                                IsEnabled="{Binding ViewModel.CanEdit}"
                                 Tag="Edit">
                                 <MenuItem.Icon>
                                     <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Edit}" />
@@ -140,7 +140,7 @@
                             <MenuItem
                                 Click="PermissionMenuItem_Click"
                                 Header="删除"
-                                IsEnabled="{Binding ViewModel.IsSelected}"
+                                IsEnabled="{Binding ViewModel.CanRemove}"
                                 Tag="Remove">
                                 <MenuItem.Icon>
                                     <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Delete}" />
