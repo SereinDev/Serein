@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,7 +27,6 @@ using Serein.Gui.Pages.Settings;
 using Serein.Gui.Services;
 using Serein.Gui.Utils;
 using Serein.Gui.ViewModels;
-using MessageBox = iNKORE.UI.WPF.Modern.Controls.MessageBox;
 
 namespace Serein.Gui;
 
@@ -63,9 +61,10 @@ public partial class MainWindow : Window
         _eventDispatcher = eventDispatcher;
         _importHandler = importHandler;
         _viewModel = viewModel;
-        var powerEase = new PowerEase { EasingMode = EasingMode.EaseInOut };
-        _infoBarPopIn = new(200, 0, new(TimeSpan.FromSeconds(0.5))) { EasingFunction = powerEase };
-        _infoBarPopOut = new(0, 200, new(TimeSpan.FromSeconds(0.5))) { EasingFunction = powerEase };
+        var easeOut = new CubicEase { EasingMode = EasingMode.EaseOut };
+        var easeIn = new CubicEase { EasingMode = EasingMode.EaseIn };
+        _infoBarPopIn = new(200, 0, new(TimeSpan.FromSeconds(0.5))) { EasingFunction = easeOut };
+        _infoBarPopOut = new(0, 200, new(TimeSpan.FromSeconds(0.5))) { EasingFunction = easeIn };
 
         InitializeComponent();
         DataContext = _viewModel;
@@ -202,10 +201,6 @@ public partial class MainWindow : Window
             : infoBarTask.Message;
         GlobalInfoBar.Severity = infoBarTask.Severity;
 
-        var cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(
-            infoBarTask.CancellationToken
-        );
-
         if (GlobalInfoBar.RenderTransform is not TranslateTransform translateTransform)
         {
             return;
@@ -245,10 +240,6 @@ public partial class MainWindow : Window
         void Cancel(object sender, EventArgs e)
         {
             infoBarTask.ResetEvent.Set();
-            if (!cancellationTokenSource.IsCancellationRequested)
-            {
-                cancellationTokenSource.Cancel();
-            }
         }
     }
 
@@ -307,6 +298,11 @@ public partial class MainWindow : Window
 
     private void Window_DragEnter(object sender, DragEventArgs e)
     {
+        if (e.Data.GetData(DataFormats.FileDrop) is not string[])
+        {
+            return;
+        }
+
         DropBorder.Visibility = Visibility.Visible;
     }
 
@@ -344,7 +340,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message, "导入失败", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBoxEx.ShowException(ex, "导入失败");
         }
     }
 }

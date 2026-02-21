@@ -5,7 +5,7 @@ using System.Windows;
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Utils.Extensions;
 using Serein.Gui.Commands;
-using MessageBox = iNKORE.UI.WPF.Modern.Controls.MessageBox;
+using Serein.Gui.Utils;
 
 namespace Serein.Gui.ViewModels;
 
@@ -66,7 +66,7 @@ public class ConnectionPageViewModel
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message, "操作失败", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBoxEx.ShowException(ex, "操作失败");
         }
     }
 
@@ -78,7 +78,7 @@ public class ConnectionPageViewModel
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message, "操作失败", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBoxEx.ShowException(ex, "操作失败");
         }
     }
 

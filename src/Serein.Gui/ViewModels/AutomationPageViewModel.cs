@@ -13,7 +13,6 @@ using Serein.Core.Utils.Extensions;
 using Serein.Gui.Commands;
 using Serein.Gui.Utils;
 using Serein.Gui.Windows;
-using MessageBox = iNKORE.UI.WPF.Modern.Controls.MessageBox;
 
 namespace Serein.Gui.ViewModels;
 
@@ -112,12 +111,7 @@ public class AutomationPageViewModel : ListViewPageViewModel
         }
         catch (Exception e)
         {
-            await MessageBox.ShowAsync(
-                e.Message,
-                "删除失败",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error
-            );
+            await MessageBoxEx.ShowExceptionAsync(e, "删除失败");
         }
     }
 
@@ -150,12 +144,7 @@ public class AutomationPageViewModel : ListViewPageViewModel
         }
         catch (Exception e)
         {
-            await MessageBox.ShowAsync(
-                e.Message,
-                "编辑失败",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error
-            );
+            await MessageBoxEx.ShowExceptionAsync(e, "编辑失败");
         }
     }
 
@@ -183,7 +172,14 @@ public class AutomationPageViewModel : ListViewPageViewModel
 
     private void Refresh()
     {
-        _provider.Read();
+        try
+        {
+            _provider.Read();
+        }
+        catch (Exception e)
+        {
+            MessageBoxEx.ShowException(e, "刷新自动化任务失败");
+        }
     }
 
     private static void OpenVariablesDoc()

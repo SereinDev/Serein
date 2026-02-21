@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Windows;
 using Force.DeepCloner;
 using iNKORE.UI.WPF.Modern.Controls;
 using MineStatLib;
@@ -10,7 +9,6 @@ using Serein.Core.Utils.Extensions;
 using Serein.Gui.Commands;
 using Serein.Gui.Utils;
 using Serein.Gui.Windows;
-using MessageBox = iNKORE.UI.WPF.Modern.Controls.MessageBox;
 using Timer = System.Timers.Timer;
 
 namespace Serein.Gui.ViewModels;
@@ -87,7 +85,7 @@ public class PanelViewModel : NotifyPropertyChangedModelBase, IDisposable
         }
         catch (Exception ex)
         {
-            ShowError(ex);
+            MessageBoxEx.ShowException(ex, "启动服务器失败");
         }
     }
 
@@ -99,7 +97,7 @@ public class PanelViewModel : NotifyPropertyChangedModelBase, IDisposable
         }
         catch (Exception ex)
         {
-            ShowError(ex);
+            MessageBoxEx.ShowException(ex, "停止服务器失败");
         }
     }
 
@@ -111,7 +109,7 @@ public class PanelViewModel : NotifyPropertyChangedModelBase, IDisposable
         }
         catch (Exception ex)
         {
-            ShowError(ex);
+            MessageBoxEx.ShowException(ex, "重启服务器失败");
         }
     }
 
@@ -124,7 +122,7 @@ public class PanelViewModel : NotifyPropertyChangedModelBase, IDisposable
         }
         catch (Exception ex)
         {
-            ShowError(ex);
+            MessageBoxEx.ShowException(ex, "终止服务器失败");
         }
     }
 
@@ -143,7 +141,7 @@ public class PanelViewModel : NotifyPropertyChangedModelBase, IDisposable
         }
         catch (Exception ex)
         {
-            ShowError(ex);
+            MessageBoxEx.ShowException(ex, "打开文件夹失败");
         }
     }
 
@@ -156,7 +154,7 @@ public class PanelViewModel : NotifyPropertyChangedModelBase, IDisposable
         }
         catch (Exception ex)
         {
-            ShowError(ex);
+            MessageBoxEx.ShowException(ex, "打开插件管理器失败");
         }
     }
 
@@ -210,11 +208,13 @@ public class PanelViewModel : NotifyPropertyChangedModelBase, IDisposable
 
                     try
                     {
-                        _mainWindow.Dispatcher.Invoke(() => _serverManager.Remove(_id));
+                        _serverManager.Remove(_id);
                     }
                     catch (Exception ex)
                     {
-                        _mainWindow.Dispatcher.Invoke(() => ShowError(ex));
+                        _mainWindow.Dispatcher.Invoke(
+                            () => MessageBoxEx.ShowException(ex, "删除服务器失败")
+                        );
                     }
                 }
             );
@@ -314,20 +314,6 @@ public class PanelViewModel : NotifyPropertyChangedModelBase, IDisposable
             PlayerCount = null;
             RunTime = null;
         }
-    }
-
-    private static void ShowError(Exception ex)
-    {
-        MessageBox.Show(
-            $"""
-            {ex.Message}
-
-            -> {ex.GetType().FullName}
-            """,
-            "操作失败",
-            MessageBoxButton.OK,
-            MessageBoxImage.Error
-        );
     }
 
     public void Dispose()

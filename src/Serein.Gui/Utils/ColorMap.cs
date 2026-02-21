@@ -61,7 +61,7 @@ public static class ColorMap
     public static readonly Color BrightWhite = Color.FromRgb(242, 242, 242);
 
     // https://en.wikipedia.org/wiki/ANSI_escape_code#8-bits
-    public static readonly IReadOnlyDictionary<string, Color> EightBitColors = new Dictionary<
+    public static readonly FrozenDictionary<string, Color> EightBitColors = new Dictionary<
         string,
         Color
     >

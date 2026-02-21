@@ -112,7 +112,7 @@ public sealed class JsEngineFactory(
     {
         var engine = new Engine(PrepareOptions(jsPlugin));
 
-        if (settingProvider.Value.Application.EnableWebApiForJsPlugins)
+        if (settingProvider.Value.Application.EnableWebAPIForJsPlugins)
         {
             engine.InitializeWebApi(new() { CancellationToken = jsPlugin.CancellationToken });
         }

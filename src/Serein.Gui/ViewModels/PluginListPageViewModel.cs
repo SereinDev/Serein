@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows.Threading;
+using iNKORE.UI.WPF.Modern.Controls;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Plugins.Js;
@@ -10,7 +12,7 @@ using Serein.Core.Utils;
 using Serein.Core.Utils.Extensions;
 using Serein.Gui.Commands;
 using Serein.Gui.Services;
-using MessageBox = iNKORE.UI.WPF.Modern.Controls.MessageBox;
+using Serein.Gui.Utils;
 
 namespace Serein.Gui.ViewModels;
 
@@ -21,6 +23,7 @@ public class PluginListPageViewModel
     private readonly JsPluginLoader _jsPluginLoader;
     private readonly NetPluginLoader _netPluginLoader;
     private readonly PluginConsoleViewModel _pluginConsoleViewModel;
+    private readonly Dispatcher _dispatcher;
 
     private KeyValuePair<string, IPlugin>? _selectedPlugin;
 
@@ -37,6 +40,7 @@ public class PluginListPageViewModel
         _pluginManager = pluginManager;
         _jsPluginLoader = jsPluginLoader;
         _netPluginLoader = netPluginLoader;
+        _dispatcher = Dispatcher.CurrentDispatcher;
 
         PluginInfos = [];
 
@@ -75,6 +79,18 @@ public class PluginListPageViewModel
 
     private void UpdatePlugins()
     {
+        if (_dispatcher.CheckAccess())
+        {
+            UpdatePluginsCore();
+        }
+        else
+        {
+            _dispatcher.InvokeAsync(UpdatePluginsCore, DispatcherPriority.DataBind);
+        }
+    }
+
+    private void UpdatePluginsCore()
+    {
         PluginInfos.Clear();
 
         foreach (var kv in _jsPluginLoader.Plugins)
@@ -104,7 +120,7 @@ public class PluginListPageViewModel
                         _infoBarProvider.Enqueue(
                             "重新加载插件失败",
                             task.Exception.InnerException!.Message,
-                            iNKORE.UI.WPF.Modern.Controls.InfoBarSeverity.Error
+                            InfoBarSeverity.Error
                         );
                     }
                 }
@@ -129,17 +145,12 @@ public class PluginListPageViewModel
             _infoBarProvider.Enqueue(
                 $"插件（Id={kv.Key}）禁用成功",
                 string.Empty,
-                iNKORE.UI.WPF.Modern.Controls.InfoBarSeverity.Success
+                InfoBarSeverity.Success
             );
         }
         catch (Exception ex)
         {
-            MessageBox.Show(
-                ex.Message,
-                "禁用失败",
-                System.Windows.MessageBoxButton.OK,
-                System.Windows.MessageBoxImage.Error
-            );
+            MessageBoxEx.ShowException(ex, "禁用失败");
         }
     }
 }

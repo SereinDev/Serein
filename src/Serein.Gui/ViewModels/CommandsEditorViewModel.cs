@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
 using Force.DeepCloner;
 using iNKORE.UI.WPF.Modern.Controls;
@@ -10,7 +9,6 @@ using Serein.Core.Models.Commands;
 using Serein.Gui.Commands;
 using Serein.Gui.Dialogs;
 using Serein.Gui.Utils;
-using MessageBox = iNKORE.UI.WPF.Modern.Controls.MessageBox;
 
 namespace Serein.Gui.ViewModels;
 
@@ -50,12 +48,7 @@ public class CommandsEditorViewModel : ListViewPageViewModel
         }
         catch (Exception e)
         {
-            await MessageBox.ShowAsync(
-                e.Message,
-                "添加命令时发生错误",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error
-            );
+            await MessageBoxEx.ShowExceptionAsync(e, "添加命令时发生错误");
         }
     }
 
@@ -80,12 +73,7 @@ public class CommandsEditorViewModel : ListViewPageViewModel
         }
         catch (Exception e)
         {
-            await MessageBox.ShowAsync(
-                e.Message,
-                "删除命令时发生错误",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error
-            );
+            await MessageBoxEx.ShowExceptionAsync(e, "删除命令时发生错误");
         }
     }
 
@@ -112,12 +100,7 @@ public class CommandsEditorViewModel : ListViewPageViewModel
         }
         catch (Exception e)
         {
-            await MessageBox.ShowAsync(
-                e.Message,
-                "编辑命令时发生错误",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error
-            );
+            await MessageBoxEx.ShowExceptionAsync(e, "编辑命令时发生错误");
         }
     }
 
@@ -142,12 +125,7 @@ public class CommandsEditorViewModel : ListViewPageViewModel
         }
         catch (Exception e)
         {
-            await MessageBox.ShowAsync(
-                e.Message,
-                "编辑命令时发生错误",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error
-            );
+            await MessageBoxEx.ShowExceptionAsync(e, "导入命令时发生错误");
         }
     }
 }

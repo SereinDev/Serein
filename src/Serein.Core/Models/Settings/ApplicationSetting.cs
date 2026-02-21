@@ -30,7 +30,7 @@ public class ApplicationSetting : NotifyPropertyChangedModelBase
 
     public string[] JsFilesToExcludeFromLoading { get; set; } = [".module.js"];
 
-    public bool EnableWebApiForJsPlugins { get; set; } = false;
+    public bool EnableWebAPIForJsPlugins { get; set; } = false;
 
     public bool DisableBindingManagerWhenAllServersStopped { get; set; }
 

@@ -11,6 +11,7 @@
     d:DataContext="{d:DesignInstance Type=viewmodels:PanelViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    AllowDrop="True"
     ContextMenuOpening="TabItem_ContextMenuOpening"
     Header="{Binding Server.Configuration.Name, Mode=OneWay}"
     Style="{DynamicResource DefaultTabItemStyle}"
