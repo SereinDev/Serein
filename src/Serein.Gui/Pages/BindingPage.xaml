@@ -7,7 +7,9 @@
     xmlns:local="clr-namespace:Serein.Gui.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    xmlns:viewModels="clr-namespace:Serein.Gui.ViewModels"
     Title="BindingPage"
+    d:DataContext="{d:DesignInstance Type=viewModels:BindingPageViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Loaded="Page_Loaded"
@@ -15,21 +17,26 @@
 
     <Page.Resources>
         <converter:GameIdsConverter x:Key="GameIdsConverter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Page.Resources>
 
     <Grid>
-        <ui:ProgressRing x:Name="Ring"
-                         Height="50"
-                         Width="50" />
+        <ui:ProgressRing
+            x:Name="Ring"
+            Width="50"
+            Height="50"
+            IsActive="{Binding IsLoading}"
+            Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" />
         <ListView
             x:Name="BindingListView"
+            ItemsSource="{Binding Records}"
+            IsEnabled="{Binding IsListEnabled}"
             VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-            VirtualizingPanel.VirtualizationMode="Recycling"
-            IsEnabled="False">
+            VirtualizingPanel.VirtualizationMode="Recycling">
 
             <ListView.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Click="MenuItem_Click" Header="刷新">
+                    <MenuItem Command="{Binding RefreshCommand}" Header="刷新">
                         <MenuItem.Icon>
                             <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Refresh}" />
                         </MenuItem.Icon>

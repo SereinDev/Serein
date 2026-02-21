@@ -7,16 +7,16 @@
     xmlns:ikw="http://schemas.inkore.net/lib/ui/wpf"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pages="clr-namespace:Serein.Gui.Pages"
-    xmlns:services="clr-namespace:Serein.Gui.Services"
     xmlns:tb="http://www.hardcodet.net/taskbar"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    xmlns:viewModels="clr-namespace:Serein.Gui.ViewModels"
     x:Name="Window"
     Title="{Binding CustomTitle}"
     Width="800"
     Height="450"
     MinWidth="600"
     MinHeight="340"
-    d:DataContext="{d:DesignInstance Type=services:TitleUpdater}"
+    d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel}"
     ui:ThemeManager.IsThemeAware="True"
     ui:TitleBar.ExtendViewIntoTitleBar="True"
     ui:TitleBar.Height="36"
@@ -55,29 +55,30 @@
                 <ContextMenu>
                     <MenuItem
                         x:Name="HideMenuItem"
-                        Click="MenuItem_Click"
+                        Command="{Binding ToggleHideCommand}"
+                        CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
                         Header="隐藏"
                         IsCheckable="True"
-                        Tag="Hide">
+                        IsChecked="{Binding IsHideChecked, Mode=TwoWay}"
+                        IsEnabled="{Binding IsHideEnabled}">
                         <MenuItem.Icon>
                             <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.StopPresenting}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
                         x:Name="TopMostMenuItem"
-                        Click="MenuItem_Click"
+                        Command="{Binding ToggleTopMostCommand}"
+                        CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
                         Header="置顶"
                         IsCheckable="True"
-                        Tag="TopMost">
+                        IsChecked="{Binding IsTopMostChecked, Mode=TwoWay}"
+                        IsEnabled="{Binding IsTopMostEnabled}">
                         <MenuItem.Icon>
                             <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Pinned}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem
-                        Click="MenuItem_Click"
-                        Header="退出"
-                        Tag="Exit">
+                    <MenuItem Command="{Binding ExitCommand}" Header="退出">
                         <MenuItem.Icon>
                             <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.SignOut}" />
                         </MenuItem.Icon>

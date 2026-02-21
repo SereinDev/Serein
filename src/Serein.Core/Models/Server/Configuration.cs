@@ -6,7 +6,9 @@ namespace Serein.Core.Models.Server;
 
 public class Configuration : NotifyPropertyChangedModelBase
 {
-    public string Name { get; set; } = "未命名";
+    public static readonly string DefaultName = "未命名";
+
+    public string Name { get; set; } = DefaultName;
 
     public string FileName { get; set; } = string.Empty;
 

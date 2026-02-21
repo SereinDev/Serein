@@ -11,30 +11,72 @@ namespace Serein.Gui.Controls;
 
 public partial class PanelTabItem : TabItem
 {
-    private readonly PanelViewModel _viewModel;
+    private PanelViewModel? _viewModel;
 
-    public PanelTabItem(PanelViewModel viewModel)
+    public PanelTabItem()
     {
         InitializeComponent();
-
-        _viewModel = viewModel;
-        DataContext = _viewModel;
 
         Console.EnableAnsiColor();
         Console.EnableLogLevelHighlight(true);
 
-        _viewModel.RequestClearConsole += () => Dispatcher.Invoke(Console.Clear);
-        _viewModel.RequestInputTextUpdate += (text) =>
-        {
-            InputBox.Text = text;
-            InputBox.SelectionStart = InputBox.Text.Length;
-        };
+        DataContextChanged += PanelTabItem_DataContextChanged;
+    }
 
-        viewModel.Server.Logger.Output += Output;
+    public PanelTabItem(PanelViewModel viewModel)
+        : this()
+    {
+        BindViewModel(viewModel);
+    }
+
+    internal void BindViewModel(PanelViewModel viewModel)
+    {
+        DataContext = viewModel;
+    }
+
+    private void PanelTabItem_DataContextChanged(
+        object sender,
+        DependencyPropertyChangedEventArgs e
+    )
+    {
+        if (e.OldValue is PanelViewModel oldViewModel)
+        {
+            oldViewModel.RequestClearConsole -= ViewModel_RequestClearConsole;
+            oldViewModel.RequestInputTextUpdate -= ViewModel_RequestInputTextUpdate;
+            oldViewModel.Server.Logger.Output -= Output;
+        }
+
+        if (e.NewValue is PanelViewModel newViewModel)
+        {
+            _viewModel = newViewModel;
+
+            newViewModel.RequestClearConsole += ViewModel_RequestClearConsole;
+            newViewModel.RequestInputTextUpdate += ViewModel_RequestInputTextUpdate;
+            newViewModel.Server.Logger.Output += Output;
+            return;
+        }
+
+        _viewModel = null;
+    }
+
+    private void ViewModel_RequestClearConsole()
+    {
+        Dispatcher.Invoke(Console.Clear);
+    }
+
+    private void ViewModel_RequestInputTextUpdate(string text)
+    {
+        InputBox.Text = text;
+        InputBox.SelectionStart = InputBox.Text.Length;
     }
 
     private void Output(object? sender, ServerOutputEventArgs e)
     {
+        if (_viewModel == null)
+        {
+            return;
+        }
+
         switch (e.Type)
         {
             case ServerOutputType.StandardOutput:
@@ -70,6 +112,11 @@ public partial class PanelTabItem : TabItem
 
     private void InputBox_PreviewKeyDown(object sender, KeyEventArgs e)
     {
+        if (_viewModel == null)
+        {
+            return;
+        }
+
         switch (e.Key)
         {
             case Key.Enter:

@@ -173,7 +173,26 @@ public class PanelViewModel : NotifyPropertyChangedModelBase, IDisposable
             return;
         }
 
-        editor.Configuration.ShallowCloneTo(Server.Configuration);
+        Server.Configuration.Argument = editor.Configuration.Argument;
+        Server.Configuration.AutoRestart = editor.Configuration.AutoRestart;
+        Server.Configuration.AutoStopWhenCrashing = editor.Configuration.AutoStopWhenCrashing;
+        Server.Configuration.Environment = editor.Configuration.Environment;
+        Server.Configuration.FileName = editor.Configuration.FileName;
+        Server.Configuration.LineTerminator = editor.Configuration.LineTerminator;
+        Server.Configuration.Name = editor.Configuration.Name;
+        Server.Configuration.OutputCommandUserInput = editor.Configuration.OutputCommandUserInput;
+        Server.Configuration.OutputEncoding = editor.Configuration.OutputEncoding;
+        Server.Configuration.OutputStyle = editor.Configuration.OutputStyle;
+        Server.Configuration.PortIPv4 = editor.Configuration.PortIPv4;
+        Server.Configuration.SaveLog = editor.Configuration.SaveLog;
+        Server.Configuration.StartWhenSettingUp = editor.Configuration.StartWhenSettingUp;
+        Server.Configuration.StopCommands = editor.Configuration.StopCommands;
+        Server.Configuration.UseUnicodeChars = editor.Configuration.UseUnicodeChars;
+        Server.Configuration.Pty.IsEnabled = editor.Configuration.Pty.IsEnabled;
+        Server.Configuration.Pty.ForceWinPty = editor.Configuration.Pty.ForceWinPty;
+        Server.Configuration.Pty.TerminalHeight = editor.Configuration.Pty.TerminalHeight;
+        Server.Configuration.Pty.TerminalWidth = editor.Configuration.Pty.TerminalWidth;
+
         _serverManager.SaveAll();
     }
 

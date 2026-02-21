@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,19 +22,19 @@ using Serein.Core.Services.Network;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils;
-using Serein.Gui.Commands;
 using Serein.Gui.Models;
 using Serein.Gui.Pages;
 using Serein.Gui.Pages.Settings;
 using Serein.Gui.Services;
 using Serein.Gui.Utils;
+using Serein.Gui.ViewModels;
 using MessageBox = iNKORE.UI.WPF.Modern.Controls.MessageBox;
 
 namespace Serein.Gui;
 
 public partial class MainWindow : Window
 {
-    private bool _isTopMost;
+    private readonly MainWindowViewModel _viewModel;
     private readonly IHost _host;
     private readonly IServiceProvider _services;
     private readonly UpdateChecker _updateChecker;
@@ -52,7 +52,8 @@ public partial class MainWindow : Window
         SettingProvider settingProvider,
         EventDispatcher eventDispatcher,
         TitleUpdater titleUpdater,
-        ImportHandler importHandler
+        ImportHandler importHandler,
+        MainWindowViewModel viewModel
     )
     {
         _host = host;
@@ -61,16 +62,16 @@ public partial class MainWindow : Window
         _serverManager = serverManager;
         _eventDispatcher = eventDispatcher;
         _importHandler = importHandler;
+        _viewModel = viewModel;
         var powerEase = new PowerEase { EasingMode = EasingMode.EaseInOut };
         _infoBarPopIn = new(200, 0, new(TimeSpan.FromSeconds(0.5))) { EasingFunction = powerEase };
         _infoBarPopOut = new(0, 200, new(TimeSpan.FromSeconds(0.5))) { EasingFunction = powerEase };
 
         InitializeComponent();
-        AppTrayIcon.ContextMenu!.DataContext = this;
-        AppTrayIcon.DoubleClickCommand = new TaskbarIconDoubleClickCommand(this);
-
-        DataContext = titleUpdater;
-        titleUpdater.Update();
+        DataContext = _viewModel;
+        AppTrayIcon.ContextMenu!.DataContext = _viewModel;
+        AppTrayIcon.DoubleClickCommand = _viewModel.ShowWindowCommand;
+        _viewModel.BindWindowActions(ShowWindow, Hide, Close, topmost => Topmost = topmost);
 
         ThemeManager.Current.ApplicationTheme = settingProvider.Value.Application.Theme switch
         {
@@ -102,41 +103,6 @@ public partial class MainWindow : Window
                 });
             }
         };
-    }
-
-    private void MenuItem_Click(object sender, RoutedEventArgs e)
-    {
-        if (sender is not MenuItem item)
-        {
-            return;
-        }
-
-        var tag = item.Tag as string;
-
-        switch (tag)
-        {
-            case "TopMost":
-                Topmost = _isTopMost = item.IsChecked;
-                HideMenuItem.IsEnabled = !item.IsChecked;
-                break;
-
-            case "Exit":
-                Close();
-                break;
-
-            case "Hide":
-                if (item.IsChecked)
-                {
-                    Hide();
-                }
-                else
-                {
-                    ShowWindow();
-                }
-
-                TopMostMenuItem.IsEnabled = !item.IsChecked;
-                break;
-        }
     }
 
     public void ShowWindow()
@@ -181,14 +147,13 @@ public partial class MainWindow : Window
 
     private void Window_Deactivated(object sender, EventArgs e)
     {
-        Topmost = _isTopMost;
+        Topmost = _viewModel.IsTopMostChecked;
     }
 
     private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
     {
         ShowInTaskbar = IsVisible;
-        HideMenuItem.IsChecked = !IsVisible;
-        TopMostMenuItem.IsEnabled = IsVisible;
+        _viewModel.SyncWindowVisibility(IsVisible);
 
         if (Topmost && !IsVisible)
         {
@@ -214,8 +179,7 @@ public partial class MainWindow : Window
         }
 
         e.Cancel = true;
-        HideMenuItem.IsEnabled = HideMenuItem.IsChecked = true;
-        Topmost = _isTopMost = TopMostMenuItem.IsEnabled = TopMostMenuItem.IsChecked = false;
+        _viewModel.OnMinimizeToTrayDueRunningServers();
 
         AppTrayIcon.ShowBalloonTip(
             "仍有服务器进程在运行中",

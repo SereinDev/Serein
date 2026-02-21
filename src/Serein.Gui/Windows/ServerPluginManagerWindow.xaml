@@ -7,10 +7,11 @@
     xmlns:local="clr-namespace:Serein.Gui.Windows"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
-    Title="{Binding ViewModel.Title, Mode=OneTime}"
+    xmlns:viewModels="clr-namespace:Serein.Gui.ViewModels"
+    Title="{Binding Title, Mode=OneTime}"
     Width="600"
     Height="400"
-    d:DataContext="{d:DesignInstance Type=local:ServerPluginManagerWindow}"
+    d:DataContext="{d:DesignInstance Type=viewModels:ServerPluginManagerViewModel}"
     ui:ThemeManager.IsThemeAware="True"
     ui:TitleBar.ExtendViewIntoTitleBar="True"
     ui:TitleBar.Height="36"
@@ -43,7 +44,7 @@
             Margin="15,0"
             VerticalAlignment="Center"
             Style="{DynamicResource CaptionTextBlockStyle}"
-            Text="{Binding ViewModel.Title, Mode=OneTime}" />
+            Text="{Binding Title, Mode=OneTime}" />
 
         <ListView
             x:Name="PluginListView"
@@ -56,7 +57,7 @@
             <ListView.ContextMenu>
                 <ContextMenu>
                     <MenuItem
-                        Click="MenuItem_Click"
+                        Command="{Binding ImportCommand}"
                         Header="导入..."
                         Tag="Import">
                         <MenuItem.Icon>
@@ -65,9 +66,9 @@
                     </MenuItem>
 
                     <MenuItem
-                        Click="MenuItem_Click"
+                        Command="{Binding RemoveCommand}"
                         Header="删除"
-                        IsEnabled="{Binding ViewModel.Remove, Mode=OneWay}"
+                        IsEnabled="{Binding Remove, Mode=OneWay}"
                         Tag="Remove">
                         <MenuItem.Icon>
                             <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Delete}" />
@@ -75,9 +76,9 @@
                     </MenuItem>
 
                     <MenuItem
-                        Click="MenuItem_Click"
+                        Command="{Binding EnableCommand}"
                         Header="启用"
-                        IsEnabled="{Binding ViewModel.Enable, Mode=OneWay}"
+                        IsEnabled="{Binding Enable, Mode=OneWay}"
                         Tag="Enable">
                         <MenuItem.Icon>
                             <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Accept}" />
@@ -85,9 +86,9 @@
                     </MenuItem>
 
                     <MenuItem
-                        Click="MenuItem_Click"
+                        Command="{Binding DisableCommand}"
                         Header="禁用"
-                        IsEnabled="{Binding ViewModel.Disable, Mode=OneWay}"
+                        IsEnabled="{Binding Disable, Mode=OneWay}"
                         Tag="Disable">
                         <MenuItem.Icon>
                             <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Blocked2}" />
@@ -95,9 +96,9 @@
                     </MenuItem>
 
                     <MenuItem
-                        Click="MenuItem_Click"
+                        Command="{Binding OpenInExplorerCommand}"
                         Header="在资源管理器中显示"
-                        IsEnabled="{Binding ViewModel.OpenInExplorer, Mode=OneWay}"
+                        IsEnabled="{Binding OpenInExplorer, Mode=OneWay}"
                         Tag="OpenInExplorer">
                         <MenuItem.Icon>
                             <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.OpenLocal}" />
@@ -107,7 +108,7 @@
                     <Separator />
 
                     <MenuItem
-                        Click="MenuItem_Click"
+                        Command="{Binding RefreshCommand}"
                         Header="刷新"
                         Tag="Refresh">
                         <MenuItem.Icon>

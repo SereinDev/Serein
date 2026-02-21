@@ -9,8 +9,9 @@
     xmlns:local="clr-namespace:Serein.Gui.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    xmlns:viewModels="clr-namespace:Serein.Gui.ViewModels"
     Title="连接"
-    d:DataContext="{d:DesignInstance Type=connection:ConnectionManager}"
+    d:DataContext="{d:DesignInstance Type=viewModels:ConnectionPageViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Loaded="Page_Loaded"
@@ -61,28 +62,28 @@
                 <TextBlock
                     Grid.Column="1"
                     HorizontalAlignment="Right"
-                    Text="{Binding IsActive, Converter={StaticResource connectionStatusConverter}, Mode=OneWay}" />
+                    Text="{Binding Manager.IsActive, Converter={StaticResource connectionStatusConverter}, Mode=OneWay}" />
 
                 <TextBlock Grid.Row="1" Text="发送数" />
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="1"
                     HorizontalAlignment="Right"
-                    Text="{Binding Sent}" />
+                    Text="{Binding Manager.Sent}" />
 
                 <TextBlock Grid.Row="2" Text="接收数" />
                 <TextBlock
                     Grid.Row="2"
                     Grid.Column="1"
                     HorizontalAlignment="Right"
-                    Text="{Binding Received}" />
+                    Text="{Binding Manager.Received}" />
 
                 <TextBlock Grid.Row="3" Text="连接时长" />
                 <TextBlock
-                    x:Name="TimeTextBlock"
                     Grid.Row="3"
                     Grid.Column="1"
-                    HorizontalAlignment="Right" />
+                    HorizontalAlignment="Right"
+                    Text="{Binding RunTimeText}" />
             </Grid>
         </Border>
 
@@ -101,12 +102,12 @@
             </Grid.Resources>
 
             <Button
-                Click="ControlButton_Click"
+                Command="{Binding OpenCommand}"
                 Content="连接"
                 Tag="Open" />
             <Button
                 Grid.Column="1"
-                Click="ControlButton_Click"
+                Command="{Binding CloseCommand}"
                 Content="断开"
                 Tag="Close" />
         </Grid>

@@ -5,9 +5,9 @@
     xmlns:control="clr-namespace:Serein.Gui.Controls"
     xmlns:converter="clr-namespace:Serein.Gui.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:viewmodels="clr-namespace:Serein.Gui.ViewModels"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    xmlns:viewmodels="clr-namespace:Serein.Gui.ViewModels"
     d:DataContext="{d:DesignInstance Type=viewmodels:PanelViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -17,23 +17,30 @@
     mc:Ignorable="d">
 
     <TabItem.Resources>
-        <converter:TimeSpanConverter x:Key="timeSpanConverter" />
-        <converter:ServerStatusConverter x:Key="serverStatusConverter" />
+        <converter:TimeSpanConverter x:Key="TimeSpanConverter" />
+        <converter:ServerStatusConverter x:Key="ServerStatusConverter" />
+        <converter:ServerTabToolTipConverter x:Key="ServerTabToolTipConverter" />
     </TabItem.Resources>
+
+    <TabItem.ToolTip>
+        <MultiBinding Converter="{StaticResource ServerTabToolTipConverter}">
+            <Binding Mode="OneWay" Path="Server.Id" />
+            <Binding Mode="OneWay" Path="Status" />
+            <Binding Mode="OneWay" Path="Server.Pid" />
+            <Binding Mode="OneWay" Path="Server.Configuration.FileName" />
+            <Binding Mode="OneWay" Path="Server.Configuration.Argument" />
+        </MultiBinding>
+    </TabItem.ToolTip>
 
     <TabItem.ContextMenu>
         <ContextMenu>
-            <MenuItem
-                Command="{Binding EditConfigCommand}"
-                Header="编辑">
+            <MenuItem Command="{Binding EditConfigCommand}" Header="编辑">
                 <MenuItem.Icon>
                     <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Edit}" />
                 </MenuItem.Icon>
             </MenuItem>
 
-            <MenuItem
-                Command="{Binding RemoveServerCommand}"
-                Header="删除">
+            <MenuItem Command="{Binding RemoveServerCommand}" Header="删除">
                 <MenuItem.Icon>
                     <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Delete}" />
                 </MenuItem.Icon>
@@ -86,7 +93,7 @@
                 <TextBlock
                     Grid.Column="1"
                     HorizontalAlignment="Right"
-                    Text="{Binding Status, Mode=OneWay, Converter={StaticResource serverStatusConverter}}" />
+                    Text="{Binding Status, Mode=OneWay, Converter={StaticResource ServerStatusConverter}}" />
 
                 <TextBlock Grid.Row="1" Text="版本" />
                 <TextBlock
@@ -109,8 +116,8 @@
                     Grid.Row="3"
                     Grid.Column="1"
                     HorizontalAlignment="Right"
-                    Text="{Binding RunTime, Mode=OneWay, TargetNullValue=-, Converter={StaticResource timeSpanConverter}}"
-                    ToolTip="{Binding RunTime, Mode=OneWay, Converter={StaticResource timeSpanConverter}}" />
+                    Text="{Binding RunTime, Mode=OneWay, TargetNullValue=-, Converter={StaticResource TimeSpanConverter}}"
+                    ToolTip="{Binding RunTime, Mode=OneWay, Converter={StaticResource TimeSpanConverter}}" />
 
                 <TextBlock Grid.Row="4" Text="进程占用" />
                 <TextBlock
@@ -137,9 +144,7 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <Button
-                Command="{Binding StartCommand}"
-                Content="启动" />
+            <Button Command="{Binding StartCommand}" Content="启动" />
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
@@ -182,12 +187,8 @@
                     <Setter Property="HorizontalAlignment" Value="Stretch" />
                 </Style>
             </StackPanel.Resources>
-            <Button
-                Command="{Binding OpenInExplorerCommand}"
-                Content="打开启动文件位置" />
-            <Button
-                Command="{Binding PluginManagerCommand}"
-                Content="插件管理" />
+            <Button Command="{Binding OpenInExplorerCommand}" Content="打开启动文件位置" />
+            <Button Command="{Binding PluginManagerCommand}" Content="插件管理" />
         </StackPanel>
 
         <DockPanel
@@ -204,7 +205,10 @@
                     DockPanel.Dock="Right">
                     <ui:FontIcon FontSize="13" Icon="{x:Static ui:SegoeFluentIcons.Up}" />
                 </Button>
-                <TextBox Name="InputBox" PreviewKeyDown="InputBox_PreviewKeyDown" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox
+                    Name="InputBox"
+                    PreviewKeyDown="InputBox_PreviewKeyDown"
+                    Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" />
             </DockPanel>
 
             <Border

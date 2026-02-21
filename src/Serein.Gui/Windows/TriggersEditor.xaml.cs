@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Force.DeepCloner;
 using Serein.Gui.Utils;
 using TriggerBase = Serein.Core.Models.Automations.Triggers.TriggerBase;
 

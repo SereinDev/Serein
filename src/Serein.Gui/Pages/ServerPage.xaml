@@ -8,8 +8,9 @@
     xmlns:local="clr-namespace:Serein.Gui.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    xmlns:viewModels="clr-namespace:Serein.Gui.ViewModels"
     Title="服务器"
-    d:DataContext="{d:DesignInstance Type=local:ServerPage}"
+    d:DataContext="{d:DesignInstance Type=viewModels:ServerPageViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Loaded="Page_Loaded"
@@ -17,7 +18,6 @@
     mc:Ignorable="d">
 
     <ui:Page.Resources>
-        <Grid x:Key="Empty" Height="39" />
         <Button
             x:Key="AddButton"
             Margin="3,3,7,3"
@@ -27,7 +27,7 @@
             <ui:FlyoutService.Flyout>
                 <ui:MenuFlyout Placement="BottomEdgeAlignedRight">
                     <MenuItem
-                        Click="MenuItem_Click"
+                        Command="{Binding AddCommand}"
                         Header="新建"
                         Tag="Add">
                         <MenuItem.Icon>
@@ -36,7 +36,7 @@
                     </MenuItem>
 
                     <MenuItem
-                        Click="MenuItem_Click"
+                        Command="{Binding ImportCommand}"
                         Header="导入..."
                         Tag="Import">
                         <MenuItem.Icon>
@@ -49,19 +49,6 @@
     </ui:Page.Resources>
 
     <Grid>
-        <TabControl
-            x:Name="TabControl"
-            Padding="5,5,5,0"
-            ui:TabControlHelper.IsAddTabButtonVisible="False"
-            ui:TabControlHelper.TabStripFooter="{StaticResource AddButton}"
-            ui:TabControlHelper.TabStripHeader="{StaticResource Empty}"
-            ui:TabControlHelper.TabWidthMode="SizeToContent">
-            <TabControl.Resources>
-                <ResourceDictionary>
-                    <SolidColorBrush x:Key="TabViewBackground" Color="{DynamicResource SolidBackgroundFillColorBase}" />
-                    <SolidColorBrush x:Key="TabViewItemHeaderForeground" Color="{DynamicResource TextFillColorPrimary}" />
-                </ResourceDictionary>
-            </TabControl.Resources>
-        </TabControl>
+        <control:ServerTabControl ui:TabControlHelper.TabStripFooter="{StaticResource AddButton}" ItemsSource="{Binding Panels}" />
     </Grid>
 </ui:Page>

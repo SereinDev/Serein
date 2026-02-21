@@ -1,36 +1,40 @@
 using System;
 using System.Globalization;
 using System.Windows.Data;
-using Serein.Core.Models.Commands;
 
 namespace Serein.Gui.Converters;
 
-public class CommandToTooltipConverter : IValueConverter
+public class CommandToTooltipConverter : IMultiValueConverter
 {
-    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is not Command command)
+        if (values.Length < 3)
         {
             return "未知命令";
         }
 
-        var tooltip = $"类型：{command.Type}";
-        if (!string.IsNullOrEmpty(command.Body))
+        var type = values[0]?.ToString() ?? "未知";
+        var body = values[1]?.ToString();
+        var target = values[2]?.ToString();
+
+        var tooltip = $"类型：{type}";
+        if (!string.IsNullOrEmpty(body))
         {
-            tooltip += $"\r\n主体：{command.Body}";
+            tooltip += $"\r\n主体：{body}";
         }
 
-        if (!string.IsNullOrEmpty(command.Arguments.Target))
+        if (!string.IsNullOrEmpty(target))
         {
-            tooltip += $"\r\n目标：{command.Arguments.Target}";
+            tooltip += $"\r\n目标：{target}";
         }
+
         return tooltip;
     }
 
-    public object ConvertBack(
-        object? value,
-        Type targetType,
-        object? parameter,
+    public object[] ConvertBack(
+        object value,
+        Type[] targetTypes,
+        object parameter,
         CultureInfo culture
     )
     {

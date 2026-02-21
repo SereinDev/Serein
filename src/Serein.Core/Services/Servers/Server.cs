@@ -5,12 +5,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Automations;
-using Serein.Core.Models.Commands;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Automations.TriggerHandlers;
-using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers.ProcessSpawners;
@@ -19,7 +18,7 @@ using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services.Servers;
 
-public class Server
+public class Server : NotifyPropertyChangedModelBase
 {
     public string Id { get; }
     public RestartStatus RestartStatus { get; private set; }
@@ -32,7 +31,7 @@ public class Server
     public IServerInfo Info => _info;
     public IReadOnlyList<string> CommandHistory => _commandHistory;
     public int CommandHistoryIndex { get; internal set; }
-    public Configuration Configuration { get; }
+    public Configuration Configuration { get; init; }
     public ServerPluginManager PluginManager { get; }
     public ServerLogger Logger { get; }
 
@@ -89,14 +88,14 @@ public class Server
         _ptyProcessSpawner = new(() =>
         {
             var spawner = new PtyProcessSpawner(Id, _sereinApp, _logWriter, Logger, logger);
-            spawner.StatusChanged += (_, _) => OnServerStatusChanged();
+            spawner.StatusChanged += (_, _) => ServerStatusChanged();
             spawner.ProcessExited += (_, exitCode) => OnServerExit(exitCode);
             return spawner;
         });
         _commonProcessSpawner = new(() =>
         {
             var spawner = new CommonProcessSpawner(Logger);
-            spawner.StatusChanged += (_, _) => OnServerStatusChanged();
+            spawner.StatusChanged += (_, _) => ServerStatusChanged();
             spawner.ProcessExited += (_, exitCode) => OnServerExit(exitCode);
             return spawner;
         });
@@ -124,9 +123,10 @@ public class Server
         return null;
     }
 
-    private void OnServerStatusChanged()
+    private void ServerStatusChanged()
     {
         StatusChanged?.Invoke(this, EventArgs.Empty);
+        RaisePropertyChanged(nameof(Status));
 
         if (Status)
         {

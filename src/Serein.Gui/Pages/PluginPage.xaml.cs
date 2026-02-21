@@ -9,14 +9,17 @@ namespace Serein.Gui.Pages;
 public partial class PluginPage : Page
 {
     private readonly IServiceProvider _services;
+    private readonly PluginPageViewModel _viewModel;
 
-    public PluginPage(IServiceProvider services)
+    public PluginPage(IServiceProvider services, PluginPageViewModel viewModel)
     {
         _services = services;
+        _viewModel = viewModel;
+        DataContext = _viewModel;
 
         InitializeComponent();
         NavView.SelectedItem = NavView.MenuItems[0];
-        ContentFrame.Navigate(_services.GetRequiredService<PluginConsolePage>());
+        ContentFrame.Navigate(_services.GetRequiredService(_viewModel.GetDefaultPageType()));
     }
 
     private void ContentFrame_NavigationFailed(object sender, NavigationFailedEventArgs e)
@@ -26,10 +29,7 @@ public partial class PluginPage : Page
 
     private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
     {
-        if (args.InvokedItemContainer.Tag is not Type type)
-        {
-            type = typeof(NotImplPage);
-        }
+        var type = _viewModel.ResolvePageType(args.InvokedItemContainer.Tag);
 
         ContentFrame.Navigate(_services.GetRequiredService(type));
     }

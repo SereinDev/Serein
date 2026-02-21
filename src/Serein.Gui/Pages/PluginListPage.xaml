@@ -7,7 +7,9 @@
     xmlns:local="clr-namespace:Serein.Gui.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    xmlns:viewModels="clr-namespace:Serein.Gui.ViewModels"
     Title="插件"
+    d:DataContext="{d:DesignInstance Type=viewModels:PluginListPageViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -20,7 +22,7 @@
     <Grid>
         <ListView
             x:Name="PluginListView"
-            ContextMenuOpening="PluginListView_ContextMenuOpening"
+            ItemsSource="{Binding PluginInfos}"
             SelectionChanged="PluginListView_SelectionChanged"
             SelectionMode="Single"
             VirtualizingPanel.IsVirtualizingWhenGrouping="True"
@@ -29,16 +31,16 @@
             <ListView.ContextMenu>
                 <ContextMenu>
                     <MenuItem
-                        x:Name="DisableMenuItem"
-                        Click="MenuItem_Click"
+                        Command="{Binding DisableCommand}"
                         Header="禁用"
+                        IsEnabled="{Binding CanDisable}"
                         Tag="Disable">
                         <MenuItem.Icon>
                             <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.StatusCircleBlock}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
-                        Click="MenuItem_Click"
+                        Command="{Binding ReloadCommand}"
                         Header="重新加载所有插件"
                         Tag="Reload">
                         <MenuItem.Icon>
@@ -46,7 +48,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
-                        Click="MenuItem_Click"
+                        Command="{Binding ClearConsoleCommand}"
                         Header="清空控制台"
                         Tag="ClearConsole">
                         <MenuItem.Icon>
@@ -55,7 +57,7 @@
                     </MenuItem>
                     <Separator />
                     <MenuItem
-                        Click="MenuItem_Click"
+                        Command="{Binding OpenDocCommand}"
                         Header="查看文档"
                         Tag="OpenDoc">
                         <MenuItem.Icon>
@@ -92,10 +94,10 @@
         </ListView>
 
         <TextBlock
-            x:Name="StatusBar"
             Margin="4"
             VerticalAlignment="Bottom"
             FontSize="13"
-            Foreground="Gray" />
+            Foreground="Gray"
+            Text="{Binding StatusBarText}" />
     </Grid>
 </ui:Page>

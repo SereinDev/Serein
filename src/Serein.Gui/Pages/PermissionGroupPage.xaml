@@ -6,7 +6,9 @@
     xmlns:local="clr-namespace:Serein.Gui.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    xmlns:viewModels="clr-namespace:Serein.Gui.ViewModels"
     Title="权限组"
+    d:DataContext="{d:DesignInstance Type=viewModels:PermissionGroupPageViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -14,7 +16,8 @@
     <Grid>
         <ListView
             x:Name="GroupListView"
-            ContextMenuOpening="GroupListView_ContextMenuOpening"
+            ItemsSource="{Binding Groups}"
+            SelectionChanged="GroupListView_SelectionChanged"
             VirtualizingPanel.IsVirtualizingWhenGrouping="True"
             VirtualizingPanel.VirtualizationMode="Recycling">
             <ListView.View>
@@ -44,7 +47,7 @@
             <ListView.ContextMenu>
                 <ContextMenu>
                     <MenuItem
-                        Click="MenuItem_Click"
+                        Command="{Binding AddCommand}"
                         Header="添加"
                         Tag="Add">
                         <MenuItem.Icon>
@@ -52,25 +55,25 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
-                        x:Name="EditMenuItem"
-                        Click="MenuItem_Click"
+                        Command="{Binding EditCommand}"
                         Header="编辑"
+                        IsEnabled="{Binding CanEdit}"
                         Tag="Edit">
                         <MenuItem.Icon>
                             <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Edit}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
-                        x:Name="RemoveMenuItem"
-                        Click="MenuItem_Click"
+                        Command="{Binding RemoveCommand}"
                         Header="删除"
+                        IsEnabled="{Binding CanRemove}"
                         Tag="Remove">
                         <MenuItem.Icon>
                             <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Delete}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
-                        Click="MenuItem_Click"
+                        Command="{Binding RefreshCommand}"
                         Header="刷新"
                         Tag="Refresh">
                         <MenuItem.Icon>

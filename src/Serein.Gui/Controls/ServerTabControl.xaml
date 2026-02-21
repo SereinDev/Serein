@@ -1,0 +1,28 @@
+<TabControl
+    x:Class="Serein.Gui.Controls.ServerTabControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    Padding="5,5,5,0"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    ui:TabControlHelper.IsAddTabButtonVisible="False"
+    ui:TabControlHelper.TabStripHeader="{DynamicResource ServerTabStripHeaderPlaceholder}"
+    ui:TabControlHelper.TabWidthMode="SizeToContent"
+    Style="{DynamicResource {x:Type TabControl}}"
+    mc:Ignorable="d">
+
+    <TabControl.Resources>
+        <Grid
+            x:Key="ServerTabStripHeaderPlaceholder"
+            Height="39" />
+        <SolidColorBrush
+            x:Key="TabViewBackground"
+            Color="{DynamicResource SolidBackgroundFillColorBase}" />
+        <SolidColorBrush
+            x:Key="TabViewItemHeaderForeground"
+            Color="{DynamicResource TextFillColorPrimary}" />
+    </TabControl.Resources>
+</TabControl>

@@ -32,7 +32,7 @@
                 HorizontalAlignment="Stretch"
                 ui:ControlHelper.Header="命令类型"
                 SelectedIndex="{Binding Type, Converter={StaticResource EnumValueConverter}, Mode=TwoWay}">
-                <ComboBoxItem Tag="{x:Static models:CommandType.Invalid}">禁用</ComboBoxItem>
+                <ComboBoxItem Tag="{x:Static models:CommandType.Invalid}">禁用/无效</ComboBoxItem>
                 <ComboBoxItem Tag="{x:Static models:CommandType.ExecuteShellCommand}">运行终端命令</ComboBoxItem>
                 <ComboBoxItem Tag="{x:Static models:CommandType.InputServer}">输入服务器</ComboBoxItem>
                 <ComboBoxItem Tag="{x:Static models:CommandType.SendGroupMsg}">发送群聊消息</ComboBoxItem>
@@ -49,7 +49,7 @@
 
             <TextBox
                 Height="120"
-                ui:ControlHelper.Header="终端命令内容"
+                ui:ControlHelper.Header="主体·终端命令内容"
                 AcceptsReturn="True"
                 Text="{Binding Body, Mode=TwoWay}"
                 TextWrapping="Wrap">
@@ -77,8 +77,8 @@
                     </Style>
                 </StackPanel.Style>
 
-                <TextBox ui:ControlHelper.Header="服务器Id" Text="{Binding Arguments.Target, Mode=TwoWay}" />
-                <TextBox ui:ControlHelper.Header="输入内容" Text="{Binding Body, Mode=TwoWay}" />
+                <TextBox ui:ControlHelper.Header="目标·服务器Id" Text="{Binding Arguments.Target, Mode=TwoWay}" />
+                <TextBox ui:ControlHelper.Header="主体·输入内容" Text="{Binding Body, Mode=TwoWay}" />
 
                 <CheckBox>使用Unicode字符</CheckBox>
             </StackPanel>
@@ -105,8 +105,8 @@
                     </Style>
                 </StackPanel.Style>
 
-                <TextBox ui:ControlHelper.Header="发送目标Id" Text="{Binding Arguments.Target, Mode=TwoWay}" />
-                <TextBox ui:ControlHelper.Header="发送内容" Text="{Binding Body, Mode=TwoWay}" />
+                <TextBox ui:ControlHelper.Header="目标·发送目标Id" Text="{Binding Arguments.Target, Mode=TwoWay}" />
+                <TextBox ui:ControlHelper.Header="主体·发送内容" Text="{Binding Body, Mode=TwoWay}" />
                 <Expander ExpandDirection="Down" Header="更多参数">
                     <StackPanel>
                         <CheckBox>解析为消息段发送</CheckBox>
@@ -136,7 +136,7 @@
                     </Style>
                 </StackPanel.Style>
 
-                <TextBox ui:ControlHelper.Header="回复消息内容" Text="{Binding Body, Mode=TwoWay}" />
+                <TextBox ui:ControlHelper.Header="主体·回复消息内容" Text="{Binding Body, Mode=TwoWay}" />
 
                 <TextBlock
                     HorizontalAlignment="Stretch"
@@ -148,7 +148,7 @@
 
             <TextBox
                 Height="120"
-                ui:ControlHelper.Header="数据内容"
+                ui:ControlHelper.Header="主体·数据内容"
                 AcceptsReturn="True"
                 Text="{Binding Body, Mode=TwoWay}"
                 TextWrapping="Wrap">
@@ -164,7 +164,7 @@
                 </TextBox.Style>
             </TextBox>
 
-            <TextBox ui:ControlHelper.Header="输出内容" Text="{Binding Body, Mode=TwoWay}">
+            <TextBox ui:ControlHelper.Header="主体·输出内容" Text="{Binding Body, Mode=TwoWay}">
                 <TextBox.Style>
                     <Style BasedOn="{StaticResource {x:Type TextBox}}" TargetType="TextBox">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -192,7 +192,7 @@
                     </Style>
                 </StackPanel.Style>
 
-                <TextBox ui:ControlHelper.Header="游戏Id" Text="{Binding Body, Mode=TwoWay}" />
+                <TextBox ui:ControlHelper.Header="主体·游戏Id" Text="{Binding Body, Mode=TwoWay}" />
 
                 <TextBlock
                     HorizontalAlignment="Stretch"
@@ -214,10 +214,10 @@
                     </Style>
                 </StackPanel.Style>
 
-                <TextBox ui:ControlHelper.Header="Js插件所在命名空间" Text="{Binding Arguments.Target, Mode=TwoWay}" />
+                <TextBox ui:ControlHelper.Header="目标·Js插件所在命名空间" Text="{Binding Arguments.Target, Mode=TwoWay}" />
                 <TextBox
                     Height="120"
-                    ui:ControlHelper.Header="JavaScript代码"
+                    ui:ControlHelper.Header="主体·JavaScript代码"
                     AcceptsReturn="True"
                     Text="{Binding Body, Mode=TwoWay}"
                     TextWrapping="Wrap" />
