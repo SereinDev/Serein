@@ -5,7 +5,7 @@ using Serein.Core.Utils.Extensions;
 
 namespace Serein.Console.Services.Loggers;
 
-public sealed class CliLogger(string categoryName) : ILogger
+public sealed class ConsoleLogger(string categoryName) : ILogger
 {
     private static readonly bool EnableDebug =
         Environment.CommandLine.Contains("--debug")
@@ -48,6 +48,6 @@ public sealed class CliLogger(string categoryName) : ILogger
                 + (EnableDebug ? exception.ToString() : exception.GetDetailString());
         }
 
-        CliConsole.WriteLine(logLevel, $"[{_name}] {text}");
+        SimpleConsole.WriteLine(logLevel, $"[{_name}] {text}");
     }
 }

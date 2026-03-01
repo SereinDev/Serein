@@ -458,7 +458,7 @@ public sealed class FileSystem
     public int WriteSync(long fd, string data, int position = 0, string encoding = "utf8")
     {
         var buffer = (
-            encoding.Equals("utf8", StringComparison.InvariantCultureIgnoreCase)
+            encoding.Equals("utf8", StringComparison.OrdinalIgnoreCase)
                 ? EncodingMap.UTF8
                 : Encoding.GetEncoding(encoding)
         ).GetBytes(data);

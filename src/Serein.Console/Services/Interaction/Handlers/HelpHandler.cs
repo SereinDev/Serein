@@ -1,22 +1,30 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Serein.Console.Models;
+using Spectre.Console;
 
 namespace Serein.Console.Services.Interaction.Handlers;
 
-[CommandName("help", "帮助")]
-[CommandDescription(["显示帮助页面"])]
-public sealed class HelpHandler(ILogger<HelpHandler> logger, IServiceProvider serviceProvider)
-    : CommandHandler
+public sealed class HelpHandler(IServiceProvider serviceProvider) : CommandHandler
 {
     private readonly Lazy<CommandProvider> _commandProvider = new(
         serviceProvider.GetRequiredService<CommandProvider>
     );
 
-    public override void Invoke(IReadOnlyList<string> args)
+    public override string Name { get; } = "帮助";
+
+    public override string[] Description { get; } = ["显示帮助页面"];
+
+    public override string RootCommand { get; } = "help";
+
+    public override string? Alias { get; } = "?";
+
+    public override Dictionary<string, string> SubCommands { get; } = [];
+
+    public override bool AllowToExecuteRootCommand { get; } = true;
+
+    public override void Invoke(string subCommand, IReadOnlyList<string> args)
     {
-        logger.LogInformation("{}", _commandProvider.Value.HelpPage);
+        AnsiConsole.Write(_commandProvider.Value.HelpTable);
     }
 }

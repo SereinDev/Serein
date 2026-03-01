@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using PrettyPrompt.Completion;
 using PrettyPrompt.Highlighting;
-using Serein.Console.Models;
 using Serein.Console.Services.Interaction.Handlers;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Services.Plugins.Js;
@@ -16,21 +15,13 @@ namespace Serein.Console.Services.Interaction;
 
 public partial class CommandPromptCallbacks
 {
-    private readonly Lazy<IEnumerable<CompletionItem>> _connectionSubcommnads = new(
-        LoadFrom<ConnectionHandler>
-    );
+    private readonly Lazy<IEnumerable<CompletionItem>> _connectionSubcommnads;
 
-    private readonly Lazy<IEnumerable<CompletionItem>> _serverSubcommnads = new(
-        LoadFrom<ServerHandler>
-    );
+    private readonly Lazy<IEnumerable<CompletionItem>> _serverSubcommnads;
 
-    private readonly Lazy<IEnumerable<CompletionItem>> _pluginSubcommnads = new(
-        LoadFrom<PluginHandler>
-    );
+    private readonly Lazy<IEnumerable<CompletionItem>> _pluginSubcommnads;
 
-    private readonly Lazy<IEnumerable<CompletionItem>> _webServerubcommnads = new(
-        LoadFrom<WebServerHandler>
-    );
+    private readonly Lazy<IEnumerable<CompletionItem>> _webServerubcommnads;
 
     private readonly Task<IReadOnlyList<CompletionItem>> _emptyTask = Task.FromResult<
         IReadOnlyList<CompletionItem>
@@ -38,7 +29,7 @@ public partial class CommandPromptCallbacks
 
     private IEnumerable<CompletionItem> GetServerCompletionItem()
     {
-        return serverManager.Servers.Select(
+        return _serverManager.Servers.Select(
             (kv) => new CompletionItem(kv.Key, getExtendedDescription: (_) => GetDescription(kv))
         );
 
@@ -67,12 +58,12 @@ public partial class CommandPromptCallbacks
     {
         var dictionary = new Dictionary<string, IPlugin>();
 
-        foreach (var kv in jsPluginLoader.Plugins)
+        foreach (var kv in _jsPluginLoader.Plugins)
         {
             dictionary.TryAdd(kv.Key, kv.Value);
         }
 
-        foreach (var kv in netPluginLoader.Plugins)
+        foreach (var kv in _netPluginLoader.Plugins)
         {
             dictionary.TryAdd(kv.Key, kv.Value);
         }
@@ -101,18 +92,14 @@ public partial class CommandPromptCallbacks
         }
     }
 
-    private static IEnumerable<CompletionItem> LoadFrom<THandler>()
+    private IEnumerable<CompletionItem> LoadFrom<THandler>()
         where THandler : CommandHandler
     {
-        return typeof(THandler)
-            .GetCustomAttributes<SubCommandAttribute>()
-            .Select(
-                (attr) =>
-                    new CompletionItem(
-                        attr.Command,
-                        getExtendedDescription: (_) =>
-                            Task.FromResult(new FormattedString(attr.Description))
-                    )
-            );
+        return _serviceProvider
+            .GetRequiredService<THandler>()
+            .SubCommands.Select(item => new CompletionItem(
+                item.Key,
+                getExtendedDescription: (_) => Task.FromResult(new FormattedString(item.Value))
+            ));
     }
 }

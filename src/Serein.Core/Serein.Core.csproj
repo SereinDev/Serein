@@ -32,6 +32,6 @@
         <PackageReference Include="Sentry.Profiling" Version="6.0.0" />
         <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
         <PackageReference Include="WebSocket4Net" Version="0.15.2" />
-        <PackageReference Include="Yilduz" Version="0.0.8" />
+        <PackageReference Include="Yilduz" Version="0.0.14" />
     </ItemGroup>
 </Project>

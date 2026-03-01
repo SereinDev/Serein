@@ -3,9 +3,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Serein.Console.Services.Loggers;
 
-public sealed class CliLoggerProvider : ILoggerProvider
+public sealed class ConsoleLoggerProvider : ILoggerProvider
 {
-    private readonly Dictionary<string, CliLogger> _loggers = [];
+    private readonly Dictionary<string, ConsoleLogger> _loggers = [];
 
     public ILogger CreateLogger(string categoryName)
     {

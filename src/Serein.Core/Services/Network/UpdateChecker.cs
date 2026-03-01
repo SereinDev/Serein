@@ -29,7 +29,7 @@ public sealed class UpdateChecker : NotifyPropertyChangedModelBase
     public Release? Latest { get; private set; }
     public bool IsReadyToReplace { get; private set; }
     public event EventHandler? Updated;
-    public event EventHandler? Prepared;
+    public event EventHandler? ReadyToReplace;
 
     public UpdateChecker(
         SereinApp sereinApp,
@@ -112,10 +112,10 @@ public sealed class UpdateChecker : NotifyPropertyChangedModelBase
         var asset = release.Assets.FirstOrDefault(
             (asset) =>
                 asset.Name.EndsWith(".zip")
-                && asset.Name.Contains("win", StringComparison.InvariantCultureIgnoreCase)
+                && asset.Name.Contains("win", StringComparison.OrdinalIgnoreCase)
                 && asset.Name.Contains(
                     _sereinApp.Version.ToString(),
-                    StringComparison.InvariantCultureIgnoreCase
+                    StringComparison.OrdinalIgnoreCase
                 )
         );
 
@@ -173,7 +173,7 @@ public sealed class UpdateChecker : NotifyPropertyChangedModelBase
             _listened = true;
 
             _logger.LogInformation("更新已下载完毕。退出Serein即可自动更新");
-            Prepared?.Invoke(this, EventArgs.Empty);
+            ReadyToReplace?.Invoke(this, EventArgs.Empty);
         }
     }
 

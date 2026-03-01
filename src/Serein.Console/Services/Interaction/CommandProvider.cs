@@ -1,29 +1,39 @@
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using PrettyPrompt.Completion;
 using PrettyPrompt.Highlighting;
-using Serein.Console.Models;
 using Serein.Console.Services.Interaction.Handlers;
 using Serein.Core;
+using Spectre.Console;
 
 namespace Serein.Console.Services.Interaction;
 
 public sealed class CommandProvider
 {
-    public IReadOnlyList<CompletionItem> RootCommandItems { get; }
+    private readonly List<CompletionItem> _completionItems = [];
+
+    public IReadOnlyList<CompletionItem> CompletionItems => _completionItems;
 
     public IReadOnlyDictionary<string, CommandHandler> Handlers { get; }
 
-    public string HelpPage { get; }
+    public Table HelpTable { get; }
 
     public CommandProvider(IServiceProvider serviceProvider, SereinApp sereinApp)
     {
-        CommandHandler[] commands =
+        HelpTable = new Table()
+            .RoundedBorder()
+            .AddColumn("命令")
+            .AddColumn("描述")
+            .AddColumn("子命令")
+            .ShowRowSeparators()
+            .Title($"[bold DarkSeaGreen3]Serein.Console {sereinApp.Version}[/]");
+
+        CommandHandler[] commandHandlers =
         [
             serviceProvider.GetRequiredService<ServerHandler>(),
             serviceProvider.GetRequiredService<ConnectionHandler>(),
@@ -35,90 +45,61 @@ public sealed class CommandProvider
             serviceProvider.GetRequiredService<HelpHandler>(),
         ];
 
-        var stringBuilder = new StringBuilder();
         var dict = new Dictionary<string, CommandHandler>();
-        var list = new List<CompletionItem>();
 
-        stringBuilder.AppendLine($"Serein.Console {sereinApp.Version}");
-
-        foreach (var command in commands)
+        foreach (var commandHandler in commandHandlers)
         {
-            var type = command.GetType();
-            var attribute = type.GetCustomAttribute<CommandNameAttribute>();
+            dict[commandHandler.RootCommand] = commandHandler;
 
-            if (attribute is null)
+            if (!string.IsNullOrEmpty(commandHandler.Alias))
             {
-                continue;
+                dict[commandHandler.Alias] = commandHandler;
             }
 
-            dict[attribute.RootCommand] = command;
-            if (attribute.RootCommand == "help")
-            {
-                dict["?"] = command;
-            }
-
-            GenerateHelpPage(list, stringBuilder, type);
+            GenerateHelpPage(commandHandler);
+            AddCompletionItem(commandHandler);
         }
 
-        HelpPage = stringBuilder.ToString();
-        Handlers = dict;
-        RootCommandItems = list;
+        Handlers = dict.ToFrozenDictionary();
     }
 
-    private static void GenerateHelpPage(
-        List<CompletionItem> completionItems,
-        StringBuilder stringBuilder,
-        Type type
-    )
+    private void GenerateHelpPage(CommandHandler commandHandler)
     {
-        var nameAttribute = type.GetCustomAttribute<CommandNameAttribute>();
-        var descriptionAttribute = type.GetCustomAttribute<CommandDescriptionAttribute>();
-        if (nameAttribute is null || descriptionAttribute is null)
-        {
-            return;
-        }
-
-        stringBuilder.AppendLine($"■ {nameAttribute.RootCommand}  {nameAttribute.Name}");
-
-        stringBuilder.AppendLine(" ▢ 描述");
-        foreach (var line in descriptionAttribute.Lines)
-        {
-            stringBuilder.AppendLine($"  ▫ {line}");
-        }
-
-        var childrenAttributes = type.GetCustomAttributes<SubCommandAttribute>();
-        if (childrenAttributes.Any())
-        {
-            stringBuilder.AppendLine(" ▢ 用法");
-            foreach (var child in childrenAttributes)
-            {
-                stringBuilder.AppendLine(
-                    $"  ▫ {nameAttribute.RootCommand} {child.Command}  {child.Description}"
-                );
-            }
-        }
-
-        stringBuilder.AppendLine();
-        completionItems.Add(CreateCompletionItem(nameAttribute, descriptionAttribute));
+        HelpTable.AddRow(
+            new Markup($"[bold white]{commandHandler.RootCommand}[/]"),
+            new Markup(
+                string.Join(
+                    '\n',
+                    commandHandler.Description.Length > 1
+                        ? commandHandler.Description.Select(line => "▫ " + line)
+                        : commandHandler.Description
+                )
+            ),
+            new Markup(
+                commandHandler.SubCommands.Count > 0
+                    ? string.Join(
+                        '\n',
+                        commandHandler.SubCommands.Select(kv => $"[white]{kv.Key}[/] - {kv.Value}")
+                    )
+                    : "[grey italic]无[/]"
+            )
+        );
     }
 
-    private static CompletionItem CreateCompletionItem(
-        CommandNameAttribute nameAttribute,
-        CommandDescriptionAttribute descriptionAttribute
-    )
+    private void AddCompletionItem(CommandHandler commandHandler)
     {
-        return new(
-            nameAttribute.RootCommand,
+        var completionItem = new CompletionItem(
+            commandHandler.RootCommand,
             getExtendedDescription: (_) =>
             {
                 var stringBuilder = new StringBuilder();
-                stringBuilder.AppendLine(nameAttribute.Name);
+                stringBuilder.AppendLine(commandHandler.Name);
                 stringBuilder.AppendLine();
 
-                if (descriptionAttribute is not null)
+                if (commandHandler.Description.Length > 0)
                 {
                     stringBuilder.AppendLine("描述");
-                    foreach (var line in descriptionAttribute.Lines)
+                    foreach (var line in commandHandler.Description)
                     {
                         stringBuilder.AppendLine($"▫ {line}");
                     }
@@ -127,10 +108,12 @@ public sealed class CommandProvider
                 return Task.FromResult<FormattedString>(
                     new(
                         stringBuilder.ToString(),
-                        new FormatSpan(0, nameAttribute.Name.Length, AnsiColor.BrightWhite)
+                        new FormatSpan(0, commandHandler.Name.Length, AnsiColor.BrightWhite)
                     )
                 );
             }
         );
+
+        _completionItems.Add(completionItem);
     }
 }

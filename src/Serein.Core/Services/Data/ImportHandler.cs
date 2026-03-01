@@ -39,7 +39,7 @@ public class ImportHandler(
 
         if (
             string.IsNullOrEmpty(path)
-            || !Path.GetExtension(path).Equals(".json", StringComparison.InvariantCultureIgnoreCase)
+            || !Path.GetExtension(path).Equals(".json", StringComparison.OrdinalIgnoreCase)
         )
         {
             throw new InvalidOperationException("不支持此文件扩展名");

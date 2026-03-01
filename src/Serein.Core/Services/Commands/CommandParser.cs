@@ -425,7 +425,7 @@ public sealed partial class CommandParser(
     private string? GetUserIdByGameId(string input)
     {
         if (
-            !input.StartsWith("user.id", StringComparison.InvariantCultureIgnoreCase)
+            !input.StartsWith("user.id", StringComparison.OrdinalIgnoreCase)
             || !input.Contains('@')
         )
         {
@@ -440,7 +440,7 @@ public sealed partial class CommandParser(
         {
             foreach (var record in bindingManager.Records)
             {
-                if (record.GameIds.Contains(gameId, StringComparer.InvariantCultureIgnoreCase))
+                if (record.GameIds.Contains(gameId, StringComparer.OrdinalIgnoreCase))
                 {
                     return record.UserId;
                 }
@@ -452,7 +452,7 @@ public sealed partial class CommandParser(
 
     private object? GetServerVariables(string input, string? id = null)
     {
-        if (!input.StartsWith("server.", StringComparison.InvariantCultureIgnoreCase))
+        if (!input.StartsWith("server.", StringComparison.OrdinalIgnoreCase))
         {
             return null;
         }

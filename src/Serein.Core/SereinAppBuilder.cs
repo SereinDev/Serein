@@ -31,13 +31,15 @@ namespace Serein.Core;
 
 public static class SereinAppBuilder
 {
-    public static readonly bool StartForTheFirstTime = !File.Exists(PathConstants.SettingFile);
-
     static SereinAppBuilder()
     {
         Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
         Directory.CreateDirectory(PathConstants.Root);
+
+        StartForTheFirstTime = !File.Exists(PathConstants.SettingFile);
     }
+
+    public static readonly bool StartForTheFirstTime;
 
     public static HostApplicationBuilder CreateBuilder()
     {

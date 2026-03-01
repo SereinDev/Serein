@@ -1,17 +1,11 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
-using Serein.Console.Models;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Web;
 
 namespace Serein.Console.Services.Interaction.Handlers;
 
-[CommandName("webserver", "网页服务器")]
-[CommandDescription(["开启或关闭网页服务器", "解压网页文件"])]
-[SubCommand("start", "开启网页服务器")]
-[SubCommand("stop", "关闭网页服务器")]
-[SubCommand("extract", "解压网页文件")]
 public sealed class WebServerHandler(
     ILogger<WebServerHandler> logger,
     WebServer webServer,
@@ -19,16 +13,23 @@ public sealed class WebServerHandler(
     SettingProvider settingProvider
 ) : CommandHandler
 {
-    public override void Invoke(IReadOnlyList<string> args)
-    {
-        if (args.Count == 1)
-        {
-            throw new InvalidArgumentException(
-                "缺少参数。可用值：\"start\"、\"stop\"和\"extract\""
-            );
-        }
+    public override string Name { get; } = "网页服务器";
 
-        switch (args[1].ToLowerInvariant())
+    public override string[] Description { get; } = ["开启或关闭网页服务器", "解压网页文件"];
+
+    public override string RootCommand { get; } = "webserver";
+
+    public override Dictionary<string, string> SubCommands { get; } =
+        new()
+        {
+            ["start"] = "开启网页服务器",
+            ["stop"] = "关闭网页服务器",
+            ["extract"] = "解压网页文件",
+        };
+
+    public override void Invoke(string subCommand, IReadOnlyList<string> args)
+    {
+        switch (subCommand)
         {
             case "start":
                 try
@@ -65,11 +66,6 @@ public sealed class WebServerHandler(
                     logger.LogError(e, "网页文件解压失败");
                 }
                 break;
-
-            default:
-                throw new InvalidArgumentException(
-                    "未知的参数。可用值：\"start\"、\"stop\"和\"extract\""
-                );
         }
     }
 }

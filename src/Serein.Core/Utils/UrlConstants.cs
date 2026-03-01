@@ -5,7 +5,7 @@ namespace Serein.Core.Utils;
 /// </summary>
 public static class UrlConstants
 {
-    public static readonly string Group = "https://sereindev.github.io/redirects/group";
+    public static readonly string Group = "https://sereindev.github.io/redirects/group/";
 
     public static readonly string Repository = "https://github.com/SereinDev/Serein";
 

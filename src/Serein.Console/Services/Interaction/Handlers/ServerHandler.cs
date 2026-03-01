@@ -1,21 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Microsoft.Extensions.Logging;
 using Serein.Console.Models;
+using Serein.Console.Utils;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Servers;
+using Spectre.Console;
 
 namespace Serein.Console.Services.Interaction.Handlers;
 
-[CommandName("server", "服务器")]
-[CommandDescription(["管理服务器配置", "控制服务器", "查看服务器信息"])]
-[SubCommand("info", "显示信息")]
-[SubCommand("start", "启动")]
-[SubCommand("stop", "关闭")]
-[SubCommand("terminate", "强制结束")]
-[SubCommand("switch", "选择并控制")]
-[SubCommand("list", "列出所有服务器")]
 public sealed class ServerHandler(
     ILogger<ServerHandler> logger,
     SettingProvider settingProvider,
@@ -23,25 +16,33 @@ public sealed class ServerHandler(
     ServerSwitcher serverSwitcher
 ) : CommandHandler
 {
-    public override void Invoke(IReadOnlyList<string> args)
-    {
-        if (args.Count == 1)
-        {
-            throw new InvalidArgumentException(
-                "缺少参数。可用值：\"list\"、\"info\"、\"start\"、\"stop\"、\"terminate\"和\"switch\""
-            );
-        }
+    public override string Name { get; } = "服务器";
 
-        if (args[1].Equals("list", StringComparison.InvariantCultureIgnoreCase))
+    public override string[] Description { get; } =
+        ["管理服务器配置", "控制服务器", "查看服务器信息"];
+
+    public override string RootCommand { get; } = "server";
+
+    public override Dictionary<string, string> SubCommands { get; } =
+        new()
+        {
+            ["info"] = "显示信息",
+            ["start"] = "启动",
+            ["stop"] = "关闭",
+            ["terminate"] = "强制结束",
+            ["switch"] = "选择并控制",
+            ["list"] = "列出所有服务器",
+        };
+
+    public override void Invoke(string subCommand, IReadOnlyList<string> args)
+    {
+        if (subCommand.Equals("list", StringComparison.OrdinalIgnoreCase))
         {
             LogList();
             return;
         }
 
-        if (
-            args[1].Equals("switch", StringComparison.InvariantCultureIgnoreCase)
-            && args.Count == 2
-        )
+        if (subCommand.Equals("switch", StringComparison.OrdinalIgnoreCase) && args.Count == 2)
         {
             throw new InvalidArgumentException("缺少服务器Id。");
         }
@@ -61,13 +62,13 @@ public sealed class ServerHandler(
             throw new InvalidArgumentException("指定的服务器不存在");
         }
 
-        switch (args[1].ToLowerInvariant())
+        switch (subCommand.ToLowerInvariant())
         {
-            case "info" when args.Count <= 3:
+            case "info":
                 LogServerInfo(server);
                 break;
 
-            case "start" when args.Count <= 3:
+            case "start":
                 try
                 {
                     server.Start();
@@ -88,7 +89,7 @@ public sealed class ServerHandler(
                 }
                 break;
 
-            case "stop" when args.Count <= 3:
+            case "stop":
                 try
                 {
                     server.Stop();
@@ -110,7 +111,7 @@ public sealed class ServerHandler(
                 }
                 break;
 
-            case "terminate" when args.Count <= 3:
+            case "terminate":
                 try
                 {
                     server.Terminate();
@@ -120,72 +121,82 @@ public sealed class ServerHandler(
                     logger.LogError("强制结束失败：{}", e.Message);
                 }
                 break;
-
-            default:
-                throw new InvalidArgumentException(
-                    "未知的参数。可用值：\"info\"、\"start\"、\"stop\"、\"terminate\"和\"switch\""
-                );
         }
     }
 
     private void LogServerInfo(Server server)
     {
-        var stringBuilder = new StringBuilder();
-        stringBuilder.AppendLine($"{server.Configuration.Name}({server.Id})");
-
-        if (server.Status)
-        {
-            stringBuilder.AppendLine($"▫ 状态: 运行中 (Pid={server.Pid})");
-        }
-        else
-        {
-            stringBuilder.AppendLine("▫ 状态: 已停止");
-        }
-
-        stringBuilder.AppendLine(
-            "▫ 启动命令行：" + server.Configuration.FileName + " " + server.Configuration.Argument
-        );
+        var table = new Table()
+            .RoundedBorder()
+            .HideHeaders()
+            .AddColumn("_", c => c.Centered())
+            .AddColumn("_")
+            .ShowRowSeparators()
+            .AddRow("[bold white]Id[/]", $"[gray italic]({server.Id.EscapeMarkup()})[/]")
+            .AddRow("[bold white]名称[/]", server.Configuration.Name.EscapeMarkup())
+            .AddRow(
+                "[bold white]状态[/]",
+                server.Status ? $"运行中 [gray italic](Pid:{server.Pid})[/]" : "未启动"
+            )
+            .AddRow(
+                "[bold white]启动命令行[/]",
+                $"{server.Configuration.FileName.EscapeMarkup()} "
+                    + $"[gray]{server.Configuration.Argument.EscapeMarkup()}[/]"
+            );
 
         if (server.Info.StartTime is not null)
         {
-            stringBuilder.AppendLine("▫ 启动时间：" + server.Info.StartTime.Value.ToString("G"));
+            table.AddRow("[bold white]启动时间[/]", server.Info.StartTime.Value.ToString("G"));
         }
         else if (server.Info.ExitTime is not null)
         {
-            stringBuilder.AppendLine("▫ 停止时间：" + server.Info.ExitTime.Value.ToString("G"));
+            table.AddRow("[bold white]停止时间[/]", server.Info.ExitTime.Value.ToString("G"));
         }
 
         if (server.Status && server.Info.Stat is not null && server.Info.Stat.ServerUp)
         {
-            stringBuilder.AppendLine("▫ 版本：" + server.Info.Stat.Version);
-            stringBuilder.AppendLine(
-                "▫ 在线人数："
-                    + server.Info.Stat.CurrentPlayers
-                    + "/"
-                    + server.Info.Stat.MaximumPlayers
-            );
+            table
+                .AddRow("[bold white]版本[/]", server.Info.Stat.Version.EscapeMarkup())
+                .AddRow(
+                    new Markup("[bold white]在线人数[/]"),
+                    new Text(
+                        server.Info.Stat.CurrentPlayers + "/" + server.Info.Stat.MaximumPlayers
+                    )
+                );
         }
 
-        logger.LogInformation(stringBuilder.ToString());
+        SimpleConsole.Log(LogLevel.Information, table);
     }
 
     private void LogList()
     {
-        var stringBuilder = new StringBuilder();
-        stringBuilder.AppendLine($"当前共{serverManager.Servers.Count}个服务器配置");
+        var table = new Table()
+            .RoundedBorder()
+            .ShowRowSeparators()
+            .AddColumn("[bold white]名称[/]")
+            .AddColumn("[bold white]状态[/]")
+            .AddColumn("[bold white]启动命令行[/]");
+
         foreach (var kv in serverManager.Servers)
         {
-            stringBuilder.AppendLine($"▢ {kv.Value.Configuration.Name}");
-            stringBuilder.AppendLine($"  ▫ Id： {kv.Key}");
-            stringBuilder.AppendLine($"  ▫ 状态: " + (kv.Value.Status ? "运行中" : "已停止"));
-            stringBuilder.AppendLine(
-                "  ▫ 启动命令行："
-                    + kv.Value.Configuration.FileName
-                    + " "
-                    + kv.Value.Configuration.Argument
+            table.AddRow(
+                new Markup(
+                    $"{kv.Value.Configuration.Name.EscapeMarkup()} [gray italic]({kv.Key.EscapeMarkup()})[/]"
+                ),
+                new Markup(
+                    kv.Value.Status ? $"运行中 [gray italic](Pid:{kv.Value.Pid})[/]" : "未启动"
+                ),
+                new Markup(
+                    $"{kv.Value.Configuration.FileName.EscapeMarkup()} "
+                        + $"[gray]{kv.Value.Configuration.Argument.EscapeMarkup()}[/]"
+                ).Ellipsis()
             );
         }
 
-        logger.LogInformation(stringBuilder.ToString());
+        SimpleConsole.Log(
+            LogLevel.Information,
+            $"当前共{serverManager.Servers.Count}个服务器。",
+            table
+        );
     }
 }

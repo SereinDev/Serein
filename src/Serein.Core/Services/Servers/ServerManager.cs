@@ -58,7 +58,7 @@ public sealed partial class ServerManager
     {
         ArgumentException.ThrowIfNullOrEmpty(id, nameof(id));
 
-        if (BlacklistOfFileName.Contains(id, StringComparer.InvariantCultureIgnoreCase))
+        if (BlacklistOfFileName.Contains(id, StringComparer.OrdinalIgnoreCase))
         {
             throw new ArgumentException("不能使用或含有Windows系统的保留关键字", nameof(id));
         }

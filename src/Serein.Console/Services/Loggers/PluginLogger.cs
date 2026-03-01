@@ -16,7 +16,7 @@ public sealed class PluginLogger(ILogger<PluginLogger> logger) : PluginLoggerBas
         }
         else
         {
-            CliConsole.WriteLine(level, $"[{name}] {message}");
+            SimpleConsole.WriteLine(level, $"[{name}] {message}");
         }
 
         OnLogging(level, name, message);

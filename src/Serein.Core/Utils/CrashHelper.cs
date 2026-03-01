@@ -25,8 +25,8 @@ internal static class CrashHelper
             var sb = new StringBuilder();
             var app = SereinApp.GetCurrentApp();
 
-            sb.AppendLine($"Serein.{app.Type}");
-            sb.AppendLine("版本：" + app.FullVersion);
+            sb.AppendLine($"Serein.{app?.Type ?? AppType.Unknown}");
+            sb.AppendLine("版本：" + app?.FullVersion);
             sb.AppendLine("程序集：" + Assembly.GetEntryAssembly()?.FullName);
             sb.AppendLine("时间：" + date.ToString("o"));
             sb.AppendLine("文件路径：" + AppDomain.CurrentDomain.BaseDirectory);

@@ -6,19 +6,41 @@ using System.Threading.Tasks;
 using PrettyPrompt;
 using PrettyPrompt.Completion;
 using PrettyPrompt.Documents;
+using Serein.Console.Services.Interaction.Handlers;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Services.Plugins.Net;
 using Serein.Core.Services.Servers;
 
 namespace Serein.Console.Services.Interaction;
 
-public partial class CommandPromptCallbacks(
-    CommandProvider commandProvider,
-    ServerManager serverManager,
-    JsPluginLoader jsPluginLoader,
-    NetPluginLoader netPluginLoader
-) : PromptCallbacks
+public partial class CommandPromptCallbacks : PromptCallbacks
 {
+    private readonly IServiceProvider _serviceProvider;
+    private readonly CommandProvider _commandProvider;
+    private readonly ServerManager _serverManager;
+    private readonly JsPluginLoader _jsPluginLoader;
+    private readonly NetPluginLoader _netPluginLoader;
+
+    public CommandPromptCallbacks(
+        IServiceProvider serviceProvider,
+        CommandProvider commandProvider,
+        ServerManager serverManager,
+        JsPluginLoader jsPluginLoader,
+        NetPluginLoader netPluginLoader
+    )
+    {
+        _serviceProvider = serviceProvider;
+        _commandProvider = commandProvider;
+        _serverManager = serverManager;
+        _jsPluginLoader = jsPluginLoader;
+        _netPluginLoader = netPluginLoader;
+
+        _connectionSubcommnads = new(LoadFrom<ConnectionHandler>);
+        _serverSubcommnads = new(LoadFrom<ServerHandler>);
+        _pluginSubcommnads = new(LoadFrom<PluginHandler>);
+        _webServerubcommnads = new(LoadFrom<WebServerHandler>);
+    }
+
     protected override Task<IReadOnlyList<CompletionItem>> GetCompletionItemsAsync(
         string text,
         int caret,
@@ -35,8 +57,8 @@ public partial class CommandPromptCallbacks(
         {
             return Task.FromResult<IReadOnlyList<CompletionItem>>(
                 [
-                    .. commandProvider
-                        .RootCommandItems.OrderByDescending(
+                    .. _commandProvider
+                        .CompletionItems.OrderByDescending(
                             (item) => CalculateRelevance(item.ReplacementText, typedWord)
                         )
                         .ThenBy((item) => item.ReplacementText[0]),
@@ -79,7 +101,7 @@ public partial class CommandPromptCallbacks(
 
                 case "plugin"
                     when args.Length == 3
-                        && args[1].Equals("disable", StringComparison.InvariantCultureIgnoreCase):
+                        && args[1].Equals("disable", StringComparison.OrdinalIgnoreCase):
                     return Task.FromResult<IReadOnlyList<CompletionItem>>(
                         [
                             .. GetPluginIdCompletionItem()

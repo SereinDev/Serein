@@ -22,7 +22,7 @@ internal static partial class BaseChecker
                     process.Id == id
                     || !process.ProcessName.Contains(
                         "serein",
-                        StringComparison.InvariantCultureIgnoreCase
+                        StringComparison.OrdinalIgnoreCase
                     )
                     || Path.GetDirectoryName(process.MainModule?.FileName) != dir
                 )
@@ -42,7 +42,7 @@ internal static partial class BaseChecker
     {
         var temp = Path.GetTempPath();
         var dir = Directory.GetCurrentDirectory();
-        return dir.StartsWith(temp, StringComparison.InvariantCultureIgnoreCase)
+        return dir.StartsWith(temp, StringComparison.OrdinalIgnoreCase)
             || dir.Contains(@"AppData\Local\Temp\");
     }
 }

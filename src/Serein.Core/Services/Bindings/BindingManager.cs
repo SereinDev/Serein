@@ -105,7 +105,7 @@ public sealed class BindingManager(IServiceProvider services, SettingProvider se
             {
                 if (
                     record.UserId != id
-                    && record.GameIds.Contains(gameId, StringComparer.InvariantCultureIgnoreCase)
+                    && record.GameIds.Contains(gameId, StringComparer.OrdinalIgnoreCase)
                 )
                 {
                     throw new BindingFailureException("此Id已被占用");
@@ -150,7 +150,7 @@ public sealed class BindingManager(IServiceProvider services, SettingProvider se
 
                 foreach (var gameId in bindingRecord.GameIds)
                 {
-                    if (record.GameIds.Contains(gameId, StringComparer.InvariantCultureIgnoreCase))
+                    if (record.GameIds.Contains(gameId, StringComparer.OrdinalIgnoreCase))
                     {
                         throw new BindingFailureException($"已经绑定过此Id了（Id={gameId}）");
                     }

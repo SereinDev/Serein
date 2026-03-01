@@ -6,7 +6,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PrettyPrompt;
 using PrettyPrompt.Highlighting;
-using Serein.Console.Utils;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils;
@@ -37,14 +36,18 @@ public sealed class InputLoopService(
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
-        _cancellationTokenSource.Cancel();
-        _cancellationTokenSource.Dispose();
+        if (!_cancellationTokenSource.IsCancellationRequested)
+        {
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
+        }
+
         return Task.CompletedTask;
     }
 
     private void Loop(CancellationToken cancellationToken)
     {
-        if (!SysConsole.IsInputRedirected && CliConsole.IsColorful)
+        if (!SysConsole.IsInputRedirected)
         {
             var flag = false;
             var prompt = new Prompt(
@@ -70,6 +73,7 @@ public sealed class InputLoopService(
                 {
                     flag = true;
                     SysConsole.CancelKeyPress += IgnoreCtrlC;
+
                     ProcessInput(SysConsole.ReadLine());
                 }
                 else
@@ -102,9 +106,11 @@ public sealed class InputLoopService(
         else
         {
             logger.LogWarning(
-                "当前输出流已被重定向 或 你在启动时指定了禁用彩色输出参数，输入自动补全功能已关闭，但你仍可以输入\"help\"查看帮助页面"
+                "当前输出流已被重定向，输入自动补全功能已关闭，但你仍可以输入\"help\"查看帮助页面"
             );
             logger.LogWarning("若要体验此功能，请在终端内运行 Serein.Console");
+
+            SysConsole.CancelKeyPress += IgnoreCtrlC;
 
             while (!cancellationToken.IsCancellationRequested)
             {

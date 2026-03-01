@@ -12,9 +12,9 @@ public sealed class SereinApp
 {
     private static SereinApp? s_sereinApp;
 
-    public static SereinApp GetCurrentApp()
+    public static SereinApp? GetCurrentApp()
     {
-        return s_sereinApp ?? throw new InvalidOperationException("没有正在运行的 SereinApp 实例");
+        return s_sereinApp;
     }
 
     public SereinApp(ILogger<SereinApp> logger, IServiceProvider serviceProvider)
