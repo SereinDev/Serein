@@ -2,14 +2,16 @@
     x:Class="Serein.Gui.Pages.Settings.WebApiSettingPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Serein.Gui.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:data="clr-namespace:Serein.Core.Services.Data;assembly=Serein.Core"
     xmlns:local="clr-namespace:Serein.Gui.Pages.Settings"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    xmlns:viewmodels="clr-namespace:Serein.Gui.ViewModels"
     Title="WebApiSettingPage"
-    d:DataContext="{d:DesignInstance Type=data:SettingProvider}"
+    d:DataContext="{d:DesignInstance Type=viewmodels:WebApiSettingPageViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -19,18 +21,34 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/SettingPageBaseStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <converters:WebServerStateToTextConverter x:Key="WebServerStateToTextConverter" />
         </ResourceDictionary>
     </Page.Resources>
 
     <ui:ScrollViewerEx>
         <StackPanel Margin="20,5,20,20">
+            <TextBlock
+                Margin="0,15,0,5"
+                Style="{DynamicResource SubtitleTextBlockStyle}"
+                Text="控制" />
 
-            <ui:SettingsCard Header="启用">
-                <ui:ToggleSwitch IsOn="{Binding Value.WebApi.IsEnabled}" Toggled="ToggleSwitch_Toggled" />
+            <ui:SettingsCard
+                Command="{Binding ToggleServerStateCommand}"
+                Header="切换状态"
+                IsClickEnabled="True">
+                <TextBlock Foreground="Gray" Text="{Binding HttpServer.State, Converter={StaticResource WebServerStateToTextConverter}}" />
+            </ui:SettingsCard>
+
+            <ui:SettingsCard Header="自动启动网页服务器">
+                <ui:SettingsCard.Description>
+                    <sys:String xml:space="preserve">· 开启后会在Serein启动后自动启动网页服务器
+· 这不会影响当前网页服务器的状态</sys:String>
+                </ui:SettingsCard.Description>
+                <ui:ToggleSwitch IsOn="{Binding WebApiSetting.StartWhenSettingUp}" Toggled="ToggleSwitch_Toggled" />
             </ui:SettingsCard>
 
             <ui:SettingsCard
-                Click="ExtractPages_Click"
+                Command="{Binding ExtractPagesCommand}"
                 Header="解压释放网页文件"
                 IsClickEnabled="True">
                 <ui:SettingsCard.Description>
@@ -82,14 +100,14 @@
                         <TextBox
                             AcceptsReturn="True"
                             LostFocus="OnPropertyChanged"
-                            Text="{Binding Value.WebApi.UrlPrefixes, Converter={StaticResource multiLinesConverter}}"
+                            Text="{Binding WebApiSetting.UrlPrefixes, Converter={StaticResource multiLinesConverter}}"
                             TextWrapping="Wrap" />
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
 
             <ui:SettingsCard Description="开启后会在响应头添加“Access-Control-Allow-Origin: *”" Header="允许跨源请求">
-                <ui:ToggleSwitch IsOn="{Binding Value.WebApi.AllowCrossOrigin}" Toggled="OnPropertyChanged" />
+                <ui:ToggleSwitch IsOn="{Binding WebApiSetting.AllowCrossOrigin}" Toggled="OnPropertyChanged" />
             </ui:SettingsCard>
 
             <ui:SettingsCard Description="每秒请求数超过此值的IP（下方白名单内的除外）将被封禁" Header="每秒最大请求数">
@@ -101,7 +119,7 @@
                     Minimum="0"
                     SpinButtonPlacementMode="Compact"
                     ValueChanged="OnPropertyChanged"
-                    Value="{Binding Value.WebApi.MaxRequestsPerSecond}" />
+                    Value="{Binding WebApiSetting.MaxRequestsPerSecond}" />
             </ui:SettingsCard>
 
             <ui:SettingsExpander Description="无视请求速度限制的IP列表" Header="IP请求白名单">
@@ -123,40 +141,48 @@
                         <TextBox
                             AcceptsReturn="True"
                             LostFocus="OnPropertyChanged"
-                            Text="{Binding Value.WebApi.WhiteList, Converter={StaticResource multiLinesConverter}}"
+                            Text="{Binding WebApiSetting.WhiteList, Converter={StaticResource multiLinesConverter}}"
                             TextWrapping="Wrap" />
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
 
-            <ui:SettingsExpander Header="访问凭证">
-                <ui:SettingsExpander.ItemsHeader>
-                    <ui:InfoBar
-                        Title="提示"
-                        BorderThickness="0"
-                        CornerRadius="0"
-                        IsOpen="True"
-                        Severity="Informational">
-                        <ui:InfoBar.Message>
-                            使用换行符分隔每一个值，即一行一个值
-                        </ui:InfoBar.Message>
-                    </ui:InfoBar>
-                </ui:SettingsExpander.ItemsHeader>
+            <TextBlock
+                Margin="0,15,0,5"
+                Style="{DynamicResource SubtitleTextBlockStyle}"
+                Text="权限" />
 
-                <ui:SettingsExpander.Description>
-                    若值不为空，请求时“/api”下的任意资源均需要在请求头中添加Authentication项，即“Authentication: Bearer [Token]”
-                </ui:SettingsExpander.Description>
+            <TextBlock
+                Margin="0,5"
+                FontSize="13"
+                Foreground="Gray"
+                LineHeight="21"
+                TextWrapping="Wrap">
+                <Run Text="目前支持以下两种访问凭证：" />
+                <LineBreak />
+                <Run Text="· 令牌（Token）：客户端在 HTTP 请求头中携带“" />
+                <Run FontFamily="Consolas" Text="Authorization: Bearer {token}" />
+                <Run Text="”，服务端提取 Bearer 值并与已配置的令牌进行精确匹配" />
+                <LineBreak />
+                <Run Text="· 用户名与密码：采用 Digest Authentication（服务端先返回 401 与" />
+                <Run FontFamily="Consolas" Text="WWW-Authenticate" />
+                <Run Text="响应头，客户端根据用户名、密码、nonce 等参数计算 response 摘要并回传，服务端复算后比对）" />
+                <LineBreak />
+                <LineBreak />
+                <Bold>Tip:</Bold>
+                <LineBreak />
+                <Run Text="· 两种方式都能用于访问 API：Token 更容易接入脚本与工具；Digest 更贴近传统“用户名+密码登录”，且不会在网络中直接传输明文密码，因此有着更高的安全性" />
+                <LineBreak />
+                <Run Text="· 如果你暂时不熟悉这些机制，或是只需要使用网页控制台功能，也可以直接在下方添加至少一组用户名和密码，该用户名和密码可直接用于登录" />
+                <LineBreak />
+                <Run Text="· 如果浏览器版本较低、无法正常弹出登录窗口，或你需要更方便地调用API，可额外添加一个令牌，以此使用兼容性更好的旧版验证方式" />
+            </TextBlock>
 
-                <ui:SettingsExpander.Items>
-                    <ui:SettingsCard ContentAlignment="Left">
-                        <TextBox
-                            AcceptsReturn="True"
-                            LostFocus="OnPropertyChanged"
-                            Text="{Binding Value.WebApi.AccessTokens, Converter={StaticResource multiLinesConverter}}"
-                            TextWrapping="Wrap" />
-                    </ui:SettingsCard>
-                </ui:SettingsExpander.Items>
-            </ui:SettingsExpander>
+            <ui:SettingsCard
+                Command="{Binding OpenEditorCommand}"
+                Description="{Binding AuthenticationCountText}"
+                Header="修改访问凭证"
+                IsClickEnabled="True" />
 
             <TextBlock
                 Margin="0,15,0,5"
@@ -172,17 +198,17 @@
                 Severity="Warning" />
 
             <ui:SettingsCard Header="启用">
-                <ui:ToggleSwitch IsOn="{Binding Value.WebApi.Certificate.IsEnabled}" Toggled="OnPropertyChanged" />
+                <ui:ToggleSwitch IsOn="{Binding WebApiSetting.Certificate.IsEnabled}" Toggled="OnPropertyChanged" />
             </ui:SettingsCard>
             <ui:SettingsCard Description="自动将使用的证书注册到默认的证书存储区" Header="自动注册证书">
-                <ui:ToggleSwitch IsOn="{Binding Value.WebApi.Certificate.AutoRegisterCertificate}" Toggled="OnPropertyChanged" />
+                <ui:ToggleSwitch IsOn="{Binding WebApiSetting.Certificate.AutoRegisterCertificate}" Toggled="OnPropertyChanged" />
             </ui:SettingsCard>
             <ui:SettingsCard Description="自动从默认的证书存储区中读取证书" Header="自动加载证书">
-                <ui:ToggleSwitch IsOn="{Binding Value.WebApi.Certificate.AutoLoadCertificate}" Toggled="OnPropertyChanged" />
+                <ui:ToggleSwitch IsOn="{Binding WebApiSetting.Certificate.AutoLoadCertificate}" Toggled="OnPropertyChanged" />
             </ui:SettingsCard>
 
             <ui:SettingsExpander Header="证书文件路径">
-                <TextBlock Style="{DynamicResource SettingsExpanderValue}" Text="{Binding Value.WebApi.Certificate.Path}" />
+                <TextBlock Style="{DynamicResource SettingsExpanderValue}" Text="{Binding WebApiSetting.Certificate.Path}" />
 
                 <ui:SettingsExpander.Items>
                     <ui:SettingsCard ContentAlignment="Left">
@@ -195,14 +221,14 @@
                             <TextBox
                                 Margin="0"
                                 LostFocus="OnPropertyChanged"
-                                Text="{Binding Value.WebApi.Certificate.Path}" />
+                                Text="{Binding WebApiSetting.Certificate.Path}" />
 
                             <Button
                                 Grid.Column="1"
                                 Height="32"
                                 Margin="10,0,0,0"
                                 VerticalAlignment="Bottom"
-                                Click="OpenFileButton_Click">
+                                Command="{Binding OpenFileCommand}">
                                 <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.OpenFile}" />
                             </Button>
                         </Grid>
@@ -216,7 +242,7 @@
                         <TextBox
                             AcceptsReturn="False"
                             LostFocus="OnPropertyChanged"
-                            Text="{Binding Value.WebApi.Certificate.Password}" />
+                            Text="{Binding WebApiSetting.Certificate.Password}" />
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>

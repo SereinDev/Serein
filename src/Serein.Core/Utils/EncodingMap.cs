@@ -3,9 +3,6 @@ using System.Text;
 
 namespace Serein.Core.Utils;
 
-/// <summary>
-/// 编码
-/// </summary>
 public static class EncodingMap
 {
     static EncodingMap()

@@ -6,7 +6,9 @@
     xmlns:local="clr-namespace:Serein.Gui.Pages.Settings"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    xmlns:viewmodels="clr-namespace:Serein.Gui.ViewModels"
     Title="关于"
+    d:DataContext="{d:DesignInstance Type=viewmodels:AboutPageViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -52,10 +54,16 @@
 
                 <ui:SettingsExpander.Items>
                     <ui:SettingsCard Header="程序集">
-                        <TextBlock Style="{StaticResource ValueTextBlock}" Text="{Binding AssemblyVersion, Mode=OneTime}" />
+                        <TextBlock Style="{StaticResource ValueTextBlock}" Text="{Binding AssemblyName, Mode=OneTime}" />
                     </ui:SettingsCard>
                     <ui:SettingsCard Header="详细版本">
-                        <TextBlock Style="{StaticResource ValueTextBlock}" Text="{Binding AssemblyInformationalVersion, Mode=OneTime}" />
+                        <TextBlock Style="{StaticResource ValueTextBlock}" Text="{Binding InformationalVersion, Mode=OneTime}" />
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="分支">
+                        <TextBlock Style="{StaticResource ValueTextBlock}" Text="{Binding Branch, Mode=OneTime}" />
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="编译时根目录">
+                        <TextBlock Style="{StaticResource ValueTextBlock}" Text="{Binding Root, Mode=OneTime}" />
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
@@ -63,7 +71,7 @@
 
             <TextBlock Margin="5" FontSize="14">
                 <Run Text="此软件根据" />
-                <Hyperlink NavigateUri="https://github.com/SereinDev/Serein?tab=GPL-3.0-1-ov-file#" RequestNavigate="OnRequestNavigate">
+                <Hyperlink Command="{Binding OpenUrlCommand}" CommandParameter="https://github.com/SereinDev/Serein?tab=GPL-3.0-1-ov-file#">
                     GPL-3.0 license
                 </Hyperlink>
                 <Run Text="发行" />
@@ -86,11 +94,11 @@
                 <Run Text="◾ 此软件与Mojang Studio、网易、Microsoft没有从属关系" />
                 <LineBreak />
                 <Run Text="◾ 使用本程序启动任何Minecraft服务端即代表您已阅读并同意了" />
-                <Hyperlink NavigateUri="https://www.minecraft.net/zh-hans/eula" RequestNavigate="OnRequestNavigate">
+                <Hyperlink Command="{Binding OpenUrlCommand}" CommandParameter="https://www.minecraft.net/zh-hans/eula">
                     MINECRAFT 最终用户许可协议
                 </Hyperlink>
                 <Run Text="和" />
-                <Hyperlink NavigateUri="https://www.minecraft.net/zh-hans/usage-guidelines" RequestNavigate="OnRequestNavigate">
+                <Hyperlink Command="{Binding OpenUrlCommand}" CommandParameter="https://www.minecraft.net/zh-hans/usage-guidelines">
                     MINECRAFT 使用准则
                 </Hyperlink>
             </TextBlock>
@@ -102,7 +110,8 @@
                 Text="有用的链接" />
 
             <ui:SettingsCard
-                Click="SettingsCard_Click"
+                Command="{Binding OpenCardLinkCommand}"
+                CommandParameter="Repo"
                 Header="GitHub仓库"
                 IsClickEnabled="True"
                 Tag="Repo">
@@ -115,7 +124,8 @@
             </ui:SettingsCard>
 
             <ui:SettingsCard
-                Click="SettingsCard_Click"
+                Command="{Binding OpenCardLinkCommand}"
+                CommandParameter="Docs"
                 Header="官网/文档"
                 IsClickEnabled="True"
                 Tag="Docs">
@@ -129,7 +139,8 @@
             </ui:SettingsCard>
 
             <ui:SettingsCard
-                Click="SettingsCard_Click"
+                Command="{Binding OpenCardLinkCommand}"
+                CommandParameter="Group"
                 Header="交流群"
                 IsClickEnabled="True"
                 Tag="Group">

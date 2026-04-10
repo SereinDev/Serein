@@ -13,7 +13,8 @@ public sealed class TaskHost(
     AutomationTaskProvider automationTaskProvider
 )
 {
-    public void EnumerateAllTriggers(Action<AutomationTask, TriggerBase> action)
+    public void EnumerateAllTriggers<T>(Action<AutomationTask, T> action)
+        where T : TriggerBase
     {
         lock (automationTaskProvider.Value)
         {
@@ -21,7 +22,12 @@ public sealed class TaskHost(
             {
                 foreach (var trigger in task.Triggers)
                 {
-                    action(task, trigger);
+                    if (trigger is not T t)
+                    {
+                        continue;
+                    }
+
+                    action(task, t);
                 }
             }
         }
@@ -31,7 +37,7 @@ public sealed class TaskHost(
     {
         foreach (var command in task.Commands)
         {
-            await commandRunner.RunAsync(command, context);
+            await commandRunner.RunAsync(command, context).ConfigureAwait(false);
         }
     }
 }

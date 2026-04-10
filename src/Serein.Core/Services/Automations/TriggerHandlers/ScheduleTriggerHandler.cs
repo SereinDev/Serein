@@ -6,7 +6,7 @@ using Serein.Core.Models.Automations.Triggers;
 
 namespace Serein.Core.Services.Automations.TriggerHandlers;
 
-public sealed class ScheduleTriggerHandler : IHostedService
+internal sealed class ScheduleTriggerHandler : IHostedService
 {
     private readonly TaskHost _taskHost;
     private readonly Timer _timer = new(10_000);
@@ -37,14 +37,12 @@ public sealed class ScheduleTriggerHandler : IHostedService
 
     private void OnElapsed(object? sender, EventArgs e)
     {
-        _taskHost.EnumerateAllTriggers(
+        _taskHost.EnumerateAllTriggers<ScheduleTrigger>(
             (task, trigger) =>
             {
-                if (trigger is ScheduleTrigger scheduleTrigger && Check(scheduleTrigger))
+                if (Check(trigger))
                 {
-                    _taskHost
-                        .RunTaskAsync(task)
-                        .ContinueWith((_) => scheduleTrigger.UpdateNextTime());
+                    _taskHost.RunTaskAsync(task).ContinueWith((_) => trigger.UpdateNextTime());
                 }
             }
         );

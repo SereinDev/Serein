@@ -34,7 +34,7 @@ public sealed class WebServerHandler(
             case "start":
                 try
                 {
-                    settingProvider.Value.WebApi.IsEnabled = true;
+                    settingProvider.Value.WebApi.StartWhenSettingUp = true;
                     webServer.Start();
                 }
                 catch (Exception e)
@@ -46,7 +46,7 @@ public sealed class WebServerHandler(
             case "stop":
                 try
                 {
-                    settingProvider.Value.WebApi.IsEnabled = false;
+                    settingProvider.Value.WebApi.StartWhenSettingUp = false;
                     webServer.Stop();
                 }
                 catch (Exception e)

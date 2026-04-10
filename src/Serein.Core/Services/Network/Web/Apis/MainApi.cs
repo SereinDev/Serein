@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -24,10 +25,11 @@ internal sealed partial class ApiMap(
     SettingProvider settingProvider,
     ConnectionManager connectionManager,
     HardwareInfoProvider hardwareInfoProvider,
-    AutomationTaskProvider automationTaskProvider
+    AutomationTaskProvider automationTaskProvider,
+    WebSocketTicketService webSocketTicketService
 ) : WebApiController
 {
-    private List<ApiEndpointRecord>? _records;
+    private static readonly Lazy<List<ApiEndpointRecord>> Records = new(GenerateRouteInfos);
 
     [Route(HttpVerbs.Get, "/")]
     public async Task GetAppInfo()
@@ -38,21 +40,15 @@ internal sealed partial class ApiMap(
     [Route(HttpVerbs.Get, "/routes")]
     public async Task GetRoutes()
     {
-        if (_records is null)
-        {
-            GenerateRouteInfos();
-        }
-
-        await HttpContext.SendPacketAsync(_records);
+        await HttpContext.SendPacketAsync(Records);
     }
 
-    [MemberNotNull(nameof(_records))]
-    private void GenerateRouteInfos()
+    private static List<ApiEndpointRecord> GenerateRouteInfos()
     {
-        _records = [];
+        var records = new List<ApiEndpointRecord>();
         foreach (var methodInfo in typeof(ApiMap).GetMethods())
         {
-            _records.AddRange(
+            records.AddRange(
                 methodInfo
                     .GetCustomAttributes(typeof(RouteAttribute), true)
                     .OfType<RouteAttribute>()
@@ -65,5 +61,7 @@ internal sealed partial class ApiMap(
                     )
             );
         }
+
+        return records;
     }
 }

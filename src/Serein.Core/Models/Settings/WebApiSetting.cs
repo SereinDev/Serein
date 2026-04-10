@@ -4,7 +4,7 @@ namespace Serein.Core.Models.Settings;
 
 public class WebApiSetting : NotifyPropertyChangedModelBase
 {
-    public bool IsEnabled { get; set; }
+    public bool StartWhenSettingUp { get; set; }
 
     public string[] UrlPrefixes { get; set; } = ["http://127.0.0.1:50000/"];
 
@@ -13,8 +13,6 @@ public class WebApiSetting : NotifyPropertyChangedModelBase
     public int MaxRequestsPerSecond { get; set; } = 50;
 
     public string[] WhiteList { get; set; } = ["127.0.0.1", "::1"];
-
-    public string[] AccessTokens { get; set; } = [];
 
     public CertificateSetting Certificate { get; set; } = new();
 }

@@ -1,0 +1,15 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="src/Serein.Core/Serein.Core.csproj" />
+  
+  <Project Path="src/Serein.ConnectionProtocols/Serein.ConnectionProtocols.csproj" />
+  <Project Path="src/Serein.Tests/Serein.Tests.csproj" />
+  <Project Path="src/Serein.Plugins.Demo/Serein.Plugins.Demo.csproj" />
+
+  <Project Path="src/Serein.Console/Serein.Console.csproj" />
+  <Project Path="src/Serein.Gui/Serein.Gui.csproj" />
+</Solution>

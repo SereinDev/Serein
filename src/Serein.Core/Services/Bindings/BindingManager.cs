@@ -13,33 +13,42 @@ using Serein.Core.Services.Servers;
 
 namespace Serein.Core.Services.Bindings;
 
-public sealed class BindingManager(IServiceProvider services, SettingProvider settingProvider)
+public sealed class BindingManager
 {
     private readonly object _lock = new();
+    private readonly IServiceScopeFactory _scopeFactory;
+    private readonly SettingProvider _settingProvider;
 
-    private readonly Lazy<ServerManager> _serverManager = new(
-        services.GetRequiredService<ServerManager>
-    );
+    private readonly Lazy<ServerManager> _serverManager;
 
-    private BindingRecordDbContext BindingRecordDbContext
+    public BindingManager(
+        IServiceProvider services,
+        IServiceScopeFactory scopeFactory,
+        SettingProvider settingProvider
+    )
     {
-        get
+        _scopeFactory = scopeFactory;
+        _settingProvider = settingProvider;
+        _serverManager = new(services.GetRequiredService<ServerManager>);
+
+        InitializeDatabase();
+    }
+
+    private void InitializeDatabase()
+    {
+        using var scope = _scopeFactory.CreateScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<BindingRecordDbContext>();
+        ctx.Database.EnsureCreated();
+
+        try
         {
-            var ctx = services.GetRequiredService<BindingRecordDbContext>();
-            ctx.Database.EnsureCreated();
-
-            try
-            {
-                var databaseCreator =
-                    ctx.Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator;
-                databaseCreator?.CreateTables();
-            }
-            catch (SqliteException)
-            {
-                // A SqlException will be thrown if tables already exist. So simply ignore it.
-            }
-
-            return ctx;
+            var databaseCreator =
+                ctx.Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator;
+            databaseCreator?.CreateTables();
+        }
+        catch (SqliteException)
+        {
+            // A SqlException will be thrown if tables already exist. So simply ignore it.
         }
     }
 
@@ -47,7 +56,7 @@ public sealed class BindingManager(IServiceProvider services, SettingProvider se
     {
         ArgumentException.ThrowIfNullOrEmpty(gameId, nameof(gameId));
 
-        var regex = new Regex(settingProvider.Value.Application.GameIdValidationPattern);
+        var regex = new Regex(_settingProvider.Value.Application.GameIdValidationPattern);
 
         if (!regex.IsMatch(gameId))
         {
@@ -55,7 +64,18 @@ public sealed class BindingManager(IServiceProvider services, SettingProvider se
         }
     }
 
-    public IReadOnlyList<BindingRecord> Records => [.. BindingRecordDbContext.Datas];
+    public IReadOnlyList<BindingRecord> Records
+    {
+        get
+        {
+            lock (_lock)
+            {
+                using var scope = _scopeFactory.CreateScope();
+                var context = scope.ServiceProvider.GetRequiredService<BindingRecordDbContext>();
+                return [.. context.Datas];
+            }
+        }
+    }
 
     public BindingRecord? Get(string id)
     {
@@ -70,7 +90,8 @@ public sealed class BindingManager(IServiceProvider services, SettingProvider se
     {
         lock (_lock)
         {
-            using var context = BindingRecordDbContext;
+            using var scope = _scopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<BindingRecordDbContext>();
             return TryGet(context, id, out bindingRecord);
         }
     }
@@ -92,7 +113,8 @@ public sealed class BindingManager(IServiceProvider services, SettingProvider se
     {
         lock (_lock)
         {
-            using var context = BindingRecordDbContext;
+            using var scope = _scopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<BindingRecordDbContext>();
             CheckConflict(context, userId, gameId);
         }
     }
@@ -120,7 +142,7 @@ public sealed class BindingManager(IServiceProvider services, SettingProvider se
         ArgumentException.ThrowIfNullOrEmpty(bindingRecord.UserId, nameof(bindingRecord.UserId));
 
         if (
-            settingProvider.Value.Application.DisableBindingManagerWhenAllServersStopped
+            _settingProvider.Value.Application.DisableBindingManagerWhenAllServersStopped
             && !_serverManager.Value.AnyRunning
         )
         {
@@ -129,7 +151,8 @@ public sealed class BindingManager(IServiceProvider services, SettingProvider se
 
         lock (_lock)
         {
-            using var context = BindingRecordDbContext;
+            using var scope = _scopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<BindingRecordDbContext>();
 
             foreach (var gameId in bindingRecord.GameIds)
             {
@@ -182,7 +205,7 @@ public sealed class BindingManager(IServiceProvider services, SettingProvider se
     public void Remove(string userId, string gameId)
     {
         if (
-            settingProvider.Value.Application.DisableBindingManagerWhenAllServersStopped
+            _settingProvider.Value.Application.DisableBindingManagerWhenAllServersStopped
             && !_serverManager.Value.AnyRunning
         )
         {
@@ -191,7 +214,8 @@ public sealed class BindingManager(IServiceProvider services, SettingProvider se
 
         lock (_lock)
         {
-            using var context = BindingRecordDbContext;
+            using var scope = _scopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<BindingRecordDbContext>();
             if (!TryGet(context, userId, out var record) || !record.GameIds.Remove(gameId))
             {
                 throw new BindingFailureException("未绑定此Id");

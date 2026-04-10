@@ -9,7 +9,6 @@ using Serein.ConnectionProtocols.Models.OneBot.V12.Messages;
 using Serein.ConnectionProtocols.Models.Satori.V1.Channels;
 using Serein.Core.Models.Automations;
 using Serein.Core.Models.Automations.Triggers;
-using Serein.Core.Models.Commands;
 using Serein.Core.Models.Network.Connection;
 
 namespace Serein.Core.Services.Automations.TriggerHandlers;
@@ -89,16 +88,11 @@ public sealed class MatchTriggerHandler
     {
         var tasks = new List<Task>();
 
-        _taskHost.EnumerateAllTriggers(
+        _taskHost.EnumerateAllTriggers<MatchTrigger>(
             (task, trigger) =>
             {
-                if (trigger is not MatchTrigger matchTrigger)
-                {
-                    return;
-                }
-
                 if (
-                    matchTrigger.FieldType
+                    trigger.FieldType
                     != (
                         serverLine.IsInput
                             ? MatchFieldType.ServerInput
@@ -109,28 +103,23 @@ public sealed class MatchTriggerHandler
                     return;
                 }
 
-                if (matchTrigger.IsRegex && matchTrigger.Regex is not null)
+                if (trigger.IsRegex && trigger.Regex is not null)
                 {
-                    var matches = matchTrigger.Regex.Match(serverLine.Text);
+                    var matches = trigger.Regex.Match(serverLine.Text);
 
                     if (matches.Success)
                     {
                         tasks.Add(
                             _taskHost.RunTaskAsync(
                                 task,
-                                new CommandContext { Match = matches, ServerId = serverLine.Id }
+                                new() { Match = matches, ServerId = serverLine.Id }
                             )
                         );
                     }
                 }
-                else if (serverLine.Text.Contains(matchTrigger.Pattern))
+                else if (serverLine.Text.Contains(trigger.Pattern))
                 {
-                    tasks.Add(
-                        _taskHost.RunTaskAsync(
-                            task,
-                            new CommandContext { ServerId = serverLine.Id }
-                        )
-                    );
+                    tasks.Add(_taskHost.RunTaskAsync(task, new() { ServerId = serverLine.Id }));
                 }
             }
         );
@@ -162,15 +151,10 @@ public sealed class MatchTriggerHandler
     {
         var tasks = new List<Task>();
 
-        _taskHost.EnumerateAllTriggers(
+        _taskHost.EnumerateAllTriggers<MatchTrigger>(
             (task, trigger) =>
             {
-                if (trigger is not MatchTrigger matchTrigger)
-                {
-                    return;
-                }
-
-                if (!CheckFieldType(matchTrigger, packets))
+                if (!CheckFieldType(trigger, packets))
                 {
                     return;
                 }
@@ -180,25 +164,23 @@ public sealed class MatchTriggerHandler
                     return;
                 }
 
-                if (matchTrigger.IsRegex && matchTrigger.Regex is not null)
+                if (trigger.IsRegex && trigger.Regex is not null)
                 {
-                    var matches = matchTrigger.Regex.Match(packets.Message);
+                    var matches = trigger.Regex.Match(packets.Message);
 
                     if (matches.Success)
                     {
                         tasks.Add(
                             _taskHost.RunTaskAsync(
                                 task,
-                                new CommandContext { Match = matches, Packets = packets }
+                                new() { Match = matches, Packets = packets }
                             )
                         );
                     }
                 }
-                else if (packets.Message.Contains(matchTrigger.Pattern))
+                else if (packets.Message.Contains(trigger.Pattern))
                 {
-                    tasks.Add(
-                        _taskHost.RunTaskAsync(task, new CommandContext { Packets = packets })
-                    );
+                    tasks.Add(_taskHost.RunTaskAsync(task, new() { Packets = packets }));
                 }
             }
         );

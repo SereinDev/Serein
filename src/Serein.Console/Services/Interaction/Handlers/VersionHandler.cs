@@ -2,12 +2,11 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
 using Serein.Console.Utils;
-using Serein.Core;
 using Spectre.Console;
 
 namespace Serein.Console.Services.Interaction.Handlers;
 
-public sealed class VersionHandler(SereinApp sereinApp) : CommandHandler
+public sealed class VersionHandler : CommandHandler
 {
     public override string Name { get; } = "版本";
 
@@ -25,7 +24,9 @@ public sealed class VersionHandler(SereinApp sereinApp) : CommandHandler
             .AddColumn(new("") { Alignment = Justify.Center })
             .AddColumn("")
             .AddRow("程序集", typeof(Program).Assembly.ToString())
-            .AddRow("详细版本", sereinApp.FullVersion)
+            .AddRow("详细版本", ThisAssembly.Info.InformationalVersion.EscapeMarkup())
+            .AddRow("分支", ThisAssembly.Git.Branch.EscapeMarkup())
+            .AddRow("编译时根目录", ThisAssembly.Git.Root.EscapeMarkup())
             .AddRow(
                 "运行时",
                 $"{RuntimeInformation.FrameworkDescription} ({RuntimeInformation.RuntimeIdentifier})"

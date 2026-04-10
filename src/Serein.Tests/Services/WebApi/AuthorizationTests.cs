@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serein.Core.Models.Network.Web.WebAuthentication;
 using Serein.Core.Services.Data;
 using Xunit;
 
@@ -21,8 +22,11 @@ public class AuthorizationTests : IDisposable
         _app = HostFactory.BuildNew();
 
         var settingProvider = _app.Services.GetRequiredService<SettingProvider>();
-        settingProvider.Value.WebApi.IsEnabled = true;
-        settingProvider.Value.WebApi.AccessTokens = ["123456"];
+        var webAuthenticationProvider =
+            _app.Services.GetRequiredService<WebAuthenticationProvider>();
+        settingProvider.Value.WebApi.StartWhenSettingUp = true;
+        webAuthenticationProvider.Value.Clear();
+        webAuthenticationProvider.Value.Add(new TokenAuthentication { Token = "123456" });
         _client = new() { BaseAddress = new(settingProvider.Value.WebApi.UrlPrefixes.First()) };
         _app.Start();
     }

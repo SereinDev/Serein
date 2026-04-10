@@ -1,4 +1,5 @@
-﻿using System.Timers;
+﻿using System.Security.Principal;
+using System.Timers;
 using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Commands;
@@ -12,9 +13,11 @@ public sealed class TitleUpdater : NotifyPropertyChangedModelBase
     private readonly SettingProvider _settingProvider;
     private readonly CommandParser _commandParser;
     private readonly Timer _timer;
+    private readonly bool _isSystemAdmin;
 
     public TitleUpdater(SettingProvider settingProvider, CommandParser commandParser)
     {
+        _isSystemAdmin = GetIsSystemAdmin();
         _settingProvider = settingProvider;
         _commandParser = commandParser;
         _timer = new(2000) { Enabled = true };
@@ -36,6 +39,26 @@ public sealed class TitleUpdater : NotifyPropertyChangedModelBase
             _settingProvider.Value.Application.CustomTitle,
             null
         );
+
+        if (string.IsNullOrEmpty(postfix) && _isSystemAdmin)
+        {
+            postfix = "管理员";
+        }
+
         CustomTitle = string.IsNullOrEmpty(postfix) ? Name : $"{Name} - {postfix}";
+    }
+
+    private static bool GetIsSystemAdmin()
+    {
+        try
+        {
+            return new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(
+                WindowsBuiltInRole.Administrator
+            );
+        }
+        catch
+        {
+            return false;
+        }
     }
 }

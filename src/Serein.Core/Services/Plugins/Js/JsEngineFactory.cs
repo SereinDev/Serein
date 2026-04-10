@@ -112,10 +112,7 @@ public sealed class JsEngineFactory(
     {
         var engine = new Engine(PrepareOptions(jsPlugin));
 
-        if (settingProvider.Value.Application.EnableWebAPIForJsPlugins)
-        {
-            engine.InitializeWebApi(new() { CancellationToken = jsPlugin.CancellationToken });
-        }
+        engine.InitializeWebApi(new() { CancellationToken = jsPlugin.CancellationToken });
 
         engine.SetValue("serein", jsPlugin.ScriptInstance);
         engine.SetValue("console", jsPlugin.Console);

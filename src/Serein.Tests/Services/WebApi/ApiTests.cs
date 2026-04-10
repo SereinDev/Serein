@@ -23,7 +23,7 @@ public partial class ApiTests : IDisposable
         _app = HostFactory.BuildNew();
 
         var settingProvider = _app.Services.GetRequiredService<SettingProvider>();
-        settingProvider.Value.WebApi.IsEnabled = true;
+        settingProvider.Value.WebApi.StartWhenSettingUp = true;
         _client = new() { BaseAddress = new(settingProvider.Value.WebApi.UrlPrefixes.First()) };
         _app.Start();
     }

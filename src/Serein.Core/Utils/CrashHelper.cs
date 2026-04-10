@@ -1,6 +1,8 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using Sentry;
 
@@ -31,10 +33,15 @@ internal static class CrashHelper
             sb.AppendLine("时间：" + date.ToString("o"));
             sb.AppendLine("文件路径：" + AppDomain.CurrentDomain.BaseDirectory);
             sb.AppendLine("操作系统：" + Environment.OSVersion);
-            sb.AppendLine("CLR版本：" + Environment.Version);
+            sb.AppendLine(
+                "CLR版本："
+                    + $"{RuntimeInformation.FrameworkDescription} ({RuntimeInformation.RuntimeIdentifier})"
+            );
             sb.AppendLine("已加载的程序集：");
 
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            foreach (
+                var assembly in AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName)
+            )
             {
                 try
                 {

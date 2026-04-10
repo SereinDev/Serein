@@ -25,7 +25,7 @@ internal sealed class RequestInterceptorModule : IPBanningModule
 
         OnHttpException = async (context, exception) =>
         {
-            if (context.Request.Url.PathAndQuery.StartsWith("/api/"))
+            if (context.Request.Url.AbsolutePath.StartsWith("/api"))
             {
                 await ApiHelper.HandleHttpException(context, exception);
             }

@@ -19,11 +19,12 @@ internal sealed class ConnectionWebSocketModule : WebSocketModuleBase
 
     public ConnectionWebSocketModule(
         ILogger<ConnectionWebSocketModule> logger,
-        SettingProvider settingProvider,
+        WebAuthenticationProvider webAuthenticationProvider,
+        WebSocketTicketService webSocketTicketService,
         ConnectionManager connectionManager,
         ConnectionLoggerBase connectionLoggerBase
     )
-        : base("/ws/connection", settingProvider)
+        : base("/ws/connection", webAuthenticationProvider, webSocketTicketService)
     {
         _logger = logger;
         _connectionManager = connectionManager;

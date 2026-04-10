@@ -14,23 +14,20 @@ public sealed class EventTriggerHandler(TaskHost taskHost, ILogger<EventTriggerH
     {
         var tasks = new List<Task>();
 
-        taskHost.EnumerateAllTriggers(
+        taskHost.EnumerateAllTriggers<EventTrigger>(
             (task, trigger) =>
             {
-                if (
-                    trigger is EventTrigger eventTrigger
-                    && eventTrigger.Events.Contains(eventType)
-                )
+                if (trigger.Events.Contains(eventType))
                 {
                     tasks.Add(taskHost.RunTaskAsync(task, context));
                 }
             }
         );
 
-        await Task.WhenAll(tasks);
+        await Task.WhenAll(tasks).ConfigureAwait(false);
     }
 
-    internal async Task CallAsync(
+    public async Task CallAsync(
         Events type,
         EventTarget? target = null,
         IReadOnlyDictionary<string, string?>? variables = null
@@ -38,9 +35,6 @@ public sealed class EventTriggerHandler(TaskHost taskHost, ILogger<EventTriggerH
     {
         logger.LogDebug("触发：Type={}, Target={}", type, target);
 
-        await TriggerAsync(
-            type,
-            new CommandContext { Variables = variables, ServerId = target?.ServerId }
-        );
+        await TriggerAsync(type, new() { Variables = variables, ServerId = target?.ServerId });
     }
 }

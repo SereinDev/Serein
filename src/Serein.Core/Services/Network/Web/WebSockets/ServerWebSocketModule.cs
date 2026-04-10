@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Web;
@@ -8,23 +7,30 @@ using EmbedIO.WebSockets;
 using Serein.Core.Models.Network.Web;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Data;
+using Serein.Core.Services.Network.Web;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Network.Web.WebSockets;
 
-internal class ServerWebSocketModule : WebSocketModule
+internal class ServerWebSocketModule : WebSocketModuleBase
 {
     private readonly ServerManager _serverManager;
-    private readonly SettingProvider _settingProvider;
+    private readonly WebAuthenticationProvider _webAuthenticationProvider;
+    private readonly WebSocketTicketService _webSocketTicketService;
     private readonly Dictionary<string, List<IWebSocketContext>> _clients = [];
 
-    public ServerWebSocketModule(ServerManager serverManager, SettingProvider settingProvider)
-        : base("/ws/server", true)
+    public ServerWebSocketModule(
+        ServerManager serverManager,
+        WebAuthenticationProvider webAuthenticationProvider,
+        WebSocketTicketService webSocketTicketService
+    )
+        : base("/ws/server", webAuthenticationProvider, webSocketTicketService)
     {
         _serverManager = serverManager;
-        _settingProvider = settingProvider;
+        _webAuthenticationProvider = webAuthenticationProvider;
+        _webSocketTicketService = webSocketTicketService;
         _serverManager.ServersUpdated += OnServersUpdate;
 
         foreach (var server in _serverManager.Servers.Values)
@@ -46,15 +52,8 @@ internal class ServerWebSocketModule : WebSocketModule
     protected override async Task OnClientConnectedAsync(IWebSocketContext context)
     {
         var query = HttpUtility.ParseQueryString(context.RequestUri.Query);
-        var auth = query.Get("token");
 
-        if (
-            _settingProvider.Value.WebApi.AccessTokens.Length != 0
-            && (
-                string.IsNullOrEmpty(auth)
-                || !_settingProvider.Value.WebApi.AccessTokens.Contains(auth)
-            )
-        )
+        if (!TryAuthorize(context, query, _webAuthenticationProvider, _webSocketTicketService))
         {
             await context.WebSocket.CloseAsync();
             return;

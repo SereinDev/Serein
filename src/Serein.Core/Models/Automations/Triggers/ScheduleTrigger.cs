@@ -6,6 +6,8 @@ namespace Serein.Core.Models.Automations.Triggers;
 
 public sealed class ScheduleTrigger : TriggerBase
 {
+    public override TriggerType Type => TriggerType.Schedule;
+
     private string _cronExpression = string.Empty;
 
     public string CronExpression

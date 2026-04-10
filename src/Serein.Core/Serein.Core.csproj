@@ -31,7 +31,15 @@
         <PackageReference Include="Quick.PtyNet" Version="1.0.3" />
         <PackageReference Include="Sentry.Profiling" Version="6.0.0" />
         <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
+        <PackageReference Include="ThisAssembly.AssemblyInfo" Version="2.1.2">
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+          <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="ThisAssembly.Git" Version="2.1.2">
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+          <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
         <PackageReference Include="WebSocket4Net" Version="0.15.2" />
-        <PackageReference Include="Yilduz" Version="0.0.14" />
+        <PackageReference Include="Yilduz" Version="0.1.0" />
     </ItemGroup>
 </Project>

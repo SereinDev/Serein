@@ -8,6 +8,7 @@ using EmbedIO.WebApi;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serein.Core.Models.Abstractions;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Web.Apis;
 using Serein.Core.Services.Network.Web.WebSockets;
@@ -16,7 +17,7 @@ using Swan.Logging;
 
 namespace Serein.Core.Services.Network.Web;
 
-public sealed class WebServer
+public sealed class WebServer : NotifyPropertyChangedModelBase
 {
     static WebServer()
     {
@@ -60,6 +61,11 @@ public sealed class WebServer
 
     public WebServerState State => _webServer?.State ?? WebServerState.Stopped;
 
+    private void UpdateState()
+    {
+        RaisePropertyChanged(nameof(State));
+    }
+
     public void Start()
     {
         if (State != WebServerState.Stopped && State != WebServerState.Created)
@@ -68,18 +74,23 @@ public sealed class WebServer
         }
 
         _webServer = new EmbedIO.WebServer(CreateOptions());
+        _webServer.StateChanged += (_, _) => UpdateState();
+        UpdateState();
 
         if (_settingProvider.Value.WebApi.AllowCrossOrigin)
         {
             _webServer.WithCors();
         }
 
-        _webServer.WithModule(new AuthGate(_settingProvider));
+        var webAuthenticationProvider =
+            _serviceProvider.GetRequiredService<WebAuthenticationProvider>();
+        _webServer.WithModule(new AuthGate(webAuthenticationProvider));
         _webServer.WithModule(_serviceProvider.GetRequiredService<RequestInterceptorModule>());
         _webServer.WithModule(_serviceProvider.GetRequiredService<ServerWebSocketModule>());
         _webServer.WithModule(_serviceProvider.GetRequiredService<ConnectionWebSocketModule>());
         _webServer.WithModule(_serviceProvider.GetRequiredService<PluginWebSocketModule>());
 
+        _webServer.OnGet("/_auth", (context) => throw HttpException.Redirect("/"));
         _webServer.WithWebApi(
             "/api",
             (module) =>
@@ -88,8 +99,8 @@ public sealed class WebServer
                     .HandleUnhandledException(ApiHelper.HandleException)
                     .WithController(() => _serviceProvider.GetRequiredService<ApiMap>())
         );
-        _webServer.WithStaticFolder("/", PathConstants.WebRoot, true);
 
+        _webServer.WithStaticFolder("/", PathConstants.WebRoot, true);
         _webServer.HandleUnhandledException(OnUnhandledException);
 
         _cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(

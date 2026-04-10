@@ -28,7 +28,7 @@ public class Demo : PluginBase
         Call();
     }
 
-    public override void Dispose()
+    protected override void OnDisposing()
     {
         Call();
     }

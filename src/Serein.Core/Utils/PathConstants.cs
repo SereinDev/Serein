@@ -27,6 +27,8 @@ public static class PathConstants
 
     public static readonly string AutomationTasksFile = "Serein/automation-tasks.json";
 
+    public static readonly string WebAuthenticationsFile = "Serein/web-authentications.json";
+
     public static readonly string SettingFile = "Serein/setting.json";
 
     public static readonly string PluginsDirectory = "Serein/plugins";

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Network.Web;
 using Serein.Core.Services.Data;
+using Serein.Core.Services.Network.Web;
 using Serein.Core.Utils.Extensions;
 using Serein.Core.Utils.Json;
 
@@ -16,10 +17,11 @@ internal sealed class PluginWebSocketModule : WebSocketModuleBase
 
     public PluginWebSocketModule(
         ILogger<PluginWebSocketModule> logger,
-        SettingProvider settingProvider,
+        WebAuthenticationProvider webAuthenticationProvider,
+        WebSocketTicketService webSocketTicketService,
         PluginLoggerBase pluginLoggerBase
     )
-        : base("/ws/plugins", settingProvider)
+        : base("/ws/plugins", webAuthenticationProvider, webSocketTicketService)
     {
         _logger = logger;
         _pluginLoggerBase = pluginLoggerBase;

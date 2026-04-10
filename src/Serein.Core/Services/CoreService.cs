@@ -77,7 +77,7 @@ internal sealed partial class CoreService : IHostedService
             }
         }
 
-        if (_settingProvider.Value.WebApi.IsEnabled)
+        if (_settingProvider.Value.WebApi.StartWhenSettingUp)
         {
             _logger.LogInformation("正在启动Web服务器");
             Try(_httpServer.Start, "Web Server");

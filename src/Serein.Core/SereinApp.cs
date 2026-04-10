@@ -6,8 +6,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Serein.Core;
 
-#pragma warning disable CS0612
-
 public sealed class SereinApp
 {
     private static SereinApp? s_sereinApp;
@@ -23,10 +21,8 @@ public sealed class SereinApp
         Services = serviceProvider;
 
         AssemblyName = typeof(SereinApp).Assembly.FullName!;
-        Version = typeof(SereinApp).Assembly.GetName().Version!;
-        FullVersion = typeof(SereinApp)
-            .Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()!
-            .InformationalVersion;
+        Version = Version.Parse(ThisAssembly.Info.Version);
+        FullVersion = ThisAssembly.Info.InformationalVersion;
         Type = Assembly.GetEntryAssembly()?.GetName().Name switch
         {
             "Serein.Console" => AppType.Console,

@@ -7,15 +7,12 @@ public sealed class PluginTriggerHandler(TaskHost taskHost, ILogger<PluginTrigge
 {
     public void CallPluginTriggersByKey(string key)
     {
-        taskHost.EnumerateAllTriggers(
+        taskHost.EnumerateAllTriggers<PluginTrigger>(
             (_, trigger) =>
             {
-                if (trigger is PluginTrigger pluginTrigger && pluginTrigger.Key == key)
+                if (trigger.Key == key)
                 {
-                    logger.LogInformation(
-                        "触发自动化任务，触发器：{}",
-                        pluginTrigger.GetType().Name
-                    );
+                    logger.LogInformation("触发自动化任务，触发器：{}", trigger.GetType().Name);
                 }
             }
         );

@@ -78,9 +78,14 @@ public static class SimpleConsole
 
     public static void WriteLine(LogLevel logLevel, string content)
     {
+        var contentStyle = GetContentStyle(logLevel);
         WriteLine(
             logLevel,
-            new Markup($"[{GetContentStyle(logLevel)}]{content.EscapeMarkup()}[/] ")
+            new Markup(
+                string.IsNullOrEmpty(contentStyle)
+                    ? content.EscapeMarkup()
+                    : $"[{contentStyle}]{content.EscapeMarkup()}[/] "
+            )
         );
     }
 

@@ -1,5 +1,3 @@
-using System;
-
 namespace Serein.Core;
 
 /// <summary>

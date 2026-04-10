@@ -16,7 +16,7 @@ using Serein.Gui.Utils;
 
 namespace Serein.Gui.ViewModels;
 
-public class PluginListPageViewModel
+public sealed class PluginListPageViewModel
 {
     private readonly InfoBarProvider _infoBarProvider;
     private readonly PluginManager _pluginManager;

@@ -101,7 +101,10 @@ public partial class CommandPromptCallbacks : PromptCallbacks
 
                 case "plugin"
                     when args.Length == 3
-                        && args[1].Equals("disable", StringComparison.OrdinalIgnoreCase):
+                        && (
+                            args[1].Equals("disable", StringComparison.OrdinalIgnoreCase)
+                            || args[1].Equals("info", StringComparison.OrdinalIgnoreCase)
+                        ):
                     return Task.FromResult<IReadOnlyList<CompletionItem>>(
                         [
                             .. GetPluginIdCompletionItem()

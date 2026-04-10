@@ -9,8 +9,9 @@
     xmlns:net="clr-namespace:Serein.Core.Services.Network;assembly=Serein.Core"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    xmlns:viewmodels="clr-namespace:Serein.Gui.ViewModels"
     Title="应用设置"
-    d:DataContext="{d:DesignInstance Type=data:SettingProvider}"
+    d:DataContext="{d:DesignInstance Type=viewmodels:AppSettingPageViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -37,8 +38,7 @@
                     HorizontalAlignment="Left"
                     LostFocus="OnPropertyChanged"
                     Minimum="0"
-                    SpinButtonPlacementMode="Compact"
-                    Value="{Binding Value.Application.MaximumWaitTimeForPluginEvents}" />
+                    SpinButtonPlacementMode="Compact"                    Value="{Binding ApplicationSetting.MaximumWaitTimeForPluginEvents}" />
             </ui:SettingsCard>
 
             <ui:SettingsExpander Description="此处的程序集将会被所有Js插件加载" Header="Js插件默认加载的程序集">
@@ -60,7 +60,7 @@
                         <TextBox
                             AcceptsReturn="True"
                             LostFocus="OnPropertyChanged"
-                            Text="{Binding Value.Application.JsDefaultAssemblies, Converter={StaticResource multiLinesConverter}}"
+                            Text="{Binding ApplicationSetting.JsDefaultAssemblies, Converter={StaticResource multiLinesConverter}}"
                             TextWrapping="Wrap" />
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
@@ -85,7 +85,7 @@
                         <TextBox
                             AcceptsReturn="True"
                             LostFocus="OnPropertyChanged"
-                            Text="{Binding Value.Application.JsFilesToExcludeFromLoading, Converter={StaticResource multiLinesConverter}}"
+                            Text="{Binding ApplicationSetting.JsFilesToExcludeFromLoading, Converter={StaticResource multiLinesConverter}}"
                             TextWrapping="Wrap" />
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
@@ -123,7 +123,7 @@
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
 
-                <ui:ToggleSwitch IsOn="{Binding Value.Application.EnableWebAPIForJsPlugins}" Toggled="OnPropertyChanged" />
+                <ui:ToggleSwitch IsOn="{Binding ApplicationSetting.EnableWebAPIForJsPlugins}" Toggled="OnPropertyChanged" />
 
             </ui:SettingsExpander>
 
@@ -146,21 +146,21 @@
                     </ui:InfoBar>
                 </ui:SettingsExpander.ItemsHeader>
 
-                <TextBlock Style="{DynamicResource SettingsExpanderValue}" Text="{Binding Value.Application.GameIdValidationPattern}" />
+                <TextBlock Style="{DynamicResource SettingsExpanderValue}" Text="{Binding ApplicationSetting.GameIdValidationPattern}" />
 
                 <ui:SettingsExpander.Items>
                     <ui:SettingsCard ContentAlignment="Left">
                         <TextBox
                             AcceptsReturn="False"
                             LostFocus="OnPropertyChanged"
-                            Text="{Binding Value.Application.GameIdValidationPattern}"
+                            Text="{Binding ApplicationSetting.GameIdValidationPattern}"
                             TextWrapping="Wrap" />
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
 
             <ui:SettingsCard Description="只影响通过Serein命令执行的绑定" Header="当服务器关闭时禁用绑定功能">
-                <ui:ToggleSwitch IsOn="{Binding Value.Application.DisableBindingManagerWhenAllServersStopped}" Toggled="OnPropertyChanged" />
+                <ui:ToggleSwitch IsOn="{Binding ApplicationSetting.DisableBindingManagerWhenAllServersStopped}" Toggled="OnPropertyChanged" />
             </ui:SettingsCard>
 
             <TextBlock
@@ -187,7 +187,7 @@
                         <TextBox
                             AcceptsReturn="True"
                             LostFocus="OnPropertyChanged"
-                            Text="{Binding Value.Application.MultiLineMatchingPatterns, Converter={StaticResource multiLinesConverter}}"
+                            Text="{Binding ApplicationSetting.MultiLineMatchingPatterns, Converter={StaticResource multiLinesConverter}}"
                             TextWrapping="Wrap" />
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
@@ -199,11 +199,11 @@
 · 更改后重启生效
 · 上报时可能会收集部分系统和环境信息并产生一定网络流量</sys:String>
                 </ui:SettingsCard.Description>
-                <ui:ToggleSwitch IsOn="{Binding Value.Application.EnableSentry}" Toggled="OnPropertyChanged" />
+                <ui:ToggleSwitch IsOn="{Binding ApplicationSetting.EnableSentry}" Toggled="OnPropertyChanged" />
             </ui:SettingsCard>
 
             <ui:SettingsCard
-                Click="OpenConsole_Click"
+                Command="{Binding OpenConsoleCommand}"
                 Description="查看Serein内部的输出，这可能带来一定卡顿和延迟"
                 Header="打开日志控制台"
                 IsClickEnabled="True" />
@@ -219,7 +219,7 @@
 · 跟随系统选项可能无法生效</sys:String>
                 </ui:SettingsCard.Description>
 
-                <ComboBox SelectedIndex="{Binding Value.Application.Theme, Converter={StaticResource enumValueConverter}}" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBox SelectedIndex="{Binding ApplicationSetting.Theme, Converter={StaticResource enumValueConverter}}" SelectionChanged="OnPropertyChanged">
                     <ComboBoxItem>跟随系统</ComboBoxItem>
                     <ComboBoxItem>浅色</ComboBoxItem>
                     <ComboBoxItem>深色</ComboBoxItem>
@@ -227,7 +227,7 @@
             </ui:SettingsCard>
 
             <ui:SettingsExpander Header="标题后缀">
-                <TextBlock Style="{DynamicResource SettingsExpanderValue}" Text="{Binding Value.Application.CustomTitle}" />
+                <TextBlock Style="{DynamicResource SettingsExpanderValue}" Text="{Binding ApplicationSetting.CustomTitle}" />
 
                 <ui:SettingsExpander.Description>
                     <sys:String xml:space="preserve">显示在标题栏的内容
@@ -237,7 +237,7 @@
                     <ui:SettingsCard ContentAlignment="Left">
                         <TextBox
                             LostFocus="OnPropertyChanged"
-                            Text="{Binding Value.Application.CustomTitle, UpdateSourceTrigger=PropertyChanged}"
+                            Text="{Binding ApplicationSetting.CustomTitle, UpdateSourceTrigger=PropertyChanged}"
                             TextWrapping="Wrap" />
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
@@ -249,33 +249,36 @@
                 Text="更新" />
 
             <ui:SettingsCard Description="启动后自动获取更新提示（建议开启）" Header="获取更新提示">
-                <ui:ToggleSwitch IsOn="{Binding Value.Application.CheckUpdate}" Toggled="OnPropertyChanged" />
+                <ui:ToggleSwitch IsOn="{Binding ApplicationSetting.CheckUpdate}" Toggled="OnPropertyChanged" />
             </ui:SettingsCard>
 
             <ui:SettingsCard Description="应用关闭后自动替换新版本" Header="自动更新">
                 <ui:ToggleSwitch
-                    IsEnabled="{Binding Value.Application.CheckUpdate}"
-                    IsOn="{Binding Value.Application.AutoUpdate}"
+                    IsEnabled="{Binding ApplicationSetting.CheckUpdate}"
+                    IsOn="{Binding ApplicationSetting.AutoUpdate}"
                     Toggled="OnPropertyChanged" />
             </ui:SettingsCard>
 
             <ui:SettingsCard
-                Click="SettingsCard_Click"
+                Command="{Binding CheckUpdateCommand}"
                 Header="检查更新"
                 IsClickEnabled="True" />
 
             <ui:InfoBar
                 x:Name="VersionInfoBar"
+                Title="{Binding VersionInfoTitle}"
                 Margin="0,5"
-                IsClosable="False" />
+                IsClosable="False"
+                IsOpen="{Binding IsVersionInfoOpen}"
+                Message="{Binding VersionInfoMessage}"
+                Severity="{Binding VersionInfoSeverity}" />
 
             <ui:InfoBar
                 x:Name="ReadyToReplaceInfoBar"
                 Title="新版本下载完毕"
                 Margin="0,5"
-                d:DataContext="{d:DesignInstance Type=net:UpdateChecker}"
                 IsClosable="False"
-                IsOpen="{Binding IsReadyToReplace}"
+                IsOpen="{Binding UpdateChecker.IsReadyToReplace}"
                 Message="重新启动Serein即可更新"
                 Severity="Success" />
 

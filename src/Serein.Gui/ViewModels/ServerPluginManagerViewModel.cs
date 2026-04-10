@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Microsoft.Win32;
+using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils.Extensions;
-using Serein.Core.Models.Abstractions;
 using Serein.Gui.Commands;
 using Serein.Gui.Utils;
 
@@ -75,10 +75,7 @@ public class ServerPluginManagerViewModel : NotifyPropertyChangedModelBase
 
     private void Import()
     {
-        var openFileDialog = new OpenFileDialog
-        {
-            Filter = "插件文件|*.dll;*.jar;*.js;*.py;*.lua",
-        };
+        var openFileDialog = new OpenFileDialog { Filter = "插件文件|*.dll;*.jar;*.js;*.py;*.lua" };
         if (openFileDialog.ShowDialog() == true)
         {
             try
@@ -105,7 +102,10 @@ public class ServerPluginManagerViewModel : NotifyPropertyChangedModelBase
             }
             catch (Exception ex)
             {
-                DialogFactory.ShowSimpleDialog($"启用插件\"{plugin.FriendlyName}\"失败", ex.Message);
+                DialogFactory.ShowSimpleDialog(
+                    $"启用插件\"{plugin.FriendlyName}\"失败",
+                    ex.Message
+                );
                 break;
             }
         }
@@ -121,7 +121,10 @@ public class ServerPluginManagerViewModel : NotifyPropertyChangedModelBase
             }
             catch (Exception ex)
             {
-                DialogFactory.ShowSimpleDialog($"禁用插件\"{plugin.FriendlyName}\"失败", ex.Message);
+                DialogFactory.ShowSimpleDialog(
+                    $"禁用插件\"{plugin.FriendlyName}\"失败",
+                    ex.Message
+                );
                 break;
             }
         }
