@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
-using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Web;
 
 namespace Serein.Console.Services.Interaction.Handlers;
@@ -9,8 +8,7 @@ namespace Serein.Console.Services.Interaction.Handlers;
 public sealed class WebServerHandler(
     ILogger<WebServerHandler> logger,
     WebServer webServer,
-    PageExtractor pageExtractor,
-    SettingProvider settingProvider
+    PageExtractor pageExtractor
 ) : CommandHandler
 {
     public override string Name { get; } = "网页服务器";
@@ -34,7 +32,6 @@ public sealed class WebServerHandler(
             case "start":
                 try
                 {
-                    settingProvider.Value.WebApi.StartWhenSettingUp = true;
                     webServer.Start();
                 }
                 catch (Exception e)
@@ -46,7 +43,6 @@ public sealed class WebServerHandler(
             case "stop":
                 try
                 {
-                    settingProvider.Value.WebApi.StartWhenSettingUp = false;
                     webServer.Stop();
                 }
                 catch (Exception e)

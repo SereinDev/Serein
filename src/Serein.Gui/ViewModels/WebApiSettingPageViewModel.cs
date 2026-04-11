@@ -55,7 +55,7 @@ public class WebApiSettingPageViewModel : NotifyPropertyChangedModelBase
         _settingProvider = settingProvider;
         _webAuthenticationProvider =
             _serviceProvider.GetRequiredService<WebAuthenticationProvider>();
-        _webAuthenticationProvider.Value.CollectionChanged += OnWebAuthenticationCollectionChanged;
+        _webAuthenticationProvider.Value.CollectionChanged += WebAuthenticationCollectionChanged;
 
         SaveSettingsCommand = new(SaveSettings);
         ToggleServerStateCommand = new(ToggleServerState);
@@ -64,7 +64,10 @@ public class WebApiSettingPageViewModel : NotifyPropertyChangedModelBase
         OpenFileCommand = new(OpenFile);
     }
 
-    private void OnWebAuthenticationCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    private void WebAuthenticationCollectionChanged(
+        object? sender,
+        NotifyCollectionChangedEventArgs e
+    )
     {
         RaisePropertyChanged(nameof(AuthenticationCountText));
     }

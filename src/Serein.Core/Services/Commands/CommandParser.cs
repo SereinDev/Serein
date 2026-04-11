@@ -425,8 +425,7 @@ public sealed partial class CommandParser(
     private string? GetUserIdByGameId(string input)
     {
         if (
-            !input.StartsWith("user.id", StringComparison.OrdinalIgnoreCase)
-            || !input.Contains('@')
+            !input.StartsWith("user.id", StringComparison.OrdinalIgnoreCase) || !input.Contains('@')
         )
         {
             return null;

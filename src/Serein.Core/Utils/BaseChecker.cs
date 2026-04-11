@@ -20,10 +20,7 @@ internal static partial class BaseChecker
             {
                 if (
                     process.Id == id
-                    || !process.ProcessName.Contains(
-                        "serein",
-                        StringComparison.OrdinalIgnoreCase
-                    )
+                    || !process.ProcessName.Contains("serein", StringComparison.OrdinalIgnoreCase)
                     || Path.GetDirectoryName(process.MainModule?.FileName) != dir
                 )
                 {

@@ -25,7 +25,8 @@ public class WebSocketTests : IDisposable
         _app = HostFactory.BuildNew();
 
         var settingProvider = _app.Services.GetRequiredService<SettingProvider>();
-        var webAuthenticationProvider = _app.Services.GetRequiredService<WebAuthenticationProvider>();
+        var webAuthenticationProvider =
+            _app.Services.GetRequiredService<WebAuthenticationProvider>();
         settingProvider.Value.WebApi.StartWhenSettingUp = true;
         webAuthenticationProvider.Value.Clear();
         webAuthenticationProvider.Value.Add(new TokenAuthentication { Token = "123456" });
@@ -75,7 +76,9 @@ public class WebSocketTests : IDisposable
     public async Task ShouldNotBeClosedWithTicketInQueryString()
     {
         var ticket = await CreateTicketAsync("/ws/plugins");
-        using var ws = new WebSocket($"ws://127.0.0.1:50000/ws/plugins?ticket={Uri.EscapeDataString(ticket)}");
+        using var ws = new WebSocket(
+            $"ws://127.0.0.1:50000/ws/plugins?ticket={Uri.EscapeDataString(ticket)}"
+        );
         ws.Open();
 
         await Task.Delay(500);

@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
 using EmbedIO;
@@ -10,9 +12,32 @@ namespace Serein.Core.Services.Network.Web;
 
 internal static class WebAuthenticationMatcher
 {
+    private enum CredentialType
+    {
+        Unknown,
+        Token,
+        Digest,
+    }
+
     private const string DefaultDigestRealm = "SereinAuthGate";
+    private const int DigestNonceFutureToleranceSeconds = 30;
+    private const int DigestNonceMaxAgeSeconds = 300;
+    private const int ReplayCleanupInterval = 128;
+
+    private static int _replayCheckCount;
+    private static readonly ConcurrentDictionary<string, DigestReplayState> DigestReplayStates =
+        new(StringComparer.Ordinal);
+
     private static readonly byte[] DigestNonceSecret = RandomNumberGenerator.GetBytes(32);
     private static readonly byte[] DigestOpaqueSecret = RandomNumberGenerator.GetBytes(32);
+
+    private sealed class DigestReplayState
+    {
+        public object Gate { get; } = new();
+        public uint LastNonceCount { get; set; }
+        public long LastSeenUnixTime { get; set; }
+        public HashSet<string> UsedResponses { get; } = new(StringComparer.OrdinalIgnoreCase);
+    }
 
     public static bool IsAuthorized(
         string authorization,
@@ -21,25 +46,44 @@ internal static class WebAuthenticationMatcher
         IReadOnlyCollection<AuthenticationBase> authentications
     )
     {
+        var credentialType = ResolveCredentialType(authorization);
+
         foreach (var authentication in authentications)
         {
-            if (authentication is TokenAuthentication tokenAuthentication)
+            try
             {
-                if (MatchToken(authorization, tokenAuthentication))
+                switch (credentialType)
                 {
-                    return true;
+                    case CredentialType.Digest
+                        when authentication is UserAuthentication userAuthentication
+                            && MatchDigest(authorization, httpVerb, requestUri, userAuthentication):
+                        return true;
+
+                    case CredentialType.Token
+                        when authentication is TokenAuthentication tokenAuthentication
+                            && MatchToken(authorization, tokenAuthentication):
+                        return true;
                 }
             }
-            else if (authentication is UserAuthentication usernamePassword)
-            {
-                if (MatchDigest(authorization, httpVerb, requestUri, usernamePassword))
-                {
-                    return true;
-                }
-            }
+            catch { }
         }
 
         return false;
+    }
+
+    private static CredentialType ResolveCredentialType(string authorization)
+    {
+        if (authorization.StartsWith("Digest ", StringComparison.OrdinalIgnoreCase))
+        {
+            return CredentialType.Digest;
+        }
+
+        if (authorization.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+        {
+            return CredentialType.Token;
+        }
+
+        return CredentialType.Unknown;
     }
 
     public static string CreateDigestChallengeHeader()
@@ -145,8 +189,89 @@ internal static class WebAuthenticationMatcher
             parameters
         );
 
-        return !string.IsNullOrEmpty(expectedResponse)
-            && string.Equals(response, expectedResponse, StringComparison.OrdinalIgnoreCase);
+        if (
+            string.IsNullOrEmpty(expectedResponse)
+            || !string.Equals(response, expectedResponse, StringComparison.OrdinalIgnoreCase)
+        )
+        {
+            return false;
+        }
+
+        return TryRegisterDigestUsage(username, nonce, response, parameters);
+    }
+
+    private static bool TryRegisterDigestUsage(
+        string username,
+        string nonce,
+        string response,
+        IReadOnlyDictionary<string, string> parameters
+    )
+    {
+        CleanupDigestReplayStatesIfNeeded();
+
+        var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        var key = $"{username}:{nonce}";
+        var state = DigestReplayStates.GetOrAdd(key, _ => new DigestReplayState());
+
+        lock (state.Gate)
+        {
+            state.LastSeenUnixTime = now;
+
+            if (parameters.TryGetValue("qop", out var qop) && !string.IsNullOrWhiteSpace(qop))
+            {
+                if (!parameters.TryGetValue("nc", out var nc) || string.IsNullOrWhiteSpace(nc))
+                {
+                    return false;
+                }
+
+                if (
+                    !uint.TryParse(
+                        nc,
+                        NumberStyles.HexNumber,
+                        CultureInfo.InvariantCulture,
+                        out var ncValue
+                    )
+                )
+                {
+                    return false;
+                }
+
+                if (ncValue <= state.LastNonceCount)
+                {
+                    return false;
+                }
+
+                state.LastNonceCount = ncValue;
+                return true;
+            }
+
+            if (!state.UsedResponses.Add(response))
+            {
+                return false;
+            }
+
+            return true;
+        }
+    }
+
+    private static void CleanupDigestReplayStatesIfNeeded()
+    {
+        var checkCount = System.Threading.Interlocked.Increment(ref _replayCheckCount);
+        if (checkCount % ReplayCleanupInterval != 0)
+        {
+            return;
+        }
+
+        var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        var expirationSeconds = DigestNonceFutureToleranceSeconds + DigestNonceMaxAgeSeconds;
+
+        foreach (var pair in DigestReplayStates)
+        {
+            if (now - pair.Value.LastSeenUnixTime > expirationSeconds)
+            {
+                DigestReplayStates.TryRemove(pair.Key, out _);
+            }
+        }
     }
 
     private static bool TryGetRequiredDigestField(
@@ -224,7 +349,10 @@ internal static class WebAuthenticationMatcher
         }
 
         var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-        if (timestamp > now + 30 || now - timestamp > 300)
+        if (
+            timestamp > now + DigestNonceFutureToleranceSeconds
+            || now - timestamp > DigestNonceMaxAgeSeconds
+        )
         {
             return false;
         }

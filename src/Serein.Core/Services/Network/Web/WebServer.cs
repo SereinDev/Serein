@@ -90,7 +90,6 @@ public sealed class WebServer : NotifyPropertyChangedModelBase
         _webServer.WithModule(_serviceProvider.GetRequiredService<ConnectionWebSocketModule>());
         _webServer.WithModule(_serviceProvider.GetRequiredService<PluginWebSocketModule>());
 
-        _webServer.OnGet("/_auth", (context) => throw HttpException.Redirect("/"));
         _webServer.WithWebApi(
             "/api",
             (module) =>

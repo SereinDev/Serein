@@ -141,9 +141,9 @@
                 <ui:NavigationViewItem
                     Content="自动化任务"
                     Tag="{x:Type pages:AutomationPage}"
-                    ToolTip="管理匹配列表">
+                    ToolTip="管理自动化任务">
                     <ui:NavigationViewItem.Icon>
-                        <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.List}" />
+                        <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Robot}" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
                 <ui:NavigationViewItem
