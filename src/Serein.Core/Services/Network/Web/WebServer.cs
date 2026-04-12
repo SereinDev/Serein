@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Abstractions;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Web.Apis;
+using Serein.Core.Services.Network.Web.Authentication;
 using Serein.Core.Services.Network.Web.WebSockets;
 using Serein.Core.Utils;
 using Swan.Logging;
@@ -84,7 +85,7 @@ public sealed class WebServer : NotifyPropertyChangedModelBase
 
         var webAuthenticationProvider =
             _serviceProvider.GetRequiredService<WebAuthenticationProvider>();
-        _webServer.WithModule(new AuthGate(webAuthenticationProvider));
+        _webServer.WithModule(new AuthGate(webAuthenticationProvider, _settingProvider));
         _webServer.WithModule(_serviceProvider.GetRequiredService<RequestInterceptorModule>());
         _webServer.WithModule(_serviceProvider.GetRequiredService<ServerWebSocketModule>());
         _webServer.WithModule(_serviceProvider.GetRequiredService<ConnectionWebSocketModule>());

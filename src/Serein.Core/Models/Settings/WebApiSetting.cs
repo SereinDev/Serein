@@ -2,6 +2,13 @@ using Serein.Core.Models.Abstractions;
 
 namespace Serein.Core.Models.Settings;
 
+public enum WebReplayProtectionLevel
+{
+    Disabled,
+    Normal,
+    Highest,
+}
+
 public class WebApiSetting : NotifyPropertyChangedModelBase
 {
     public bool StartWhenSettingUp { get; set; }
@@ -11,6 +18,9 @@ public class WebApiSetting : NotifyPropertyChangedModelBase
     public bool AllowCrossOrigin { get; set; }
 
     public int MaxRequestsPerSecond { get; set; } = 50;
+
+    public WebReplayProtectionLevel ReplayProtectionLevel { get; set; } =
+        WebReplayProtectionLevel.Highest;
 
     public string[] WhiteList { get; set; } = ["127.0.0.1", "::1"];
 

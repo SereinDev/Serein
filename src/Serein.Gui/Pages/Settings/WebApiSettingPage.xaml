@@ -7,6 +7,7 @@
     xmlns:data="clr-namespace:Serein.Core.Services.Data;assembly=Serein.Core"
     xmlns:local="clr-namespace:Serein.Gui.Pages.Settings"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:Serein.Core.Models.Settings;assembly=Serein.Core"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:viewmodels="clr-namespace:Serein.Gui.ViewModels"
@@ -183,6 +184,27 @@
                 Description="{Binding AuthenticationCountText}"
                 Header="修改访问凭证"
                 IsClickEnabled="True" />
+
+            <ui:SettingsCard Header="防重放等级">
+                <ui:SettingsCard.Description>
+                    <sys:String xml:space="preserve">· 决定防重放攻击的严格程度（仅对 Digest 认证有效）
+· 如果访问网页控制台时频繁出现 401 响应或是为方便调试 API，你可以适当降低等级
+
+· 关闭：不启用防重放攻击机制，只验证 response 的正确性（即使攻击者重放了请求，只要 response 正确，服务器也会接受）
+· 一般：只验证 response 的唯一性（nonce + cnonce + nc），同一请求只会被接受一次
+· 最高：除上述的验证外，还会验证 nc 的递增性，有着更高的安全性</sys:String>
+                </ui:SettingsCard.Description>
+
+                <ComboBox
+                    MinWidth="160"
+                    SelectedValue="{Binding WebApiSetting.ReplayProtectionLevel, Mode=TwoWay}"
+                    SelectedValuePath="Tag"
+                    SelectionChanged="OnPropertyChanged">
+                    <ComboBoxItem Tag="{x:Static models:WebReplayProtectionLevel.Disabled}">关闭</ComboBoxItem>
+                    <ComboBoxItem Tag="{x:Static models:WebReplayProtectionLevel.Normal}">一般</ComboBoxItem>
+                    <ComboBoxItem Tag="{x:Static models:WebReplayProtectionLevel.Highest}">最高</ComboBoxItem>
+                </ComboBox>
+            </ui:SettingsCard>
 
             <TextBlock
                 Margin="0,15,0,5"

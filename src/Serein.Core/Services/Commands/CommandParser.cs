@@ -394,7 +394,7 @@ public sealed partial class CommandParser(
 
         object? HandleUnmatchedVariablePattern(
             ref bool matched,
-            System.Text.RegularExpressions.Match match,
+            Match match,
             CommandContext? commandContext
         )
         {

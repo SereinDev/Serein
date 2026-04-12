@@ -55,7 +55,7 @@ internal sealed class ScheduleTriggerHandler : IHostedService
             return false;
         }
 
-        if (scheduleTrigger.NextTime == DateTime.MinValue)
+        if (scheduleTrigger.NextTime is null)
         {
             scheduleTrigger.UpdateNextTime();
 

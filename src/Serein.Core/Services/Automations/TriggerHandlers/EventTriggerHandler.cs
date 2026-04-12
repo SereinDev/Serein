@@ -17,7 +17,7 @@ public sealed class EventTriggerHandler(TaskHost taskHost, ILogger<EventTriggerH
         taskHost.EnumerateAllTriggers<EventTrigger>(
             (task, trigger) =>
             {
-                if (trigger.Events.Contains(eventType))
+                if (trigger.Event == eventType)
                 {
                     tasks.Add(taskHost.RunTaskAsync(task, context));
                 }

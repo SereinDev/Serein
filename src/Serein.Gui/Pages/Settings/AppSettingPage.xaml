@@ -91,42 +91,6 @@
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
 
-
-            <ui:SettingsExpander Header="允许Js插件使用Web API">
-                <ui:SettingsExpander.Description>
-                    <sys:String xml:space="preserve">在Js引擎中注册Web API，如fetch()、TextDecoder、ReadableStream等，开发者可以直接使用这些API而无需额外引入库
-· 此功能仍处于实验性阶段，可能存在一些问题（见下）</sys:String>
-                </ui:SettingsExpander.Description>
-
-                <ui:SettingsExpander.ItemsHeader>
-                    <ui:InfoBar
-                        Title="警告"
-                        BorderThickness="0"
-                        CornerRadius="0"
-                        IsClosable="False"
-                        IsOpen="True"
-                        Severity="Warning">
-                        <ui:InfoBar.Message>
-                            <sys:String xml:space="preserve">· 由于异步相关的操作均由C#的Task类实现而非WHATWG标准中的“微任务/Micro Task”，因此可能与浏览器或NodeJs环境下的行为存在一定差异，而且在高并发环境下可能存在引擎死锁或其他不确定的问题
-· 目前开发进度受限，部分API还未实现（如fetch()、ReadableStreamBYOBReader），具体进度可参考仓库的REAMDE文件</sys:String>
-                        </ui:InfoBar.Message>
-                    </ui:InfoBar>
-                </ui:SettingsExpander.ItemsHeader>
-
-                <ui:SettingsExpander.Items>
-                    <ui:SettingsCard Description="猜你想问 / 了解更多" Header="什么是Web API？Web API包含哪些内容？">
-                        <ui:HyperlinkButton Content="MDN 文档" NavigateUri="https://developer.mozilla.org/zh-CN/docs/Web/API" />
-                    </ui:SettingsCard>
-
-                    <ui:SettingsCard Description="实现这个功能的库" Header="GitHub仓库">
-                        <ui:HyperlinkButton Content="Zaitonn/Yilduz" NavigateUri="https://github.com/Zaitonn/Yilduz" />
-                    </ui:SettingsCard>
-                </ui:SettingsExpander.Items>
-
-                <ui:ToggleSwitch IsOn="{Binding ApplicationSetting.EnableWebAPIForJsPlugins}" Toggled="OnPropertyChanged" />
-
-            </ui:SettingsExpander>
-
             <TextBlock
                 Margin="0,15,0,5"
                 Style="{DynamicResource SubtitleTextBlockStyle}"

@@ -2,6 +2,8 @@ namespace Serein.Core.Models.Automations;
 
 public enum Events
 {
+    None,
+
     ServerStart,
 
     ServerExitedNormally,

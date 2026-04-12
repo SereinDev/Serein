@@ -7,8 +7,9 @@ using System.Security.Cryptography;
 using System.Text;
 using EmbedIO;
 using Serein.Core.Models.Network.Web.WebAuthentication;
+using Serein.Core.Models.Settings;
 
-namespace Serein.Core.Services.Network.Web;
+namespace Serein.Core.Services.Network.Web.Authentication;
 
 internal static class WebAuthenticationMatcher
 {
@@ -24,7 +25,7 @@ internal static class WebAuthenticationMatcher
     private const int DigestNonceMaxAgeSeconds = 300;
     private const int ReplayCleanupInterval = 128;
 
-    private static int _replayCheckCount;
+    private static int s_replayCheckCount;
     private static readonly ConcurrentDictionary<string, DigestReplayState> DigestReplayStates =
         new(StringComparer.Ordinal);
 
@@ -34,18 +35,25 @@ internal static class WebAuthenticationMatcher
     private sealed class DigestReplayState
     {
         public object Gate { get; } = new();
-        public uint LastNonceCount { get; set; }
+        public Dictionary<string, uint> LastNonceCountsByClientNonce { get; } =
+            new(StringComparer.OrdinalIgnoreCase);
         public long LastSeenUnixTime { get; set; }
-        public HashSet<string> UsedResponses { get; } = new(StringComparer.OrdinalIgnoreCase);
+        public HashSet<string> UsedRequestKeys { get; } = new(StringComparer.OrdinalIgnoreCase);
     }
 
     public static bool IsAuthorized(
-        string authorization,
+        [NotNullWhen(true)] string? authorization,
         HttpVerbs httpVerb,
         string requestUri,
-        IReadOnlyCollection<AuthenticationBase> authentications
+        IReadOnlyCollection<AuthenticationBase> authentications,
+        WebReplayProtectionLevel replayProtectionLevel
     )
     {
+        if (string.IsNullOrWhiteSpace(authorization))
+        {
+            return false;
+        }
+
         var credentialType = ResolveCredentialType(authorization);
 
         foreach (var authentication in authentications)
@@ -56,7 +64,13 @@ internal static class WebAuthenticationMatcher
                 {
                     case CredentialType.Digest
                         when authentication is UserAuthentication userAuthentication
-                            && MatchDigest(authorization, httpVerb, requestUri, userAuthentication):
+                            && MatchDigest(
+                                authorization,
+                                httpVerb,
+                                requestUri,
+                                userAuthentication,
+                                replayProtectionLevel
+                            ):
                         return true;
 
                     case CredentialType.Token
@@ -113,7 +127,8 @@ internal static class WebAuthenticationMatcher
         string authorization,
         HttpVerbs httpVerb,
         string requestUri,
-        UserAuthentication usernamePassword
+        UserAuthentication usernamePassword,
+        WebReplayProtectionLevel replayProtectionLevel
     )
     {
         if (!authorization.StartsWith("Digest ", StringComparison.OrdinalIgnoreCase))
@@ -197,16 +212,22 @@ internal static class WebAuthenticationMatcher
             return false;
         }
 
-        return TryRegisterDigestUsage(username, nonce, response, parameters);
+        return TryRegisterDigestUsage(username, nonce, response, parameters, replayProtectionLevel);
     }
 
     private static bool TryRegisterDigestUsage(
         string username,
         string nonce,
         string response,
-        IReadOnlyDictionary<string, string> parameters
+        IReadOnlyDictionary<string, string> parameters,
+        WebReplayProtectionLevel replayProtectionLevel
     )
     {
+        if (replayProtectionLevel == WebReplayProtectionLevel.Disabled)
+        {
+            return true;
+        }
+
         CleanupDigestReplayStatesIfNeeded();
 
         var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
@@ -217,46 +238,66 @@ internal static class WebAuthenticationMatcher
         {
             state.LastSeenUnixTime = now;
 
-            if (parameters.TryGetValue("qop", out var qop) && !string.IsNullOrWhiteSpace(qop))
-            {
-                if (!parameters.TryGetValue("nc", out var nc) || string.IsNullOrWhiteSpace(nc))
-                {
-                    return false;
-                }
-
-                if (
-                    !uint.TryParse(
-                        nc,
-                        NumberStyles.HexNumber,
-                        CultureInfo.InvariantCulture,
-                        out var ncValue
-                    )
-                )
-                {
-                    return false;
-                }
-
-                if (ncValue <= state.LastNonceCount)
-                {
-                    return false;
-                }
-
-                state.LastNonceCount = ncValue;
-                return true;
-            }
-
-            if (!state.UsedResponses.Add(response))
+            if (!state.UsedRequestKeys.Add($"response:{response}"))
             {
                 return false;
             }
 
+            if (replayProtectionLevel == WebReplayProtectionLevel.Normal)
+            {
+                return true;
+            }
+
+            if (
+                !parameters.TryGetValue("qop", out var qop)
+                || string.IsNullOrWhiteSpace(qop)
+                || !string.Equals(qop, "auth", StringComparison.OrdinalIgnoreCase)
+            )
+            {
+                return false;
+            }
+
+            if (!parameters.TryGetValue("nc", out var nc) || string.IsNullOrWhiteSpace(nc))
+            {
+                return false;
+            }
+
+            if (
+                !parameters.TryGetValue("cnonce", out var cnonce)
+                || string.IsNullOrWhiteSpace(cnonce)
+            )
+            {
+                return false;
+            }
+
+            if (
+                !uint.TryParse(
+                    nc,
+                    NumberStyles.HexNumber,
+                    CultureInfo.InvariantCulture,
+                    out var ncValue
+                )
+            )
+            {
+                return false;
+            }
+
+            if (
+                state.LastNonceCountsByClientNonce.TryGetValue(cnonce, out var lastNonceCount)
+                && ncValue <= lastNonceCount
+            )
+            {
+                return false;
+            }
+
+            state.LastNonceCountsByClientNonce[cnonce] = ncValue;
             return true;
         }
     }
 
     private static void CleanupDigestReplayStatesIfNeeded()
     {
-        var checkCount = System.Threading.Interlocked.Increment(ref _replayCheckCount);
+        var checkCount = System.Threading.Interlocked.Increment(ref s_replayCheckCount);
         if (checkCount % ReplayCleanupInterval != 0)
         {
             return;

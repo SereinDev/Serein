@@ -19,9 +19,10 @@ internal sealed class PluginWebSocketModule : WebSocketModuleBase
         ILogger<PluginWebSocketModule> logger,
         WebAuthenticationProvider webAuthenticationProvider,
         WebSocketTicketService webSocketTicketService,
+        SettingProvider settingProvider,
         PluginLoggerBase pluginLoggerBase
     )
-        : base("/ws/plugins", webAuthenticationProvider, webSocketTicketService)
+        : base("/ws/plugins", webAuthenticationProvider, webSocketTicketService, settingProvider)
     {
         _logger = logger;
         _pluginLoggerBase = pluginLoggerBase;

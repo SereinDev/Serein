@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Serein.Core.Models.Abstractions;
 
 namespace Serein.Core.Models.Automations.Triggers;
 
@@ -7,10 +8,9 @@ namespace Serein.Core.Models.Automations.Triggers;
 [JsonDerivedType(typeof(EventTrigger), typeDiscriminator: "event")]
 [JsonDerivedType(typeof(PluginTrigger), typeDiscriminator: "plugin")]
 [JsonDerivedType(typeof(ScheduleTrigger), typeDiscriminator: "schedule")]
-public abstract class TriggerBase
+public abstract class TriggerBase : NotifyPropertyChangedModelBase
 {
-    [JsonIgnore]
-    public abstract TriggerType Type { get; }
+    public abstract TriggerType Type { get; } // 方便js插件判断
 
-    public bool IsEnabled { get; set; }
+    public bool IsEnabled { get; set; } = true;
 }

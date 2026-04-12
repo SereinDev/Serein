@@ -135,7 +135,7 @@
                                         VerticalAlignment="Center"
                                         FontStyle="Italic"
                                         Foreground="Gray"
-                                        Text="无"
+                                        Text="(空)"
                                         Visibility="{Binding Triggers, Converter={StaticResource CollectionAnyToVisibilityConverter}, ConverterParameter=Invert}" />
                                 </Grid>
                             </DataTemplate>
@@ -173,7 +173,7 @@
                                         VerticalAlignment="Center"
                                         FontStyle="Italic"
                                         Foreground="Gray"
-                                        Text="无"
+                                        Text="(空)"
                                         Visibility="{Binding Commands, Converter={StaticResource CollectionAnyToVisibilityConverter}, ConverterParameter=Invert}" />
                                 </Grid>
                             </DataTemplate>

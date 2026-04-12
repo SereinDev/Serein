@@ -17,6 +17,7 @@ namespace Serein.Core.Services.Network.Web.WebSockets;
 internal class ServerWebSocketModule : WebSocketModuleBase
 {
     private readonly ServerManager _serverManager;
+    private readonly SettingProvider _settingProvider;
     private readonly WebAuthenticationProvider _webAuthenticationProvider;
     private readonly WebSocketTicketService _webSocketTicketService;
     private readonly Dictionary<string, List<IWebSocketContext>> _clients = [];
@@ -24,11 +25,13 @@ internal class ServerWebSocketModule : WebSocketModuleBase
     public ServerWebSocketModule(
         ServerManager serverManager,
         WebAuthenticationProvider webAuthenticationProvider,
-        WebSocketTicketService webSocketTicketService
+        WebSocketTicketService webSocketTicketService,
+        SettingProvider settingProvider
     )
-        : base("/ws/server", webAuthenticationProvider, webSocketTicketService)
+        : base("/ws/server", webAuthenticationProvider, webSocketTicketService, settingProvider)
     {
         _serverManager = serverManager;
+        _settingProvider = settingProvider;
         _webAuthenticationProvider = webAuthenticationProvider;
         _webSocketTicketService = webSocketTicketService;
         _serverManager.ServersUpdated += OnServersUpdate;
@@ -53,7 +56,15 @@ internal class ServerWebSocketModule : WebSocketModuleBase
     {
         var query = HttpUtility.ParseQueryString(context.RequestUri.Query);
 
-        if (!TryAuthorize(context, query, _webAuthenticationProvider, _webSocketTicketService))
+        if (
+            !TryAuthorize(
+                context,
+                query,
+                _webAuthenticationProvider,
+                _webSocketTicketService,
+                _settingProvider
+            )
+        )
         {
             await context.WebSocket.CloseAsync();
             return;

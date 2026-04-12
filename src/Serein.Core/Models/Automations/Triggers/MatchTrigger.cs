@@ -8,6 +8,7 @@ public sealed class MatchTrigger : TriggerBase
     private string _pattern = string.Empty;
     private bool _isRegex;
 
+    [JsonIgnore]
     public override TriggerType Type => TriggerType.Match;
 
     public MatchFieldType FieldType { get; set; } = MatchFieldType.ServerOutput;
@@ -31,6 +32,8 @@ public sealed class MatchTrigger : TriggerBase
             CompileRegex();
         }
     }
+
+    public bool RequireAdminPermission { get; set; }
 
     [JsonIgnore]
     public Regex? Regex { get; private set; }

@@ -6,6 +6,7 @@ namespace Serein.Core.Models.Automations.Triggers;
 
 public sealed class ScheduleTrigger : TriggerBase
 {
+    [JsonIgnore]
     public override TriggerType Type => TriggerType.Schedule;
 
     private string _cronExpression = string.Empty;
@@ -24,12 +25,10 @@ public sealed class ScheduleTrigger : TriggerBase
     public CrontabSchedule? CrontabSchedule { get; private set; }
 
     [JsonIgnore]
-    public DateTime NextTime { get; private set; } = DateTime.MinValue;
+    public DateTime? NextTime { get; private set; }
 
     internal void UpdateNextTime()
     {
-        NextTime = CrontabSchedule is not null
-            ? CrontabSchedule.GetNextOccurrence(DateTime.Now)
-            : DateTime.MinValue;
+        NextTime = CrontabSchedule?.GetNextOccurrence(DateTime.Now);
     }
 }

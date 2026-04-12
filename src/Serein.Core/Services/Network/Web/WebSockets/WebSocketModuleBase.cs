@@ -4,13 +4,15 @@ using System.Web;
 using EmbedIO;
 using EmbedIO.WebSockets;
 using Serein.Core.Services.Data;
+using Serein.Core.Services.Network.Web.Authentication;
 
 namespace Serein.Core.Services.Network.Web.WebSockets;
 
 internal abstract class WebSocketModuleBase(
     string path,
     WebAuthenticationProvider webAuthenticationProvider,
-    WebSocketTicketService webSocketTicketService
+    WebSocketTicketService webSocketTicketService,
+    SettingProvider settingProvider
 ) : WebSocketModule(path, true)
 {
     protected override Task OnMessageReceivedAsync(
@@ -24,7 +26,7 @@ internal abstract class WebSocketModuleBase(
 
     protected override async Task OnClientConnectedAsync(IWebSocketContext context)
     {
-        if (!TryAuthorize(context, webAuthenticationProvider, webSocketTicketService))
+        if (!TryAuthorize(context, webAuthenticationProvider, webSocketTicketService, settingProvider))
         {
             await context.WebSocket.CloseAsync();
         }
@@ -33,7 +35,8 @@ internal abstract class WebSocketModuleBase(
     protected static bool TryAuthorize(
         IWebSocketContext context,
         WebAuthenticationProvider webAuthenticationProvider,
-        WebSocketTicketService webSocketTicketService
+        WebSocketTicketService webSocketTicketService,
+        SettingProvider settingProvider
     )
     {
         return webAuthenticationProvider.Value.Count == 0
@@ -41,7 +44,8 @@ internal abstract class WebSocketModuleBase(
                 context,
                 HttpUtility.ParseQueryString(context.RequestUri.Query),
                 webAuthenticationProvider,
-                webSocketTicketService
+                webSocketTicketService,
+                settingProvider
             );
     }
 
@@ -49,7 +53,8 @@ internal abstract class WebSocketModuleBase(
         IWebSocketContext context,
         NameValueCollection query,
         WebAuthenticationProvider webAuthenticationProvider,
-        WebSocketTicketService webSocketTicketService
+        WebSocketTicketService webSocketTicketService,
+        SettingProvider settingProvider
     )
     {
         var ticket = query.Get("ticket");
@@ -65,7 +70,8 @@ internal abstract class WebSocketModuleBase(
                 authorization,
                 HttpVerbs.Get,
                 context.RequestUri.PathAndQuery,
-                webAuthenticationProvider.Value
+                webAuthenticationProvider.Value,
+                settingProvider.Value.WebApi.ReplayProtectionLevel
             );
     }
 

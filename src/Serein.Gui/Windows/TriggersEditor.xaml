@@ -2,14 +2,16 @@
     x:Class="Serein.Gui.Windows.TriggersEditor"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="clr-namespace:Serein.Gui.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Serein.Gui.Windows"
+    xmlns:helpers="clr-namespace:Serein.Gui.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    xmlns:viewModels="clr-namespace:Serein.Gui.ViewModels"
     Title="触发器编辑器"
     Width="420"
     Height="500"
-    d:DataContext="{d:DesignInstance Type=local:TriggersEditor}"
+    d:DataContext="{d:DesignInstance Type=viewModels:TriggersEditorViewModel}"
     ui:ThemeManager.IsThemeAware="True"
     ui:TitleBar.ExtendViewIntoTitleBar="True"
     ui:TitleBar.Height="36"
@@ -19,6 +21,12 @@
     ShowInTaskbar="False"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
+    <Window.Resources>
+        <converter:TriggerToHeaderConverter x:Key="TriggerToHeaderConverter" />
+        <converter:TriggerToTooltipConverter x:Key="TriggerToTooltipConverter" />
+        <converter:TriggerToPrimaryValueConverter x:Key="TriggerToPrimaryValueConverter" />
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="36" />
@@ -34,29 +42,88 @@
         <ListView
             x:Name="ListView"
             Grid.Row="1"
-            ItemsSource="{Binding Triggers}">
+            ItemsSource="{Binding Triggers}"
+            SelectionChanged="ListView_SelectionChanged">
+
+            <ListView.View>
+                <GridView AllowsColumnReorder="False">
+                    <GridViewColumn
+                        Width="55"
+                        helpers:GridViewColumnHelper.MinWidth="55"
+                        Header="类型">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource TriggerToHeaderConverter}}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsEnabled}" Value="False">
+                                                    <Setter Property="Opacity" Value="0.5" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn
+                        Width="340"
+                        helpers:GridViewColumnHelper.MinWidth="250"
+                        Header="值">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Text="{Binding Converter={StaticResource TriggerToPrimaryValueConverter}}"
+                                    TextTrimming="CharacterEllipsis"
+                                    ToolTip="{Binding Converter={StaticResource TriggerToTooltipConverter}}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource Self}}" Value="(空)">
+                                                    <Setter Property="Foreground" Value="Gray" />
+                                                    <Setter Property="FontStyle" Value="Italic" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsEnabled}" Value="False">
+                                                    <Setter Property="Opacity" Value="0.5" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+
             <ListView.ContextMenu>
                 <ContextMenu>
-                    <MenuItem
-                        Click="MenuItem_Click"
-                        Header="添加"
-                        Tag="Add">
+                    <MenuItem Header="添加">
                         <MenuItem.Icon>
                             <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Add}" />
                         </MenuItem.Icon>
+
+                        <MenuItem Command="{Binding AddEventTriggerCommand}" Header="事件触发器" />
+                        <MenuItem Command="{Binding AddMatchTriggerCommand}" Header="匹配触发器" />
+                        <MenuItem Command="{Binding AddScheduleTriggerCommand}" Header="定时触发器" />
+                        <MenuItem Command="{Binding AddPluginTriggerCommand}" Header="插件触发器" />
                     </MenuItem>
                     <MenuItem
-                        Click="MenuItem_Click"
+                        Command="{Binding EditCommand}"
+                        CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                         Header="编辑"
-                        Tag="Edit">
+                        IsEnabled="{Binding CanEdit}">
                         <MenuItem.Icon>
                             <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Edit}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
-                        Click="MenuItem_Click"
+                        Command="{Binding RemoveCommand}"
+                        CommandParameter="{Binding PlacementTarget.SelectedItems, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                         Header="删除"
-                        Tag="Remove">
+                        IsEnabled="{Binding CanRemove}">
                         <MenuItem.Icon>
                             <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Delete}" />
                         </MenuItem.Icon>
